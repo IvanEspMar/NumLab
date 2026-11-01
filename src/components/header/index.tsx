@@ -28,3 +28,11 @@ export function Header() {
     </nav>
   )
 }
+
+export function Footer() {
+  return (
+    <footer className="pie-pagina">
+      <span>FES ACATLÁN · UNAM · 2026</span>
+    </footer>
+  )
+}
