@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router'
 import grafica from '../../assets/graficas.jpg'
 import sistemas from '../../assets/sistemas.jpg'
 import './index.scss'
 
-type Metodo = {
+type Problema = {
   numero: string
   categoria: string
   titulo: string
@@ -11,10 +12,11 @@ type Metodo = {
   formula?: string
   descripcion: string
   pie: string
+  enlace: string
 }
 
 
-function TarjetaMetodo({
+function TarjetaProblema({
   numero,
   categoria,
   titulo,
@@ -22,10 +24,13 @@ function TarjetaMetodo({
   altImagen,
   formula,
   descripcion,
-  pie
-}: Metodo) {
+  pie,
+  enlace
+}: Problema) {
+   const navigate = useNavigate();
+
   return (
-    <article className="tarjeta-metodo">
+    <article onClick={() => navigate(enlace)} className="tarjeta-problema">
       <div className="tarjeta-encabezado">
         <span className="numero">{numero}</span>
         <span className="categoria">{categoria}</span>
@@ -33,7 +38,7 @@ function TarjetaMetodo({
 
       <h3>{titulo}</h3>
 
-      <div className="imagen-metodo">
+      <div className="imagen-problema">
         {imagen && <img src={imagen} alt={altImagen ?? ''} />}
         {formula && <span className="simbolo-matematico">{formula}</span>}
       </div>
@@ -70,15 +75,16 @@ function IconoEnlace() {
 
 
 function Areas() {
-  const metodos: Metodo[] = [
+  const problemas: Problema[] = [
   {
     numero: '02',
     categoria: 'ECUACIONES NO LINEALES',
-    titulo: 'Aproximar raíces reales de ecuaciones no lineales de una variable',
+    titulo: 'Solución numérica de ecuaciones algebraicas de una variable',
     imagen: grafica,
     altImagen: 'Gráfica de una función matemática',
     descripcion: 'Unidad 2 · Bisección, Newton y Secante.',
-    pie: 'BÚSQUEDA DE RAÍCES'
+    pie: 'BÚSQUEDA DE RAÍCES',
+     enlace: "/nolineal"
   },
   {
     numero: '03–04',
@@ -87,7 +93,8 @@ function Areas() {
     imagen: sistemas,
     altImagen: 'Ax = b',
     descripcion: 'Unidad 3 · Gauss-Jordan, Gauss-Seidel y Jacobi. Unidad 4 · Factorización de Doolittle y Crout.',
-    pie: 'SISTEMAS Y FACTORIZACIÓN'
+    pie: 'SISTEMAS Y FACTORIZACIÓN',
+    enlace: "/lineal"
   },
   {
     numero: '05',
@@ -95,11 +102,12 @@ function Areas() {
     titulo: 'Cálculo de valores propios',
     formula: 'Av = λv',
     descripcion: 'Unidad 5 · Métodos de la Potencia y Potencia Inversa.',
-    pie: 'VALORES Y VECTORES'
+    pie: 'VALORES Y VECTORES',
+     enlace: "/valores"
   }
 ]
   return (
-    <section className="seccion-metodos">
+    <section className="seccion-problemas">
       <div className="encabezado-seccion">
         <div className="encabezado-titulo">
           <h2>
@@ -112,8 +120,8 @@ function Areas() {
       </div>
 
       <div className="cuadricula">
-        {metodos.map((metodo) => (
-          <TarjetaMetodo key={metodo.numero} {...metodo} />
+        {problemas.map((problema) => (
+          <TarjetaProblema key={problema.numero} {...problema} />
         ))}
       </div>
     </section>

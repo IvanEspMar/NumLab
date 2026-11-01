@@ -6,6 +6,8 @@ import Home from './routes/home'
 import Menu from './routes/0-menu'
 
 import { Header, Footer } from './components/header'
+import NoLineales from './routes/1-nonlinear-equations'
+import Biseccion from './routes/1-nonlinear-equations/biseccion'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/nolineal" element={<NoLineales />}/>
+          <Route path='/nolineal/biseccion' element={<Biseccion/>} />
         </Routes>
 
         <Footer />

@@ -1,5 +1,5 @@
 
-.seccion-metodos {
+.seccion-problemas {
   margin-top: 45px;
   position: relative;
   min-height: 60vh;
@@ -42,7 +42,7 @@
   gap: 18px;
 }
 
-.tarjeta-metodo {
+.tarjeta-problema {
   cursor: pointer;
   min-width: 0;
   min-height: 355px;
@@ -99,7 +99,7 @@
   text-align: right;
 }
 
-.imagen-metodo {
+.imagen-problema {
   flex: 1;
   min-height: 130px;
   display: flex;
@@ -153,17 +153,17 @@
     gap: 14px;
   }
 
-  .tarjeta-metodo {
+  .tarjeta-problema {
     padding: 18px;
   }
 
-  .tarjeta-metodo h3 {
+  .tarjeta-problema h3 {
     font-size: 18px;
   }
 }
 
 @media (max-width: 750px) {
-  .seccion-metodos {
+  .seccion-problemas {
     position: relative;
     margin-top: 15px;
   }
@@ -181,17 +181,17 @@
     gap: 14px;
   }
 
-  .tarjeta-metodo {
+  .tarjeta-problema {
     min-height: 320px;
     padding: 20px;
   }
 
-  .tarjeta-metodo h3 {
+  .tarjeta-problema h3 {
     min-height: auto;
     font-size: 21px;
   }
 
-  .imagen-metodo {
+  .imagen-problema {
     min-height: 140px;
   }
 
@@ -201,7 +201,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tarjeta-metodo {
+  .tarjeta-problema {
     transition: none;
   }
 }
