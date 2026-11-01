@@ -1,0 +1,61 @@
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #17191b;
+  background: #f0f1f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f0f1f2;
+  font-size: 14px;
+}
+
+.punto {
+  color: #e64b45;
+}
+
+.aplicacion {
+  width: 100%;
+  max-width: 1380px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 34px 26px;
+}
+
+.etiqueta {
+  display: block;
+  color: #74787c;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  line-height: 1.5;
+}
+
+.pie-pagina {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 0 0;
+  color: #85898d;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.035em;
+
+  span:first-child {
+    color: #242629;
+    font-weight: 600;
+  }
+}

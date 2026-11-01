@@ -1,0 +1,74 @@
+.navegacion {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid #dfe1e3;
+
+  .marca {
+    flex-shrink: 0;
+    color: #111;
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -1.7px;
+  }
+
+  .navegacion-enlaces {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    margin-right: auto;
+    margin-left: 35px;
+  }
+
+  .enlace-nav {
+    position: relative;
+    padding: 5px 0;
+    color: #85898d;
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    transition: color 150ms ease;
+
+    &:hover {
+      color: #111;
+    }
+
+    &.active {
+      color: #111;
+      font-weight: 700;
+    }
+  }
+
+  .navegacion-anio {
+    flex-shrink: 0;
+    color: #777b80;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.025em;
+  }
+}
+
+@media (max-width: 600px) {
+  .navegacion {
+    gap: 14px;
+
+    .navegacion-enlaces {
+      gap: 12px;
+      margin-left: 5px;
+    }
+
+    .navegacion-anio {
+      display: none;
+    }
+
+    .enlace-nav {
+      font-size: 9px;
+    }
+  }
+}
