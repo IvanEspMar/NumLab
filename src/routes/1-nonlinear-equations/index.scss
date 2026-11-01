@@ -58,7 +58,7 @@
 }
 .tarjeta-metodo {
   min-width: 0;
-  min-height: 355px;
+  min-height: 55px;
   display: flex;
   flex-direction: column;
   padding: 22px;
@@ -89,6 +89,25 @@
     font-size: 12px;
     line-height: 1.7;
   }
+  .imagen-metodo {
+      flex: 1;
+      min-height: 130px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: 900;
+      img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: center;
+      }
+
+
+  }
 }
 
 .tarjeta-encabezado {
@@ -112,26 +131,7 @@
   text-align: right;
 }
 
-.imagen-metodo {
-    flex: 1;
-    min-height: 130px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 12px;
-    font-size: 20px;
-    font-weight: 900;
-    img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        max-height: 170px;
-        object-fit: contain;
-        object-position: center;
-    }
 
-
-}
 
 .simbolo-matematico {
   color: #36a9e1;

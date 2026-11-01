@@ -1,13 +1,15 @@
 
 import { useNavigate } from 'react-router'
-import { BlockMath } from 'react-katex'
+import bisec from '../../assets/biseccion.png'
+import secan from '../../assets/secante.png'
+import newton from '../../assets/newton.png'
 import './index.scss'
 
 type Metodo = {
   numero: string
   categoria: string
   titulo: string
-  formula: string
+  imagen: string
   descripcion: string
   pie: string
   enlace: string
@@ -18,28 +20,28 @@ const metodos: Metodo[] = [
     numero: '01',
     categoria: 'MÉTODO CERRADO',
     titulo: 'Método de Bisección',
-    formula: String.raw`x_r = \frac{a+b}{2}`,
+    imagen: bisec,
     descripcion: 'Encuentra raíces dividiendo repetidamente un intervalo en dos partes iguales.',
-    pie: '',
+    pie: 'CONVERGENCIA GARANTIZADA*',
     enlace: '/nolineal/biseccion'
   },
   {
     numero: '02',
     categoria: 'MÉTODO ABIERTO',
-    titulo: 'Método de la Secante',
-    formula: String.raw`x_{n+1}=x_n-\frac{f(x_n)(x_n-x_{n-1})}{f(x_n)-f(x_{n-1})}`,
-    descripcion: 'Aproxima raíces mediante rectas secantes utilizando dos valores iniciales.',
-    pie: '',
-    enlace: '/nolineal/secante'
+    titulo: 'Método de Newton-Raphson',
+    imagen: newton,
+    descripcion: 'Utiliza la recta tangente de una función para aproximar sus raíces.',
+    pie: 'CONVERGENCIA CUADRÁTICA*',
+    enlace: '/nolineal/newton'
   },
   {
     numero: '03',
     categoria: 'MÉTODO ABIERTO',
-    titulo: 'Método de Newton-Raphson',
-    formula: String.raw`x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}`,
-    descripcion: 'Utiliza la recta tangente de una función para aproximar sus raíces.',
-    pie: '*',
-    enlace: '/nolineal/newton'
+    titulo: 'Método de la Secante',
+    imagen: secan,
+    descripcion: 'Aproxima raíces mediante rectas secantes utilizando dos valores iniciales.',
+    pie: 'SIN DERIVADAS',
+    enlace: '/nolineal/secante'
   }
 ]
 
@@ -77,7 +79,7 @@ function TarjetaMetodo({ metodo }: { metodo: Metodo }) {
       <h3>{metodo.titulo}</h3>
 
       <div className={`imagen-metodo formula-${metodo.numero}`}>
-        <BlockMath math={metodo.formula} />
+        <img src={metodo.imagen} alt="" srcset="" />
       </div>
 
       <p>{metodo.descripcion}</p>

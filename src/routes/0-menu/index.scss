@@ -53,8 +53,26 @@
   background-color: white;
   border-radius: 4px;
   transition:
-    transform 180ms ease,
-    border-color 180ms ease;
+  transform 180ms ease,
+  border-color 180ms ease;
+  .tarjeta-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    .numero {
+      color: #e64b45;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+    .categoria {
+      color: #85898d;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.035em;
+      text-align: right;
+    }
+  }
 
   &:hover {
     transform: scale(1.01);
@@ -78,26 +96,10 @@
   }
 }
 
-.tarjeta-encabezado {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
 
-.numero {
-  color: #e64b45;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-}
 
-.categoria {
-  color: #85898d;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.035em;
-  text-align: right;
-}
+
+
 
 .imagen-problema {
   flex: 1;

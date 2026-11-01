@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router'
-import grafica from '../../assets/graficas.jpg'
+import grafica from '../../assets/Frame 1.png'
 import sistemas from '../../assets/sistemas.jpg'
 import './index.scss'
 
