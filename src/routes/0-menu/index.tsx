@@ -103,7 +103,7 @@ function Areas() {
       <div className="encabezado-seccion">
         <div className="encabezado-titulo">
           <h2>
-              IMPLEMENTACIÓN DE LOS MÉTODOS NUMÉRICOS
+              TIPOS DE PROBLEMAS Y MÉTODOS NUMÉRICOS
             <span className="punto">.</span>
           </h2>
         </div>

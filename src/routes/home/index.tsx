@@ -18,7 +18,7 @@ function Presentacion() {
           <span className="titulo-indice">01 / PRESENTACIÓN</span>
 
           <h1>
-            PROGRAMACIÓN DE MÉTODOS
+            HERRAMIENTA DE MÉTODOS
             <br />
             <span className='numericos'>NUMÉRICOS</span><span className="punto">.</span>
           </h1>
