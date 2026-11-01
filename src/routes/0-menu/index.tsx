@@ -74,7 +74,7 @@ function Areas() {
   {
     numero: '02',
     categoria: 'ECUACIONES NO LINEALES',
-    titulo: 'Raíces reales de ecuaciones no lineales de una variable',
+    titulo: 'Aproximar raíces reales de ecuaciones no lineales de una variable',
     imagen: grafica,
     altImagen: 'Gráfica de una función matemática',
     descripcion: 'Unidad 2 · Bisección, Newton y Secante.',
@@ -83,7 +83,7 @@ function Areas() {
   {
     numero: '03–04',
     categoria: 'SISTEMAS DE ECUACIONES LINEALES',
-    titulo: 'Métodos para resolver sistemas de ecuaciones',
+    titulo: 'Resolver sistemas de ecuaciones lineales',
     imagen: sistemas,
     altImagen: 'Ax = b',
     descripcion: 'Unidad 3 · Gauss-Jordan, Gauss-Seidel y Jacobi. Unidad 4 · Factorización de Doolittle y Crout.',
@@ -103,7 +103,7 @@ function Areas() {
       <div className="encabezado-seccion">
         <div className="encabezado-titulo">
           <h2>
-            ÁREAS DE APLICACIÓN DE LOS MÉTODOS
+              IMPLEMENTACIÓN DE LOS MÉTODOS NUMÉRICOS
             <span className="punto">.</span>
           </h2>
         </div>
