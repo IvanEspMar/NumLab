@@ -69,7 +69,7 @@ function TarjetaMetodo({ metodo }: { metodo: Metodo }) {
   const navigate = useNavigate()
 
   return (
-    <article className="tarjeta-metodo">
+    <article onClick={() => navigate(metodo.enlace)} className="tarjeta-metodo">
 
       <div className="tarjeta-encabezado">
         <span className="numero">{metodo.numero}</span>
@@ -79,7 +79,7 @@ function TarjetaMetodo({ metodo }: { metodo: Metodo }) {
       <h3>{metodo.titulo}</h3>
 
       <div className={`imagen-metodo formula-${metodo.numero}`}>
-        <img src={metodo.imagen} alt="" srcset="" />
+        <img src={metodo.imagen} alt="" />
       </div>
 
       <p>{metodo.descripcion}</p>
@@ -89,7 +89,6 @@ function TarjetaMetodo({ metodo }: { metodo: Metodo }) {
 
         <button
           className="boton-enlace"
-          onClick={() => navigate(metodo.enlace)}
           aria-label={`Abrir ${metodo.titulo}`}
         >
           <IconoEnlace />

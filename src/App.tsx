@@ -3,7 +3,7 @@ import './App.scss'
 import { BrowserRouter, Routes, Route } from 'react-router'
 
 import Home from './routes/home'
-import Menu from './routes/0-menu'
+import Menu from './routes/menu'
 
 import { Header, Footer } from './components/header'
 import NoLineales from './routes/1-nonlinear-equations'
