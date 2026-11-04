@@ -15,7 +15,7 @@ export function Header() {
           INICIO
         </Link>
 
-        <Link to="/menu" className="enlace-nav">
+        <Link to="/problems" className="enlace-nav">
           MENÚ DE MÉTODOS
         </Link>
 

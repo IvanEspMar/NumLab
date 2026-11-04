@@ -1,8 +1,8 @@
 
 import { useNavigate } from 'react-router'
-import bisec from '../../assets/biseccion.png'
-import secan from '../../assets/secante.png'
-import newton from '../../assets/newton.png'
+import bisec from '../../../assets/biseccion.svg'
+import secan from '../../../assets/secante.svg'
+import newton from '../../../assets/newton.svg'
 import './index.scss'
 
 type Metodo = {
@@ -105,7 +105,7 @@ function NoLineales() {
       <div className="encabezado-seccion">
         <div className="encabezado-titulo">
           <h2>
-            Raíces de ecuaciones no lineales de una variable
+            RAÍCES DE ECUACIONES NO LINEALES DE UNA SOLA VARIABLE
             <span className="punto">.</span>
           </h2>
         </div>
@@ -114,7 +114,15 @@ function NoLineales() {
           01 — 03
         </span>
       </div>
+      <div className="introduccion-unidad">
+        <span className="etiqueta-introduccion">
+          Introducción
+        </span>
 
+        <p>
+          Una ecuación no lineal de una variable consiste en encontrar los valores de x para los cuales una función se iguala a cero. Estos valores, conocidos como raíces, pueden aproximarse mediante diferentes métodos numéricos, cada uno con un procedimiento y condiciones de aplicación particulares.
+        </p>
+      </div>
       <div className="cuadricula">
         {metodos.map((metodo) => (
           <TarjetaMetodo
@@ -124,6 +132,9 @@ function NoLineales() {
         ))}
       </div>
 
+    <div>
+      
+    </div>
     </section>
   )
 }

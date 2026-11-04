@@ -322,3 +322,72 @@
     border-left: 0;
   }
 }
+
+
+.grafica-animada {
+  width: 100%;
+  height: auto;
+  display: block;
+
+  .curva {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    stroke-dasharray: 5000;
+    stroke-dashoffset: 5000;
+  }
+
+  .curva-1 {
+    animation: dibujar-curva 3s ease forwards;
+  }
+
+  .curva-2 {
+    animation: dibujar-curva 3.5s 0.5s ease forwards;
+  }
+
+  .punto {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+
+    animation:
+      aparecer-punto 0.5s 1s ease forwards,
+      pulsar-punto 2s 3s ease-in-out infinite;
+  }
+}
+
+@keyframes dibujar-curva {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes aparecer-punto {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulsar-punto {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grafica-animada {
+    .curva {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+
+    .punto {
+      animation: none;
+      opacity: 1;
+    }
+  }
+}

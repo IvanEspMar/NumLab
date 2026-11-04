@@ -1,0 +1,154 @@
+.seccion-biseccion {
+  margin-top: 45px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.encabezado-biseccion {
+  padding-bottom: 22px;
+  border-bottom: 1px solid #e9eaeb;
+
+  .etiqueta {
+    color: #85898d;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  h1 {
+    margin: 15px 0 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px;
+    letter-spacing: -0.06em;
+
+    span {
+      color: #e64b45;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: #777b80;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+.calculadora-biseccion {
+  padding: 25px;
+  background: white;
+  border: 1px solid #e9eaeb;
+  border-radius: 4px;
+
+  h2 {
+    margin: 0 0 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    letter-spacing: -0.04em;
+  }
+}
+
+.seccion-etiqueta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 17px;
+
+  span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: #85898d;
+  }
+
+  span:first-child {
+    color: #e64b45;
+  }
+}
+
+// TEORÍA
+
+.teoria-biseccion {
+  border-top: 1px solid #e9eaeb;
+  border-bottom: 1px solid #e9eaeb;
+}
+
+.boton-teoria {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+
+  > span:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  small {
+    color: #85898d;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+
+  strong {
+    color: #202326;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  .icono-teoria {
+    color: #269ed9;
+    font-size: 25px;
+    font-weight: 300;
+  }
+}
+
+.contenido-teoria {
+  max-width: 850px;
+  padding: 5px 0 30px;
+
+  h2 {
+    margin: 25px 0 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.04em;
+  }
+
+  p, li {
+    color: #666c71;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .katex-display {
+    padding: 20px;
+    border: 1px solid #e9eaeb;
+    background: white;
+  }
+
+  ol {
+    padding-left: 22px;
+  }
+}
+
+@media (max-width: 750px) {
+  .seccion-biseccion {
+    margin-top: 20px;
+  }
+
+  .encabezado-biseccion h1 {
+    font-size: 30px;
+  }
+
+  .calculadora-biseccion {
+    padding: 18px;
+  }
+}

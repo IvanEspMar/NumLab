@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router'
-import grafica from '../../assets/Frame 1.png'
+import grafica from '../../assets/nolineal.svg'
 import sistemas from '../../assets/sistemas.jpg'
 import './index.scss'
 
@@ -108,6 +108,7 @@ function Areas() {
 ]
   return (
     <section className="seccion-problemas">
+      
       <div className="encabezado-seccion">
         <div className="encabezado-titulo">
           <h2>
@@ -118,7 +119,15 @@ function Areas() {
 
         <span className="contador-temas">01 — 03</span>
       </div>
+      <div className="introduccion-unidad">
+        <span className="etiqueta-introduccion">
+          Introducción
+        </span>
 
+        <p>
+          Los métodos numéricos permiten abordar distintos problemas matemáticos mediante procedimientos que generan soluciones aproximadas. Su aplicación comprende la búsqueda de raíces de ecuaciones, la resolución de sistemas lineales y el cálculo de valores propios. Cada problema requiere métodos específicos que, mediante procesos algebraicos e iterativos, permiten obtener resultados con una precisión determinada.
+        </p>
+      </div>
       <div className="cuadricula">
         {problemas.map((problema) => (
           <TarjetaProblema key={problema.numero} {...problema} />
