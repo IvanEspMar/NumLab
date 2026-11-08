@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router';
 import './index.scss'
-import grafica from '../assets/funciones.svg'
 
 
 function Presentacion() {

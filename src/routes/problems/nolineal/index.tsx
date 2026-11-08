@@ -120,7 +120,7 @@ function NoLineales() {
         </span>
 
         <p>
-          Una ecuación no lineal de una variable consiste en encontrar los valores de x para los cuales una función se iguala a cero. Estos valores, conocidos como raíces, pueden aproximarse mediante diferentes métodos numéricos, cada uno con un procedimiento y condiciones de aplicación particulares.
+          Resolver una ecuación no lineal consiste en encontrar los valores de la variable \(x\) para los cuales una función se hace cero. Estos valores se conocen como raíces o soluciones. Debido a que no siempre es posible obtenerlas mediante procedimientos algebraicos, se utilizan métodos numéricos que permiten aproximarlas de manera iterativa, de acuerdo con sus características y condiciones de aplicación.
         </p>
       </div>
       <div className="cuadricula">
