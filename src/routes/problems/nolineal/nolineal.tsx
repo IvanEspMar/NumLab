@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import bisec from '../../../assets/biseccion.svg'
 import secan from '../../../assets/secante.svg'
 import newton from '../../../assets/newton.svg'
-import './index.scss'
+import './nolineal.scss'
 
 type Metodo = {
   numero: string
@@ -120,7 +120,7 @@ function NoLineales() {
         </span>
 
         <p>
-          Resolver una ecuación no lineal consiste en encontrar los valores de la variable \(x\) para los cuales una función se hace cero. Estos valores se conocen como raíces o soluciones. Debido a que no siempre es posible obtenerlas mediante procedimientos algebraicos, se utilizan métodos numéricos que permiten aproximarlas de manera iterativa, de acuerdo con sus características y condiciones de aplicación.
+          Resolver una ecuación no lineal consiste en encontrar los valores de la variable x para los cuales una función se hace cero. Estos valores se conocen como raíces o soluciones. Debido a que no siempre es posible obtenerlas mediante procedimientos algebraicos, se utilizan métodos numéricos que permiten aproximarlas de manera iterativa, de acuerdo con sus características y condiciones de aplicación.
         </p>
       </div>
       <div className="cuadricula">

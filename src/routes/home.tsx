@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import './index.scss'
+import './home.scss'
 
 
 function Presentacion() {

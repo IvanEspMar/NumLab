@@ -2,13 +2,13 @@ import './App.scss'
 
 import { BrowserRouter, Routes, Route } from 'react-router'
 
-import Home from './routes'
-import Menu from './routes/problems'
+import Home from './routes/home'
+import Menu from './routes/problems/problems'
 
 import { Header, Footer } from './components/header'
-import NoLineales from './routes/problems/nolineal'
-import Biseccion from './routes/problems/nolineal/biseccion'
-import Sistemas from './routes/problems/sistemas'
+import NoLineales from './routes/problems/nolineal/nolineal'
+import Biseccion from './routes/problems/nolineal/biseccion/biseccion'
+import Sistemas from './routes/problems/sistemas/sistemas'
 
 function App() {
   return (

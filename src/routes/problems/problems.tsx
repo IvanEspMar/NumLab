@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router'
 import grafica from '../../assets/nolineal.svg'
 import sistemas from '../../assets/sistemas.jpg'
-import './index.scss'
+import './problems.scss'
 
 type Problema = {
   numero: string
