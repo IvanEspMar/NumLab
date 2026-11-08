@@ -5,7 +5,7 @@ import secan from '../../../assets/secante.svg'
 import newton from '../../../assets/newton.svg'
 import './nolineal.scss'
 
-type Metodo = {
+type MetodoNL = {
   numero: string
   categoria: string
   titulo: string
@@ -15,7 +15,7 @@ type Metodo = {
   enlace: string
 }
 
-const metodos: Metodo[] = [
+const metodosNL: MetodoNL[] = [
   {
     numero: '01',
     categoria: 'MÉTODO CERRADO',
@@ -45,7 +45,7 @@ const metodos: Metodo[] = [
   }
 ]
 
-function IconoEnlace() {
+function IconoEnlaceNL() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -65,76 +65,72 @@ function IconoEnlace() {
   )
 }
 
-function TarjetaMetodo({ metodo }: { metodo: Metodo }) {
+function TarjetaMetodoNL({ metodo }: { metodo: MetodoNL }) {
   const navigate = useNavigate()
 
   return (
-    <article onClick={() => navigate(metodo.enlace)} className="tarjeta-metodo">
-
-      <div className="tarjeta-encabezado">
-        <span className="numero">{metodo.numero}</span>
-        <span className="categoria">{metodo.categoria}</span>
+    <article
+      className="nl-tarjeta"
+      onClick={() => navigate(metodo.enlace)}
+      role="link"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          navigate(metodo.enlace)
+        }
+      }}
+    >
+      <div className="nl-tarjeta-encabezado">
+        <span className="nl-numero">{metodo.numero}</span>
+        <span className="nl-categoria">{metodo.categoria}</span>
       </div>
 
-      <h3>{metodo.titulo}</h3>
+      <h3 className="nl-titulo">{metodo.titulo}</h3>
 
-      <div className={`imagen-metodo formula-${metodo.numero}`}>
-        <img src={metodo.imagen} alt="" />
+      <div className={`nl-imagen nl-formula-${metodo.numero}`}>
+        <img src={metodo.imagen} alt={`Ilustración del ${metodo.titulo}`} />
       </div>
 
-      <p>{metodo.descripcion}</p>
+      <p className="nl-descripcion">{metodo.descripcion}</p>
 
-      <div className="tarjeta-pie">
+      <div className="nl-pie">
         <span>{metodo.pie}</span>
-
-        <button
-          className="boton-enlace"
-          aria-label={`Abrir ${metodo.titulo}`}
-        >
-          <IconoEnlace />
-        </button>
+        <span className="nl-flecha">
+          <IconoEnlaceNL />
+        </span>
       </div>
-
     </article>
   )
 }
+
 function NoLineales() {
   return (
-    <section className="seccion-metodos">
-
-      <div className="encabezado-seccion">
-        <div className="encabezado-titulo">
+    <section className="nl-seccion">
+      <div className="nl-encabezado">
+        <div className="nl-encabezado-titulo">
           <h2>
             RAÍCES DE ECUACIONES NO LINEALES DE UNA SOLA VARIABLE
-            <span className="punto">.</span>
+            <span className="nl-punto">.</span>
           </h2>
         </div>
 
-        <span className="contador-temas">
-          01 — 03
-        </span>
+        <span className="nl-contador">01 — 03</span>
       </div>
-      <div className="introduccion-unidad">
-        <span className="etiqueta-introduccion">
-          Introducción
-        </span>
+
+      <div className="nl-introduccion">
+        <span className="nl-etiqueta">Introducción</span>
 
         <p>
           Resolver una ecuación no lineal consiste en encontrar los valores de la variable x para los cuales una función se hace cero. Estos valores se conocen como raíces o soluciones. Debido a que no siempre es posible obtenerlas mediante procedimientos algebraicos, se utilizan métodos numéricos que permiten aproximarlas de manera iterativa, de acuerdo con sus características y condiciones de aplicación.
         </p>
       </div>
-      <div className="cuadricula">
-        {metodos.map((metodo) => (
-          <TarjetaMetodo
-            key={metodo.numero}
-            metodo={metodo}
-          />
+
+      <div className="nl-cuadricula">
+        {metodosNL.map((metodo) => (
+          <TarjetaMetodoNL key={metodo.numero} metodo={metodo} />
         ))}
       </div>
-
-    <div>
-      
-    </div>
     </section>
   )
 }

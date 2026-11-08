@@ -1,22 +1,22 @@
 
-.seccion-metodos {
-  margin-top: 45px;
+.nl-seccion {
   position: relative;
-  min-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  bottom: 0;
-  top: 0;
+  min-height: 60vh;
+  margin-top: 45px;
 }
 
-.encabezado-seccion {
+.nl-encabezado {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 20px;
   margin-bottom: 17px;
+}
 
+.nl-encabezado-titulo {
   h2 {
     margin: 5px 0 0;
     font-family: 'Space Grotesk', sans-serif;
@@ -27,7 +27,12 @@
   }
 }
 
-.contador-temas {
+.nl-punto {
+  color: #e64b45;
+}
+
+.nl-contador {
+  flex-shrink: 0;
   padding-bottom: 3px;
   color: #777b80;
   font-family: 'IBM Plex Mono', monospace;
@@ -35,95 +40,82 @@
   letter-spacing: 0.035em;
 }
 
-.cuadricula {
+.nl-introduccion {
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
+  align-items: start;
+  gap: 30px;
+  margin-bottom: 28px;
+  padding: 20px 0;
+  border-top: 1px solid #e9eaeb;
+  border-bottom: 1px solid #e9eaeb;
+
+  p {
+    max-width: 850px;
+    margin: 0;
+    color: #555b60;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;
+  }
+}
+
+.nl-etiqueta {
+  display: block;
+  color: #e64b45;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.nl-cuadricula {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: stretch;
   gap: 18px;
 }
-.boton-enlace {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border: 0;
-  background: transparent;
-  color: #269ed9;
-  cursor: pointer;
-  transition: transform 180ms ease;
 
-  &:hover {
-    transform: translateX(3px);
-  }
-}
-.tarjeta-metodo {
-  min-width: 0;
-  min-height: 55px;
+.nl-tarjeta {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  min-height: 355px;
   padding: 22px;
   border: 1px solid #e9eaeb;
-  background-color: white;
   border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
   transition:
     transform 180ms ease,
     border-color 180ms ease;
 
   &:hover {
-    transform: scale(1.01);
+    transform: translateY(-3px);
+    border-color: #e13636;
   }
 
-  h3 {
-    min-height: 50px;
-    margin: 20px 0 0;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.045em;
-  }
-
-  p {
-    margin: 15px 0 20px;
-    color: #777b80;
-    font-size: 12px;
-    line-height: 1.7;
-  }
-  .imagen-metodo {
-      flex: 1;
-      min-height: 130px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 12px;
-      font-size: 20px;
-      font-weight: 900;
-      img {
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          object-position: center;
-      }
-
-
+  &:focus-visible {
+    outline: 2px solid #36a9e1;
+    outline-offset: 3px;
   }
 }
 
-.tarjeta-encabezado {
+.nl-tarjeta-encabezado {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
 
-.numero {
+.nl-numero {
   color: #e64b45;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
 }
 
-.categoria {
+.nl-categoria {
   color: #85898d;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 9px;
@@ -131,17 +123,42 @@
   text-align: right;
 }
 
-
-
-.simbolo-matematico {
-  color: #36a9e1;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: clamp(25px, 3vw, 39px);
-  font-weight: 500;
-  letter-spacing: -0.07em;
+.nl-titulo {
+  min-height: 50px;
+  margin: 20px 0 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.045em;
 }
 
-.tarjeta-pie {
+.nl-imagen {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  min-height: 130px;
+  margin-top: 12px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 170px;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+.nl-descripcion {
+  margin: 15px 0 20px;
+  color: #777b80;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.nl-pie {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -155,106 +172,91 @@
   letter-spacing: 0.035em;
 }
 
-.tarjeta-flecha {
+.nl-flecha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #269ed9;
-  font-family: 'Inter', sans-serif;
-  font-size: 26px;
-}
+  transition: transform 180ms ease;
 
-.introduccion-unidad {
-  display: grid;
-  grid-template-columns: 145px 1fr;
-  gap: 30px;
-  align-items: start;
-
-  margin-bottom: 28px;
-  padding: 20px 0;
-
-  border-top: 1px solid #e9eaeb;
-  border-bottom: 1px solid #e9eaeb;
-
-  span {
-    display: block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: #e64b45;
-  }
-
-  p {
-    max-width: 850px;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.8;
-    font-weight: 400;
-    color: #555b60;
-  }
-}
-
-@media (max-width: 750px) {
-  .introduccion-unidad {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 16px 0;
+  .nl-tarjeta:hover & {
+    transform: translateX(3px);
   }
 }
 
 @media (max-width: 1050px) {
-  .cuadricula {
+  .nl-cuadricula {
     gap: 14px;
   }
 
-  .tarjeta-metodo {
+  .nl-tarjeta {
     padding: 18px;
   }
 
-  .tarjeta-metodo h3 {
+  .nl-titulo {
     font-size: 18px;
   }
 }
 
 @media (max-width: 750px) {
-  .seccion-metodos {
-    position: relative;
+  .nl-seccion {
     margin-top: 15px;
   }
 
-  .encabezado-seccion h2 {
+  .nl-encabezado {
+    align-items: flex-start;
+  }
+
+  .nl-encabezado-titulo h2 {
     font-size: 26px;
   }
 
-  .contador-temas {
+  .nl-contador {
     font-size: 8px;
   }
 
-  .cuadricula {
+  .nl-introduccion {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  .nl-etiqueta {
+    font-size: 16px;
+  }
+
+  .nl-introduccion p {
+    font-size: 14px;
+  }
+
+  .nl-cuadricula {
     grid-template-columns: 1fr;
     gap: 14px;
   }
 
-  .tarjeta-metodo {
+  .nl-tarjeta {
     min-height: 320px;
     padding: 20px;
   }
 
-  .tarjeta-metodo h3 {
+  .nl-titulo {
     min-height: auto;
     font-size: 21px;
   }
 
-  .imagen-metodo {
+  .nl-imagen {
     min-height: 140px;
-  }
-
-  .simbolo-matematico {
-    font-size: 35px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tarjeta-metodo {
+  .nl-tarjeta,
+  .nl-flecha {
     transition: none;
+  }
+
+  .nl-tarjeta:hover,
+  .nl-tarjeta:hover .nl-flecha {
+    transform: none;
   }
 }

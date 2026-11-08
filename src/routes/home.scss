@@ -25,7 +25,6 @@
   position: relative;
   margin-top: 22px;
   margin-bottom: 38px;
-  padding: 25px 32px 0;
   overflow: hidden;
   background: #fff;
   border-radius: 4px;
@@ -147,7 +146,7 @@
       max-width: 540px;
       margin: 12px 0 0;
       color: #666b70;
-      font-size: 13px;
+      font-size: 16px;
       line-height: 1.85;
     }
   }
@@ -204,10 +203,9 @@
   margin: 0 -32px;
   padding: 11px 32px;
   color: #74787c;
-  background: #f7f8f8;
   border-top: 1px solid #e9eaeb;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.04em;
 }
 
@@ -349,7 +347,6 @@
     opacity: 0;
     transform-box: fill-box;
     transform-origin: center;
-
     animation:
       aparecer-punto 0.5s 1s ease forwards,
       pulsar-punto 2s 3s ease-in-out infinite;

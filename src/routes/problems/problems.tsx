@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router'
 import grafica from '../../assets/nolineal.svg'
 import sistemas from '../../assets/sistemas.jpg'
@@ -8,50 +9,45 @@ type Problema = {
   categoria: string
   titulo: string
   imagen?: string
-  altImagen?: string
+  textoAlternativo?: string
   formula?: string
   descripcion: string
   pie: string
-  enlace: string
+  ruta: string
 }
 
-
-function TarjetaProblema({
-  numero,
-  categoria,
-  titulo,
-  imagen,
-  altImagen,
-  formula,
-  descripcion,
-  pie,
-  enlace
-}: Problema) {
-   const navigate = useNavigate();
-
-  return (
-    <article onClick={() => navigate(enlace)} className="tarjeta-problema">
-      <div className="tarjeta-encabezado">
-        <span className="numero">{numero}</span>
-        <span className="categoria">{categoria}</span>
-      </div>
-
-      <h3>{titulo}</h3>
-
-      <div className="imagen-problema">
-        {imagen && <img src={imagen} alt={altImagen ?? ''} />}
-        {formula && <span className="simbolo-matematico">{formula}</span>}
-      </div>
-
-      <p>{descripcion}</p>
-
-      <div className="tarjeta-pie">
-        <span>{pie}</span>
-        <IconoEnlace />
-      </div>
-    </article>
-  )
-}
+const problemas: Problema[] = [
+  {
+    numero: '02',
+    categoria: 'ECUACIONES NO LINEALES',
+    titulo: 'Solución numérica de ecuaciones algebraicas de una variable',
+    imagen: grafica,
+    textoAlternativo: 'Gráfica de una función matemática',
+    descripcion: 'Unidad 2 · Bisección, Newton y Secante.',
+    pie: 'BÚSQUEDA DE RAÍCES',
+    ruta: '/nolineal'
+  },
+  {
+    numero: '03–04',
+    categoria: 'SISTEMAS DE ECUACIONES LINEALES',
+    titulo: 'Resolver sistemas de ecuaciones lineales',
+    imagen: sistemas,
+    textoAlternativo: 'Representación de sistemas de ecuaciones',
+    descripcion:
+      'Unidad 3 · Gauss-Jordan, Gauss-Seidel y Jacobi. Unidad 4 · Factorización de Doolittle y Crout.',
+    pie: 'SISTEMAS Y FACTORIZACIÓN',
+    ruta: '/lineal'
+  },
+  {
+    numero: '05',
+    categoria: 'VALORES PROPIOS',
+    titulo: 'Cálculo de valores propios',
+    formula: 'Av = λv',
+    descripcion: 'Unidad 5 · Métodos de la Potencia y Potencia Inversa.',
+    pie: 'VALORES Y VECTORES',
+    ruta: '/valores'
+  }
+]
 
 function IconoEnlace() {
   return (
@@ -73,66 +69,76 @@ function IconoEnlace() {
   )
 }
 
+function TarjetaProblema({ problema }: { problema: Problema }) {
+  const navegar = useNavigate()
+
+  return (
+    <article
+      className="tarjeta-problema"
+      onClick={() => navegar(problema.ruta)}
+    >
+      <header className="tarjeta-encabezado">
+        <span className="tarjeta-numero">{problema.numero}</span>
+        <span className="tarjeta-categoria">{problema.categoria}</span>
+      </header>
+
+      <h3 className="tarjeta-titulo">{problema.titulo}</h3>
+
+      <div className="tarjeta-visual">
+        {problema.imagen && (
+          <img
+            src={problema.imagen}
+            alt={problema.textoAlternativo ?? ''}
+          />
+        )}
+
+        {problema.formula && (
+          <span className="tarjeta-formula">{problema.formula}</span>
+        )}
+      </div>
+
+      <p className="tarjeta-descripcion">{problema.descripcion}</p>
+
+      <footer className="tarjeta-pie">
+        <span className="tarjeta-pie-texto">{problema.pie}</span>
+        <IconoEnlace />
+      </footer>
+    </article>
+  )
+}
 
 function Areas() {
-  const problemas: Problema[] = [
-  {
-    numero: '02',
-    categoria: 'ECUACIONES NO LINEALES',
-    titulo: 'Solución numérica de ecuaciones algebraicas de una variable',
-    imagen: grafica,
-    altImagen: 'Gráfica de una función matemática',
-    descripcion: 'Unidad 2 · Bisección, Newton y Secante.',
-    pie: 'BÚSQUEDA DE RAÍCES',
-     enlace: "/nolineal"
-  },
-  {
-    numero: '03–04',
-    categoria: 'SISTEMAS DE ECUACIONES LINEALES',
-    titulo: 'Resolver sistemas de ecuaciones lineales',
-    imagen: sistemas,
-    altImagen: 'Ax = b',
-    descripcion: 'Unidad 3 · Gauss-Jordan, Gauss-Seidel y Jacobi. Unidad 4 · Factorización de Doolittle y Crout.',
-    pie: 'SISTEMAS Y FACTORIZACIÓN',
-    enlace: "/lineal"
-  },
-  {
-    numero: '05',
-    categoria: 'VALORES PROPIOS',
-    titulo: 'Cálculo de valores propios',
-    formula: 'Av = λv',
-    descripcion: 'Unidad 5 · Métodos de la Potencia y Potencia Inversa.',
-    pie: 'VALORES Y VECTORES',
-     enlace: "/valores"
-  }
-]
   return (
     <section className="seccion-problemas">
-      
-      <div className="encabezado-seccion">
-        <div className="encabezado-titulo">
-          <h2>
-              TIPOS DE PROBLEMAS Y MÉTODOS NUMÉRICOS
-            <span className="punto">.</span>
-          </h2>
-        </div>
+
+      <header className="encabezado-seccion">
+        <h2 className="titulo-seccion">
+          TIPOS DE PROBLEMAS Y MÉTODOS NUMÉRICOS
+          <span className="punto">.</span>
+        </h2>
 
         <span className="contador-temas">01 — 03</span>
-      </div>
+      </header>
+
       <div className="introduccion-unidad">
-        <span className="etiqueta-introduccion">
+        <span className="introduccion-etiqueta">
           Introducción
         </span>
 
-        <p>
+        <p className="introduccion-texto">
           Los métodos numéricos permiten abordar distintos problemas matemáticos mediante procedimientos que generan soluciones aproximadas. Su aplicación comprende la búsqueda de raíces de ecuaciones, la resolución de sistemas lineales y el cálculo de valores propios. Cada problema requiere métodos específicos que, mediante procesos algebraicos e iterativos, permiten obtener resultados con una precisión determinada.
         </p>
       </div>
-      <div className="cuadricula">
+
+      <div className="cuadricula-problemas">
         {problemas.map((problema) => (
-          <TarjetaProblema key={problema.numero} {...problema} />
+          <TarjetaProblema
+            key={problema.numero}
+            problema={problema}
+          />
         ))}
       </div>
+
     </section>
   )
 }
