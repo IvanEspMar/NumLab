@@ -2,7 +2,6 @@
 import { useNavigate } from 'react-router'
 import gaussJordan from '../../../assets/gauss-jordan.svg'
 import gaussSeidel from '../../../assets/secante.svg'
-import jacobi from '../../../assets/equation.svg'
 
 type Metodo = {
   numero: string
@@ -28,7 +27,7 @@ const metodos: Metodo[] = [
     numero: '03',
     categoria: 'MÉTODO ITERATIVO',
     titulo: 'Método de Jacobi',
-    imagen: jacobi,
+    imagen: "",
     descripcion: 'Aproxima la solución de sistemas lineales calculando nuevos valores a partir de los resultados de la iteración anterior.',
     pie: 'ACTUALIZACIÓN SIMULTÁNEA',
     enlace: '/sistemas/jacobi'
