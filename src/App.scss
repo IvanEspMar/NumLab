@@ -14,11 +14,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+
 body {
   margin: 0;
   min-width: 320px;
+  min-height: 100vh;
+  color: #24282c;
   font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f8fb;
 }
+
 
 .punto {
   color: #e64b45;

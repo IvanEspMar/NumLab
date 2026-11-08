@@ -3,7 +3,7 @@ import './App.scss'
 import { BrowserRouter, Routes, Route } from 'react-router'
 
 import Home from './routes/home'
-import Menu from './routes/problems/problems'
+import Problemas from './routes/problems/problems'
 
 import { Header, Footer } from './components/header'
 import NoLineales from './routes/problems/nolineal/nolineal'
@@ -19,7 +19,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/problems" element={<Menu />} />
+          <Route path="/problems" element={<Problemas />} />
           <Route path="/nolineal" element={<NoLineales />}/>
           <Route path='/nolineal/biseccion' element={<Biseccion/>} />
           <Route path='/lineal' element={<Sistemas/>}/>

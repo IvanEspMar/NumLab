@@ -1,7 +1,6 @@
 <svg width="1424" height="1000" viewBox="0 0 1424 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_4_357)">
-<rect width="1424" height="1000" fill="white"/>
-<path d="M-79.9945 321L1504.01 323.16" stroke-width="8" stroke="#E5E5E5"/>
+<line x1="-79.9945" y1="321" x2="1504.01" y2="323.16" stroke-width="8" stroke="#F3F3F3"/>
 <path d="M-1.5 755C158.735 639.72 249.5 585 417.5 711C478.964 757.098 575.014 837.777 705.5 591.5C835.986 345.223 927 301.5 1117 320.5C1275.67 336.367 1340.14 130.5 1417.5 130.5" stroke-width="42" stroke="url(#paint0_linear_4_357)"/>
 <path d="M-14 884.5C292 861 213 98.8883 463.5 81.5C694 65.4999 739 604 868.5 731.5C998 859 1083.63 543.5 1219 543.5C1336 543.5 1348.64 777.5 1426 777.5" stroke-width="42" stroke="url(#paint1_linear_4_357)"/>
 <circle cx="984" cy="325" r="75" fill="#F960A2" fill-opacity="0.25"/>

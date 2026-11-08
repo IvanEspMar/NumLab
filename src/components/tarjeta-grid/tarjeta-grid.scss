@@ -1,0 +1,170 @@
+
+.tarjeta-grid {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 55px;
+
+  &__encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 22px;
+  }
+
+  &__titulo {
+    max-width: 950px;
+    margin: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(30px, 3.8vw, 46px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.055em;
+    color: #202326;
+  }
+
+  &__contador {
+    flex-shrink: 0;
+    padding-bottom: 5px;
+    color: #858a8f;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  &__introduccion {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 30px;
+    padding: 19px 0 22px;
+    margin-bottom: 30px;
+    border-top: 1px solid #e3e6e8;
+    border-bottom: 1px solid #e3e6e8;
+  }
+
+  &__etiqueta {
+    padding-top: 4px;
+    color: #269ed9;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+  }
+
+  &__texto {
+    max-width: 850px;
+    margin: 0;
+    color: #555d63;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  &__contenedor {
+    display: grid;
+    grid-template-columns: repeat(var(--columnas, 3), minmax(0, 1fr));
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  & + & {
+    margin-top: 75px;
+    padding-top: 8px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .tarjeta-grid {
+    &__titulo {
+      font-size: clamp(29px, 4vw, 40px);
+    }
+
+    &__introduccion {
+      grid-template-columns: 125px minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    &__contenedor {
+      gap: 15px;
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .tarjeta-grid {
+    margin-top: 40px;
+
+    &__encabezado {
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    &__titulo {
+      font-size: clamp(27px, 5.5vw, 36px);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+    }
+
+    &__contador {
+      font-size: 10px;
+    }
+
+    &__introduccion {
+      grid-template-columns: 1fr;
+      gap: 9px;
+      padding: 15px 0 18px;
+      margin-bottom: 22px;
+    }
+
+    &__etiqueta {
+      padding-top: 0;
+      font-size: 11px;
+    }
+
+    &__texto {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    &__contenedor {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    & + & {
+      margin-top: 55px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .tarjeta-grid {
+    margin-top: 32px;
+
+    &__encabezado {
+      align-items: flex-start;
+    }
+
+    &__titulo {
+      font-size: 27px;
+    }
+
+    &__contador {
+      padding-top: 5px;
+      font-size: 9px;
+    }
+
+    &__texto {
+      font-size: 14px;
+    }
+
+    &__contenedor {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+  }
+}
