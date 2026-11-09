@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router';
 import './home.scss'
 
-
 function Presentacion() {
   const navigate = useNavigate();
   return (

@@ -6,7 +6,6 @@
 }
 
 :root {
-  font-family: 'Inter', sans-serif;
   color: #17191b;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,7 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+.msupsub {
+  font-size: 10px !important;
+}
 
 body {
   margin: 0;
