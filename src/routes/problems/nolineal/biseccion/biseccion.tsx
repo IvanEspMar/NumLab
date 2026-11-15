@@ -1,23 +1,26 @@
 
 import { useState } from "react";
 import "./biseccion.scss";
-import RowBisec, {type RowBisecProps} from "./tablas";
+import RowBisec, {type RowBisecType} from "./tablas";
 
 function ecuation(x:number) {
-  return (x ** 3 + 8 * x - 7)  * -1
+  return (x ** 3 + 8 * x - 7) 
 }
 
 function Biseccion() {
-  const [iteration, setIterations] = useState<RowBisecProps[]>([])
+  const [iteration, setIterations] = useState<RowBisecType[]>([])
   const [a, setA] = useState(0)
   const [b, setB] = useState(0)
+  const [sol, setSol] = useState(0)
   const intervaIsValid = a < b
   const hasSignChange =  ecuation(a) * ecuation(b) < 0
+  const tolerance = 0.00001
+  const decimals = 6
   
   
   function computeIterations() {
     const c1 = (a + b) / 2
-    const firstIteration:RowBisecProps = {a: a, b:b, c: c1, fa: ecuation(a), fb: ecuation(b), fc: ecuation(c1), i: 0}
+    const firstIteration:RowBisecType = {a: a, b:b, c: c1, fa: ecuation(a), fb: ecuation(b), fc: ecuation(c1)}
     let interations = [firstIteration]
     let i = 0
     do {
@@ -28,13 +31,15 @@ function Biseccion() {
       const fa = ecuation(newA)
       const fb = ecuation(newB)
       const fc = ecuation(newC)
-      const newItaration = {a: newA, b:newB, c: newC, fa: fa, fb: fb, fc: fc, i:i}
+      const newItaration = {a: newA, b:newB, c: newC, fa: fa, fb: fb, fc: fc}
       
       interations.push(newItaration)
       i++
-      if(Math.abs(Number((ecuation(newC)).toFixed(5))) == 0) break
+      if(Math.abs(fc) < tolerance) {
+        setSol(newC)
+        break
+      }
     } while (i < 50)
-      console.log(interations);
       
     setIterations(interations)
   }
@@ -46,7 +51,7 @@ function Biseccion() {
         <h3>Intervalo inicial</h3>
         <label>a: <input value={a} onChange={(e) => setA(Number(e.target.value))} type="number" placeholder="0" /></label>
         <label>b: <input value={b} onChange={(e) => setB(Number(e.target.value))} type="number" placeholder="0" /></label>
-        <button disabled={!intervaIsValid} onClick={() => computeIterations()}>Calcular</button>
+        <button disabled={!(intervaIsValid && hasSignChange)} onClick={() => computeIterations()}>Calcular</button>
         {intervaIsValid ? "" : "Intervalo invalido a mayor que b"}
         {hasSignChange || !intervaIsValid ? "": "Intervalo invalido f(a) y f(b) tienen el mismo signo"}
       </div>
@@ -65,16 +70,18 @@ function Biseccion() {
         </thead>
         <tbody>
           {iteration.map((iteration, i) => 
-            <RowBisec i={i + 1} 
-              a={Number(iteration.a.toFixed(7))} 
-              b={Number((iteration.b).toFixed(7))} 
-              c={Number((iteration.c).toFixed(7))} 
-              fa={Number((iteration.fa).toFixed(7))} 
-              fb={Number((iteration.fb).toFixed(7))} 
-              fc={Number((iteration.fc).toFixed(7))} 
+            <RowBisec 
+              i={i} 
+              a={Number(iteration.a.toFixed(decimals))} 
+              b={Number((iteration.b).toFixed(decimals))} 
+              c={Number((iteration.c).toFixed(decimals))} 
+              fa={Number((iteration.fa).toFixed(decimals))} 
+              fb={Number((iteration.fb).toFixed(decimals))} 
+              fc={Number((iteration.fc).toFixed(decimals))} 
               key={i}
             />)
           }
+          {"f(" + sol + ")" + " = " + ecuation(sol)}
         </tbody>
       </table>}
 

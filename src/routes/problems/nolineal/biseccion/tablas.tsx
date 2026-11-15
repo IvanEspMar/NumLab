@@ -1,3 +1,12 @@
+export interface RowBisecType {
+    a: number;
+    b: number;
+    c: number;
+    fa: number;
+    fb: number;
+    fc: number;
+}
+
 export interface RowBisecProps {
     a: number;
     b: number;
@@ -5,10 +14,10 @@ export interface RowBisecProps {
     fa: number;
     fb: number;
     fc: number;
-    i: number | String;
+    i: number | string;
 }
 
-function RowBisec({ a, b, c, fa, fb, fc, i }: RowBisecProps) {
+function RowBisec({ a, b, c, fa, fb, fc, i}: RowBisecProps) {
     return (
         <tr>
             <td>{i}</td>

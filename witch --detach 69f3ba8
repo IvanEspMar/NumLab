@@ -1,0 +1,18 @@
+[33m92431db[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Metodo de bisección minimo viable con una funcion de ejemplo, (falta diseño)
+[33meded4ad[m Creando interfaz y pruebas metodo bisección
+[33m4c67ae3[m[33m ([m[1;31morigin/style/rediseno-componentes-reutilizables[m[33m, [m[1;32mstyle/rediseno-componentes-reutilizables[m[33m)[m Experimentando con mathjs para metodos no lineales de una variable
+[33ma53457b[m Cambio de diseño de tarjetas y grilla de tarjetas, unificar estilo en componentes reusables
+[33m534d42f[m optimizando archivos
+[33mbc9bc98[m cambio de tamaño de headers y diseño de tarjetas
+[33m9dc84ac[m cambio de nombre de archivos sass y tsx, elimine mala practica de nombre de archivo
+[33m154110a[m Introducción de raices de ecuaciones no lineas cambio redacción
+[33mc7df8b5[m Remplaze imagenes png por svg
+[33m88c41a9[m Boton de enlace se cammio el click para ir al link
+[33mbffdf42[m Imagenes de metodos de newton biseccion y secante
+[33m69f3ba8[m Agrege el link de raices ecuaciones algebraicas y empece a diseñar la pagina de metodo de biseccion
+[33m8978794[m Renombré encabezados otra vez para que quede mejor con el sentido del programa
+[33md97d255[m Renombré encabezados para que tenga mas sentido la agrupacion de los metodos
+[33m0947f7d[m Correccion pie de pagina no estaba exportado
+[33mbada6df[m Estructura del programa con react js y sass, Estilo Diseño, Inicio y ménu
+[33m51f5756[m Update upparecase letter L README.md
+[33m3c1c373[m Initial commit
