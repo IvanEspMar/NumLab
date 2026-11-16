@@ -5,6 +5,7 @@ interface RowNewtonType {
     x_nm1: number;
     x_n: number;
     x_np1: number;
+    fx_n: number;
 }
 function equation(x: number) {
     return x ** 4 - 3 * x ** 3 + 2 * x - 5;
@@ -24,14 +25,15 @@ function Secante() {
     function computeIterations() {
         const x_0 = Number(initialValue)
         const x_1 = Number(initialValue2)
-        const firstIteration:RowNewtonType = {x_nm1: x_0, x_n: x_1, x_np1: equationSecan(x_1, x_0)}
+        const firstIteration:RowNewtonType = {x_nm1: x_0, x_n: x_1, x_np1: equationSecan(x_1, x_0), fx_n: equation(x_1)}
         let iterations = [firstIteration] 
         let i = 0
         do {
             const x_nm1 = iterations[i].x_n
             const x_n = iterations[i].x_np1
             const x_np1 = equationSecan(x_n, x_nm1)
-            iterations.push({x_nm1: x_nm1, x_n: x_n,  x_np1: x_np1})
+            const fx_n = equation(x_nm1);
+            iterations.push({x_nm1: x_nm1, x_n: x_n,  x_np1: x_np1, fx_n: fx_n})
             i++
             if(Math.abs(equation(iterations[i].x_n)) < tolerance)
                 break
@@ -41,7 +43,7 @@ function Secante() {
 
     return (
         <section className="newton">
-            <h1>MÉTODO DE NEWTON RAPHSON<span className="punto">.</span></h1>
+            <h1>MÉTODO DE LA SECANTE<span className="punto">.</span></h1>
 
             <div className="newton__interval-inputs">
                 <h3>Valor inicial de x_0</h3>
@@ -65,16 +67,16 @@ function Secante() {
                             <th>n</th>
                             <th>x_n-1</th>
                             <th>x_n</th>
-                            <th>x_n + 1</th>
+                            <th>f(x_n)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {iterations.map(({x_n, x_nm1, x_np1}, i) => (
+                        {iterations.map(({x_n, x_nm1, x_np1, fx_n}, i) => (
                             <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{Number(x_nm1.toFixed(decimals))}</td>
                                 <td>{Number(x_n.toFixed(decimals))}</td>
-                                <td>{Number(x_np1.toFixed(decimals))}</td>
+                                <td>{Number(fx_n.toFixed(decimals))}</td>
                             </tr>
                         ))}
                     </tbody>
