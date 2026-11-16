@@ -97,7 +97,7 @@ function Biseccion() {
             </div>
 
             <div className="bisection__result">
-              Resultado {"f(" + sol + ") = " + equation(sol)}
+              Resultado {"f(" + sol.toFixed(5) + ") = " + equation(sol).toFixed(6)}
             </div>
             {iterations.length > 0 &&
                 <table className="bisection__iterations-table">
@@ -115,7 +115,7 @@ function Biseccion() {
                     <tbody>
                         {iterations.map(({ a, b, c, fa, fb, fc }, i) => (
                             <tr key={i}>
-                                <td>{i}</td>
+                                <td>{i + 1}</td>
                                 <td>{Number(a.toFixed(decimals))}</td>
                                 <td>{Number(c.toFixed(decimals))}</td>
                                 <td>{Number(b.toFixed(decimals))}</td>

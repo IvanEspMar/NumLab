@@ -9,6 +9,7 @@ import { Header, Footer } from './components/header'
 import NoLineales from './routes/problems/nolineal/nolineal'
 import Biseccion from './routes/problems/nolineal/biseccion/biseccion'
 import Sistemas from './routes/problems/sistemas/sistemas'
+import Newton from './routes/problems/nolineal/newton/newton'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/problems" element={<Problemas />} />
           <Route path="/nolineal" element={<NoLineales />}/>
           <Route path='/nolineal/biseccion' element={<Biseccion/>} />
+          <Route path='/nolineal/newton' element={<Newton/>} />
           <Route path='/lineal' element={<Sistemas/>}/>
         </Routes>
 
