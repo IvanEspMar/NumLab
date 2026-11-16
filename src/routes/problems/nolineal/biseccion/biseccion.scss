@@ -1,15 +1,27 @@
-
 .bisection {
     width: 100%;
     color: #222;
     font-family: 'Space Grotesk', sans-serif;
-
-    h1 {
+    &__introduction {
+        display: flex;
         margin: 45px 0 35px;
-        font-size: 54px;
+        width: 100%;
+        justify-content: space-between;
+    }
+    h1 {
+        margin: 0;
+        font-size: 45px;
         font-weight: 600;
         letter-spacing: -2px;
         line-height: 1.1;
+    }
+    &__equation-input {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        label {
+            font-size: 20px;
+        }
     }
 
     &__interval-inputs {
@@ -104,55 +116,58 @@
     }
 
     &__iterations-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    font-size: 15px;
-    font-variant-numeric: tabular-nums;
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        font-size: 15px;
+        font-variant-numeric: tabular-nums;
 
-    th, td {
-        padding: 12px 15px;
-        text-align: center;
-        border: 1px solid #e5e5e5;
-    }
-
-    th {
-        background: #f3f6f8;
-        color: #444;
-        font-weight: 600;
-        border-top: 1px solid #ddd;
-    }
-
-    tbody {
-        tr {
-            animation: rowAppear 0.3s ease both;
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #e5e5e5;
         }
-        @for $i from 1 through 20 {
-            tr:nth-child(#{$i}) {
-                animation-delay: #{$i * 0.04}s;
+
+        th {
+            background: #f3f6f8;
+            color: #444;
+            font-weight: 600;
+            border-top: 1px solid #ddd;
+        }
+
+        tbody {
+            tr {
+                animation: rowAppear 0.3s ease both;
+            }
+
+            @for $i from 1 through 20 {
+                tr:nth-child(#{$i}) {
+                    animation-delay: #{$i * 0.04}s;
+                }
+            }
+
+            tr:nth-child(odd) {
+                background: #fafafa;
+            }
+
+            tr:hover {
+                background: #edf7fc;
             }
         }
-        tr:nth-child(odd) {
-            background: #fafafa;
+    }
+
+    @keyframes rowAppear {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
         }
 
-        tr:hover {
-            background: #edf7fc;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
-}
-
-@keyframes rowAppear {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
     &__result {
         margin-top: 25px;
@@ -182,7 +197,8 @@
         &__iterations-table {
             font-size: 12px;
 
-            th, td {
+            th,
+            td {
                 padding: 8px 5px;
                 min-width: 0;
             }

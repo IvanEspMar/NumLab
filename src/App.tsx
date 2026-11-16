@@ -10,6 +10,7 @@ import NoLineales from './routes/problems/nolineal/nolineal'
 import Biseccion from './routes/problems/nolineal/biseccion/biseccion'
 import Sistemas from './routes/problems/sistemas/sistemas'
 import Newton from './routes/problems/nolineal/newton/newton'
+import Secante from './routes/problems/nolineal/secante/secante'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/nolineal" element={<NoLineales />}/>
           <Route path='/nolineal/biseccion' element={<Biseccion/>} />
           <Route path='/nolineal/newton' element={<Newton/>} />
+          <Route path='/nolineal/secante' element={<Secante/>} />
           <Route path='/lineal' element={<Sistemas/>}/>
         </Routes>
 
