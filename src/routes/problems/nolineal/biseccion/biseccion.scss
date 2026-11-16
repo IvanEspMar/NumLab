@@ -1,28 +1,191 @@
 
-.seccion-biseccion {
+.bisection {
+    width: 100%;
+    color: #222;
+    font-family: 'Space Grotesk', sans-serif;
+
     h1 {
-        margin-top: 45px;
-        font-family: 'Space Grotesk', sans-serif;
+        margin: 45px 0 35px;
         font-size: 54px;
+        font-weight: 600;
+        letter-spacing: -2px;
+        line-height: 1.1;
     }
-    table {
-        border-collapse: collapse;
-        background-color: white;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 22px;
-        
-        td,th {
-            padding: 5px 15px;
-            min-width: 100px;
-            text-align: center;
-            border: 2px solid rgb(228, 228, 228);
-        }
-        tr:nth-child(odd) {
-            background-color: #f3f3f3;
+
+    &__interval-inputs {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        h3 {
+            margin: 0 25px 0 0;
+            font-size: 16px;
+            font-weight: 600;
         }
 
-        tr:nth-child(even) {
-            background-color: white;
+        label {
+            font-size: 15px;
+            font-weight: 600;
+        }
+    }
+
+    &__interval-values {
+        display: flex;
+        gap: 35px;
+        padding: 18px 0;
+
+        span {
+            font-size: 17px;
+            color: #555;
+            font-variant-numeric: tabular-nums;
+        }
+    }
+
+    input {
+        width: 110px;
+        box-sizing: border-box;
+        border: 1px solid #d5d5d5;
+        padding: 9px 10px;
+        background: white;
+        border-radius: 3px;
+        font-family: inherit;
+        font-size: 15px;
+        color: #222;
+        outline: none;
+        transition: border-color 150ms ease;
+
+        &:hover {
+            border-color: #999;
+        }
+
+        &:focus {
+            border-color: #41B0EA;
+        }
+
+        &::placeholder {
+            color: #aaa;
+        }
+    }
+
+    &__calculation-controls {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 5px 0 25px;
+
+        button {
+            border: none;
+            border-radius: 3px;
+            padding: 10px 24px;
+            background: #41B0EA;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 150ms ease;
+
+            &:hover:not(:disabled) {
+                background: #269bd8;
+            }
+
+            &:disabled {
+                background: #ccc;
+                color: #777;
+                cursor: not-allowed;
+            }
+        }
+
+        span {
+            font-size: 13px;
+            color: #d34b45;
+        }
+    }
+
+    &__iterations-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+    }
+
+    th {
+        background: #f3f6f8;
+        color: #444;
+        font-weight: 600;
+        border-top: 1px solid #ddd;
+    }
+
+    tbody {
+        tr {
+            animation: rowAppear 0.3s ease both;
+        }
+        @for $i from 1 through 20 {
+            tr:nth-child(#{$i}) {
+                animation-delay: #{$i * 0.04}s;
+            }
+        }
+        tr:nth-child(odd) {
+            background: #fafafa;
+        }
+
+        tr:hover {
+            background: #edf7fc;
+        }
+    }
+}
+
+@keyframes rowAppear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    &__result {
+        margin-top: 25px;
+        padding: 15px 0;
+        border-top: 1px solid #ddd;
+        font-size: 18px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+@media (max-width: 700px) {
+    .bisection {
+        h1 {
+            font-size: 36px;
+        }
+
+        &__interval-inputs {
+            flex-wrap: wrap;
+        }
+
+        &__interval-values {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        &__iterations-table {
+            font-size: 12px;
+
+            th, td {
+                padding: 8px 5px;
+                min-width: 0;
+            }
         }
     }
 }
