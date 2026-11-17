@@ -1,0 +1,164 @@
+
+.gauss-jordan {
+    width: 100%;
+    min-height: 100%;
+    color: #222;
+    font-family: 'Space Grotesk', sans-serif;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin: 45px 0 35px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid #dedede;
+
+        h1 {
+            margin: 0;
+            font-size: clamp(28px, 3vw, 42px);
+            font-weight: 600;
+            letter-spacing: -1.8px;
+        }
+    }
+
+    &__workspace {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 45px;
+        align-items: start;
+    }
+
+    &__controls {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            height: 43px;
+            padding: 0 12px;
+            border: 1px solid #d5d5d5;
+            border-radius: 3px;
+            outline: none;
+            background: #fff;
+            color: #222;
+            font: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s;
+
+            &:focus {
+                border-color: #41B0EA;
+            }
+        }
+
+        small {
+            display: block;
+            margin-top: 7px;
+            color: #888;
+            font-size: 11px;
+        }
+    }
+
+    &__matrix-container {
+        min-width: 0;
+        padding: 25px;
+        border: 1px solid #e3e3e3;
+        background: #fff;
+    }
+
+    &__matrix-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+
+        h2 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        span {
+            color: #888;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+        }
+    }
+
+    &__matrix {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 5px 0;
+
+        &-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        input {
+            width: 65px;
+            min-width: 65px;
+            height: 42px;
+            padding: 0 7px;
+            border: 1px solid #dedede;
+            border-radius: 2px;
+            outline: none;
+            background: #fafafa;
+            color: #222;
+            text-align: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            transition: 0.2s;
+
+            &:hover {
+                border-color: #aaa;
+            }
+
+            &:focus {
+                border-color: #41B0EA;
+                background: #fff;
+                box-shadow: 0 0 0 2px rgba(65, 176, 234, 0.1);
+            }
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    .gauss-jordan {
+        &__header {
+            margin-top: 30px;
+        }
+
+        &__workspace {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        &__controls {
+            max-width: 100%;
+        }
+
+        &__matrix-container {
+            padding: 16px;
+        }
+
+        &__matrix {
+            input {
+                width: 55px;
+                min-width: 55px;
+                height: 40px;
+            }
+        }
+    }
+}

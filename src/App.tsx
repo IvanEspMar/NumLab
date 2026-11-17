@@ -11,6 +11,7 @@ import Biseccion from './routes/problems/nolineal/biseccion/biseccion'
 import Sistemas from './routes/problems/sistemas/sistemas'
 import Newton from './routes/problems/nolineal/newton/newton'
 import Secante from './routes/problems/nolineal/secante/secante'
+import GaussJordan from './routes/problems/sistemas/gauss-jordan/gauss-jordan'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/nolineal/newton' element={<Newton/>} />
           <Route path='/nolineal/secante' element={<Secante/>} />
           <Route path='/lineal' element={<Sistemas/>}/>
+          <Route path='/lineal/gauss-jordan' element={<GaussJordan/>}/>
         </Routes>
 
         <Footer />

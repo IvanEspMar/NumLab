@@ -17,7 +17,7 @@ const metodosSistemas: TarjetaData[] = [
     descripcion:
       'Resuelve sistemas de ecuaciones lineales mediante operaciones elementales sobre las filas de una matriz aumentada hasta obtener su forma escalonada reducida.',
     pie: 'FORMA ESCALONADA REDUCIDA',
-    ruta: '/sistemas/gauss-jordan',
+    ruta: '/lineal/gauss-jordan',
   },
   {
     numero: '02',
@@ -27,7 +27,7 @@ const metodosSistemas: TarjetaData[] = [
     descripcion:
       'Obtiene soluciones aproximadas de sistemas lineales mediante iteraciones en las que cada incógnita se actualiza utilizando exclusivamente los valores de la iteración anterior.',
     pie: 'ACTUALIZACIÓN SIMULTÁNEA',
-    ruta: '/sistemas/jacobi',
+    ruta: '/lineal/jacobi',
   },
   {
     numero: '03',
@@ -37,7 +37,7 @@ const metodosSistemas: TarjetaData[] = [
     descripcion:
       'Aproxima la solución de sistemas lineales utilizando inmediatamente los valores actualizados de las incógnitas durante cada iteración.',
     pie: 'ACTUALIZACIÓN SECUENCIAL',
-    ruta: '/sistemas/gauss-seidel',
+    ruta: '/lineal/gauss-seidel',
   },
   {
     numero: '04',
@@ -47,7 +47,7 @@ const metodosSistemas: TarjetaData[] = [
     descripcion:
       'Descompone una matriz cuadrada en el producto de una matriz triangular inferior con diagonal unitaria y una matriz triangular superior.',
     pie: 'A = LU · DIAGONAL UNITARIA EN L',
-    ruta: '/factorizacion/doolittle',
+    ruta: '/lineal/doolittle',
   },
   {
     numero: '05',
@@ -57,7 +57,7 @@ const metodosSistemas: TarjetaData[] = [
     descripcion:
       'Descompone una matriz cuadrada en el producto de una matriz triangular inferior y una matriz triangular superior con diagonal unitaria.',
     pie: 'A = LU · DIAGONAL UNITARIA EN U',
-    ruta: '/factorizacion/crout',
+    ruta: '/lineal/crout',
   },
   {
     numero: '06',
@@ -67,7 +67,7 @@ const metodosSistemas: TarjetaData[] = [
     descripcion:
       'Descompone una matriz simétrica definida positiva en el producto de una matriz triangular inferior y su transpuesta.',
     pie: 'A = LLᵀ',
-    ruta: '/factorizacion/cholesky',
+    ruta: '/lineal/cholesky',
   },
 ]
 
