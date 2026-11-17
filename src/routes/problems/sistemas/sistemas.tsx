@@ -4,6 +4,8 @@ import TarjetaGrid from '@/components/tarjeta-grid/tarjeta-grid'
 import jordan from '@/assets/jordan.jpg'
 import jacobi from '@/assets/jacobi.png'
 import seidel from '@/assets/seidel.jpg'
+import doolittle from '@/assets/doolittle.png'
+import crout from '@/assets/crout.png'
 const metodosSistemas: TarjetaData[] = [
   {
     numero: '01',
@@ -39,7 +41,7 @@ const metodosSistemas: TarjetaData[] = [
     numero: '04',
     categoria: 'FACTORIZACIÓN LU',
     titulo: 'Método de Doolittle',
-    imagen: '',
+    imagen: doolittle,
     descripcion:
       'Descompone una matriz cuadrada en el producto de una matriz triangular inferior con diagonal unitaria y una matriz triangular superior.',
     pie: 'A = LU · DIAGONAL UNITARIA EN L',
@@ -49,7 +51,7 @@ const metodosSistemas: TarjetaData[] = [
     numero: '05',
     categoria: 'FACTORIZACIÓN LU',
     titulo: 'Método de Crout',
-    imagen: '',
+    imagen: crout,
     descripcion:
       'Descompone una matriz cuadrada en el producto de una matriz triangular inferior y una matriz triangular superior con diagonal unitaria.',
     pie: 'A = LU · DIAGONAL UNITARIA EN U',

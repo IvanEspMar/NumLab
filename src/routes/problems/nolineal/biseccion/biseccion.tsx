@@ -14,6 +14,8 @@ interface RowBisecType {
 }
 
 function Biseccion() {
+  const [currentView, setCurrentView] = useState<"introduction" | "execution">("introduction");
+
   const [iterations, setIterations] = useState<RowBisecType[]>([]);
   const [equationText, setEquationText] = useState("2x^2 - 7");
   const [equationIsValid, setEquationIsValid] = useState(false);
@@ -28,12 +30,10 @@ function Biseccion() {
 
   const intervalIsValid = a < b;
 
-  // Compilamos la función introducida por el usuario.
   function equation(x: number): number {
     return compile(equationText).evaluate({ x });
   }
 
-  // Validamos que la expresión sea correcta y evaluable.
   function validateEquation() {
     try {
       const compiledEquation = compile(equationText);
@@ -53,7 +53,6 @@ function Biseccion() {
     }
   }
 
-  // Comprobamos que los extremos tengan signos contrarios.
   const intervalHasSignChange = (() => {
     try {
       if (!equationIsValid || !intervalIsValid) return false;
@@ -74,9 +73,6 @@ function Biseccion() {
 
     let currentA = a;
     let currentB = b;
-
-    const faInitial = equation(currentA);
-    const fbInitial = equation(currentB);
 
     let currentC = (currentA + currentB) / 2;
 
@@ -119,13 +115,111 @@ function Biseccion() {
     setIterations(interations);
   }
 
+  if (currentView === "introduction") {
+    return (
+      <section className="bisection">
+
+        <div className="bisection__introduction">
+
+          <span className="bisection__eyebrow">
+            MÉTODOS PARA ECUACIONES NO LINEALES
+          </span>
+
+          <h1>Método de Bisección</h1>
+          <div className="bisection__introduction-footer">
+            <button
+              onClick={() => setCurrentView("execution")}
+            >
+              Comenzar cálculo →
+            </button>
+          </div>
+          <p className="bisection__description">
+            El método de bisección es un procedimiento numérico
+            que permite aproximar las raíces reales de una función
+            mediante la reducción sucesiva de un intervalo.
+          </p>
+
+          <div className="bisection__theory">
+
+            <h2>¿En qué consiste?</h2>
+
+            <p>
+              Se comienza con un intervalo inicial [a, b]
+              en el que la función continua presenta signos
+              contrarios en sus extremos. En cada iteración
+              se calcula el punto medio del intervalo y se
+              determina cuál de sus dos mitades conserva
+              el cambio de signo.
+            </p>
+
+            <h2>Fundamento matemático</h2>
+
+            <p>
+              Para aplicar el método es necesario que
+              se cumpla la siguiente condición:
+            </p>
+
+            <div className="bisection__formula">
+              f(a) · f(b) &lt; 0
+            </div>
+
+            <p>
+              El punto medio se obtiene mediante:
+            </p>
+
+            <div className="bisection__formula">
+              c = (a + b) / 2
+            </div>
+
+            <h2>Procedimiento</h2>
+
+            <ol>
+              <li>
+                Seleccionar un intervalo inicial [a, b].
+              </li>
+              <li>
+                Calcular el punto medio c.
+              </li>
+              <li>
+                Evaluar la función en el punto medio.
+              </li>
+              <li>
+                Identificar la mitad del intervalo que
+                conserva el cambio de signo.
+              </li>
+              <li>
+                Repetir el proceso hasta alcanzar
+                la tolerancia establecida.
+              </li>
+            </ol>
+
+            <h2>Criterio de convergencia</h2>
+
+            <p>
+              El procedimiento termina cuando el error
+              aproximado o el valor absoluto de la función
+              alcanza la tolerancia especificada.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+    );
+  }
+
   return (
     <section className="bisection">
 
-      <div className="bisection__introduction">
-        <h1>MÉTODO DE BISECCIÓN</h1>
-        <button className="start-button">Más detalles</button>
-      </div>
+      <button
+        className="bisection__back-button"
+        onClick={() => setCurrentView("introduction")}
+      >
+        ← Volver a la introducción
+      </button>
+
+      <h1>MÉTODO DE BISECCIÓN</h1>
 
       <div className="bisection__equation-input">
         <label>Ingresa una ecuación válida</label>
@@ -241,6 +335,7 @@ function Biseccion() {
           )}
         </>
       )}
+
     </section>
   );
 }
