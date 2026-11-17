@@ -1,14 +1,15 @@
 import { type TarjetaData } from '@/components/tarjeta/tarjeta'
 import TarjetaGrid from '@/components/tarjeta-grid/tarjeta-grid'
 
-import gaussJordan from '@/assets/gauss-jordan.svg'
-
+import jordan from '@/assets/jordan.jpg'
+import jacobi from '@/assets/jacobi.png'
+import seidel from '@/assets/seidel.jpg'
 const metodosSistemas: TarjetaData[] = [
   {
     numero: '01',
     categoria: 'MÉTODO DIRECTO',
     titulo: 'Método de Gauss-Jordan',
-    imagen: gaussJordan,
+    imagen: jordan,
     descripcion:
       'Resuelve sistemas de ecuaciones lineales mediante operaciones elementales sobre las filas de una matriz aumentada hasta obtener su forma escalonada reducida.',
     pie: 'FORMA ESCALONADA REDUCIDA',
@@ -18,7 +19,7 @@ const metodosSistemas: TarjetaData[] = [
     numero: '02',
     categoria: 'MÉTODO ITERATIVO',
     titulo: 'Método de Jacobi',
-    imagen: '',
+    imagen: jacobi,
     descripcion:
       'Obtiene soluciones aproximadas de sistemas lineales mediante iteraciones en las que cada incógnita se actualiza utilizando exclusivamente los valores de la iteración anterior.',
     pie: 'ACTUALIZACIÓN SIMULTÁNEA',
@@ -28,7 +29,7 @@ const metodosSistemas: TarjetaData[] = [
     numero: '03',
     categoria: 'MÉTODO ITERATIVO',
     titulo: 'Método de Gauss-Seidel',
-    imagen: '',
+    imagen: seidel,
     descripcion:
       'Aproxima la solución de sistemas lineales utilizando inmediatamente los valores actualizados de las incógnitas durante cada iteración.',
     pie: 'ACTUALIZACIÓN SECUENCIAL',

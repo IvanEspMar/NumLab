@@ -1,26 +1,70 @@
+
 .bisection {
     width: 100%;
     color: #222;
     font-family: 'Space Grotesk', sans-serif;
+
     &__introduction {
         display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin: 45px 0 35px;
         width: 100%;
-        justify-content: space-between;
     }
+
     h1 {
         margin: 0;
-        font-size: 45px;
+        font-size: clamp(36px, 4vw, 45px);
         font-weight: 600;
         letter-spacing: -2px;
         line-height: 1.1;
     }
+
     &__equation-input {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
+        margin-bottom: 30px;
+
         label {
-            font-size: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        > div {
+            display: flex;
+            align-items: stretch;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        input {
+            width: min(450px, 100%);
+            padding: 11px 12px;
+            font-size: 200px;
+        }
+
+        button {
+            border: none;
+            border-radius: 3px;
+            padding: 10px 22px;
+            background: #222;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 150ms ease;
+
+            &:hover {
+                background: #444;
+            }
+
+            &:focus-visible {
+                outline: 2px solid #41B0EA;
+                outline-offset: 3px;
+            }
         }
     }
 
@@ -43,6 +87,7 @@
 
     &__interval-values {
         display: flex;
+        flex-wrap: wrap;
         gap: 35px;
         padding: 18px 0;
 
@@ -54,14 +99,15 @@
     }
 
     input {
-        width: 110px;
+        width: 200px;
+        min-width: 0;
         box-sizing: border-box;
         border: 1px solid #d5d5d5;
         padding: 9px 10px;
         background: white;
         border-radius: 3px;
         font-family: inherit;
-        font-size: 15px;
+        font-size: 20px;
         color: #222;
         outline: none;
         transition: border-color 150ms ease;
@@ -106,6 +152,11 @@
                 background: #ccc;
                 color: #777;
                 cursor: not-allowed;
+            }
+
+            &:focus-visible {
+                outline: 2px solid #222;
+                outline-offset: 3px;
             }
         }
 
@@ -157,18 +208,6 @@
         }
     }
 
-    @keyframes rowAppear {
-        from {
-            opacity: 0;
-            transform: translateY(8px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
     &__result {
         margin-top: 25px;
         padding: 15px 0;
@@ -179,10 +218,38 @@
     }
 }
 
+@keyframes rowAppear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @media (max-width: 700px) {
     .bisection {
+        &__introduction {
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
         h1 {
             font-size: 36px;
+        }
+
+        &__equation-input {
+            > div {
+                flex-wrap: wrap;
+            }
+
+            input {
+                flex: 1;
+                width: 100%;
+            }
         }
 
         &__interval-inputs {
@@ -195,13 +262,21 @@
         }
 
         &__iterations-table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
             font-size: 12px;
 
             th,
             td {
-                padding: 8px 5px;
-                min-width: 0;
+                padding: 8px 10px;
             }
         }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bisection__iterations-table tbody tr {
+        animation: none;
     }
 }

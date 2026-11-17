@@ -32,12 +32,12 @@ function Secante() {
             const x_nm1 = iterations[i].x_n
             const x_n = iterations[i].x_np1
             const x_np1 = equationSecan(x_n, x_nm1)
-            const fx_n = equation(x_nm1);
+            const fx_n = equation(x_n);
             iterations.push({x_nm1: x_nm1, x_n: x_n,  x_np1: x_np1, fx_n: fx_n})
             i++
             if(Math.abs(equation(iterations[i].x_n)) < tolerance)
                 break
-        } while (i < 100)
+        } while (i < 99)
         setIterations(iterations)
     }
 
