@@ -12,7 +12,7 @@ import Sistemas from './routes/problems/sistemas/sistemas'
 import Newton from './routes/problems/nolineal/newton/newton'
 import Secante from './routes/problems/nolineal/secante/secante'
 import GaussJordan from './routes/problems/sistemas/gauss-jordan/gauss-jordan'
-import Doolittle from './routes/problems/factorizacion/doolittle/doolittle'
+import Doolittle from './routes/problems/sistemas/doolittle/doolittle'
 
 function App() {
   return (
