@@ -1,0 +1,43 @@
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    width: 100%;
+    max-width: 1180px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 20px;
+    margin-top: 25px;
+
+    a {
+        color: #858c93;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #41b0ea;
+        }
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    &__separator {
+        color: #c5cbd0;
+    }
+
+    &__current {
+        color: #202326;
+        font-weight: 600;
+    }
+}
+
+@media (max-width: 650px) {
+    .breadcrumbs {
+        padding: 0 16px;
+        font-size: 11px;
+    }
+}

@@ -1,7 +1,6 @@
 import { type TarjetaData } from '@/components/tarjeta/tarjeta'
 import TarjetaGrid from '@/components/tarjeta-grid/tarjeta-grid'
 
-import cholesky from '@/assets/cholesky.png'
 import jordan from '@/assets/jordan.jpg'
 import jacobi from '@/assets/jacobi.png'
 import seidel from '@/assets/seidel.jpg'
@@ -58,16 +57,6 @@ const metodosSistemas: TarjetaData[] = [
       'Descompone una matriz cuadrada en el producto de una matriz triangular inferior y una matriz triangular superior con diagonal unitaria.',
     pie: 'A = LU · DIAGONAL UNITARIA EN U',
     ruta: '/lineal/crout',
-  },
-  {
-    numero: '06',
-    categoria: 'FACTORIZACIÓN',
-    titulo: 'Método de Cholesky',
-    imagen: cholesky,
-    descripcion:
-      'Descompone una matriz simétrica definida positiva en el producto de una matriz triangular inferior y su transpuesta.',
-    pie: 'A = LLᵀ',
-    ruta: '/lineal/cholesky',
   },
 ]
 
