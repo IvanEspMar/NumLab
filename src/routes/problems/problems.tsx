@@ -50,7 +50,7 @@ const problemas: TarjetaData[] = [
     formula: 'Av = λv',
     descripcion: 'Unidad 5 · Métodos de la Potencia y Potencia Inversa.',
     pie: 'VALORES Y VECTORES',
-    ruta: '/valores'
+    ruta: '/eigenvalues'
   }
 ]
 

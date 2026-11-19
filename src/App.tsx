@@ -15,8 +15,12 @@ import Newton from './routes/problems/nolineal/newton/newton'
 import Secante from './routes/problems/nolineal/secante/secante'
 import GaussJordan from './routes/problems/sistemas/gauss-jordan/gauss-jordan'
 import Doolittle from './routes/problems/sistemas/doolittle/doolittle'
+import Crout from './routes/problems/sistemas/crout/crout.tsx'
 import Jacobi from './routes/problems/sistemas/jacobi/jacobi.tsx'
 import GaussSeidel from './routes/problems/sistemas/gauss-seidel/gauss-seidel.tsx'
+import EigenValues from './routes/problems/eigenvalues/eigenvalues.tsx'
+import Potencia from './routes/problems/eigenvalues/potencia/potencia.tsx'
+import PotenciaInversa from './routes/problems/eigenvalues/inversa/inversa.tsx'
 
 function AppContent() {
   const location = useLocation()
@@ -42,6 +46,11 @@ function AppContent() {
         <Route path="/lineal/jacobi" element={<Jacobi />} />
         <Route path="/lineal/gauss-seidel" element={<GaussSeidel />} />
         <Route path="/lineal/doolittle" element={<Doolittle />} />
+        <Route path="/lineal/crout" element={<Crout />} />
+
+        <Route path="/eigenvalues" element={<EigenValues />} />
+        <Route path="/eigenvalues/potencia" element={<Potencia />} />
+         <Route path="/eigenvalues/inversa" element={<PotenciaInversa />} />
       </Routes>
 
       <Footer />
