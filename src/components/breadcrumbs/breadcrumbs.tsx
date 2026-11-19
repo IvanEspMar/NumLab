@@ -13,6 +13,10 @@ const routes: Record<string, string> = {
   "/lineal/gauss-seidel": "Gauss-Seidel",
   "/lineal/jacobi": "Jacobi",
   "/lineal/doolittle": "Doolittle",
+  "/lineal/crout": "Crout",
+  "/eigenvalues": "Valores propios",
+  "/eigenvalues/potencia": "Potencia",
+  "/eigenvalues/inversa": "Potencia inversa",
 };
 
 function Breadcrumbs() {
@@ -24,13 +28,18 @@ function Breadcrumbs() {
     "/" + segments.slice(0, index + 1).join("/")
   );
 
+  const labels = { ...routes };
+  for (const path of paths) {
+    if (path.endsWith('/calcular')) labels[path] = 'Calculadora';
+  }
+
   return (
     <nav className="breadcrumbs" aria-label="Ruta de navegación">
       <Link to="/">NumLab</Link>
 
       {paths.map((path, index) => {
         const isLast = index === paths.length - 1;
-        const label = routes[path] || "Sección";
+        const label = labels[path] || "Sección";
 
         return (
           <span className="breadcrumbs__item" key={path}>

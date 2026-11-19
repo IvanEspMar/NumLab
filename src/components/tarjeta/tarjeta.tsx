@@ -1,15 +1,10 @@
 
-import { useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import './tarjeta.scss'
 
 function Tarjeta({ tarjeta }: { tarjeta: TarjetaData }) {
-  const navegar = useNavigate()
-
   return (
-    <article
-      className="tarjeta"
-      onClick={() => navegar(tarjeta.ruta)}
-    >
+    <Link className="tarjeta" to={tarjeta.ruta} aria-label={`Conocer ${tarjeta.titulo}`}>
       <header className="tarjeta__encabezado">
         <span className="tarjeta__numero">{tarjeta.numero}</span>
         <span className="tarjeta__categoria">{tarjeta.categoria}</span>
@@ -39,7 +34,7 @@ function Tarjeta({ tarjeta }: { tarjeta: TarjetaData }) {
       <footer className="tarjeta__pie">
         <span className="tarjeta__pie-texto">{tarjeta.pie}</span>
       </footer>
-    </article>
+    </Link>
   )
 }
 

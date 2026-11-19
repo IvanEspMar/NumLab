@@ -1,3 +1,5 @@
+@use './styles/variables' as *;
+
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -23,13 +25,13 @@ body {
   min-height: 100vh;
   color: #24282c;
   font-size: 14px;
-  font-family: 'Inter', sans-serif;
-  background-color: #f5f8fb;
+  font-family: $font-body;
+  background-color: $color-background;
 }
 
 
 .punto {
-  color: #e64b45;
+  color: $color-red;
 }
 
 .aplicacion {
@@ -43,7 +45,7 @@ body {
 .etiqueta {
   display: block;
   color: #74787c;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: $font-mono;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.07em;
@@ -56,7 +58,7 @@ body {
   gap: 20px;
   padding: 24px 0 0;
   color: #85898d;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: $font-mono;
   font-size: 9px;
   letter-spacing: 0.035em;
 

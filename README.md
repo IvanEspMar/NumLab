@@ -1,32 +1,54 @@
-# React + TypeScript + Vite
+# NumLab
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Proyecto de Métodos Numéricos I · FES Acatlán, UNAM.
 
-Currently, two official plugins are available:
+Aplicación desarrollada con React, TypeScript, Vite y Sass para consultar la teoría y utilizar calculadoras de métodos numéricos.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Desarrollo
 
-## React Compiler
+Requiere Node.js 22 o superior.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm ci
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Para comprobar el proyecto antes de publicarlo:
+
+```bash
+npm run build
+npm run preview
+```
+
+## Imágenes necesarias
+
+Los archivos gráficos **no se incluyen en este ZIP** para reducir su tamaño. Antes de compilar, copia desde el proyecto original los siguientes archivos dentro de `src/assets/`, conservando exactamente los nombres y extensiones:
+
+- `biseccion.svg`, `newton.svg`, `secante.svg`, `nolineal.svg`
+- `sistemas.jpg`
+- `jordan.png`, `jacobi.png`, `seidel.jpg`, `doolittle.png`, `crout.png`
+
+La sección de ecuaciones no lineales utiliza exclusivamente las gráficas SVG. Los retratos de personajes se mantienen en sistemas lineales.
+
+## Navegación
+
+- `/problems`: selección de temas.
+- `/nolineal`, `/lineal`, `/eigenvalues`: listas de métodos.
+- `/<tema>/<metodo>`: introducción, explicación, historia e ilustración.
+- `/<tema>/<metodo>/calcular`: calculadora existente.
+
+El sitio utiliza `HashRouter` para admitir enlaces directos en GitHub Pages sin configurar redirecciones del servidor. Ejemplo: `https://ivanespmar.github.io/NumLab/#/nolineal/newton`.
+
+## Publicación en GitHub Pages
+
+1. Copia las imágenes a `src/assets/` y confirma que se compila con `npm run build`.
+2. Haz commit de las imágenes y del código; `dist/` y `node_modules/` permanecen ignorados.
+3. Sube los cambios a `main`.
+4. En el repositorio de GitHub, abre **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+5. El workflow `.github/workflows/deploy.yml` instalará dependencias, compilará y desplegará `dist` automáticamente.
+
+Vite utiliza `base: '/NumLab/'`. Si cambias el nombre del repositorio, actualiza `base` en `vite.config.ts`.
+
+## Organización
+
+Se conserva la estructura de rutas y calculadoras. `src/components/method-introduction/` contiene la plantilla reutilizable para las introducciones, y `src/styles/_variables.scss` reúne los tokens Sass comunes.
