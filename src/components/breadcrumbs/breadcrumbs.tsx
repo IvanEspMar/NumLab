@@ -10,6 +10,8 @@ const routes: Record<string, string> = {
   "/nolineal/secante": "Secante",
   "/lineal": "Sistemas de ecuaciones",
   "/lineal/gauss-jordan": "Gauss-Jordan",
+  "/lineal/gauss-seidel": "Gauss-Seidel",
+  "/lineal/jacobi": "Jacobi",
   "/lineal/doolittle": "Doolittle",
 };
 

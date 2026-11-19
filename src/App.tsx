@@ -15,6 +15,8 @@ import Newton from './routes/problems/nolineal/newton/newton'
 import Secante from './routes/problems/nolineal/secante/secante'
 import GaussJordan from './routes/problems/sistemas/gauss-jordan/gauss-jordan'
 import Doolittle from './routes/problems/sistemas/doolittle/doolittle'
+import Jacobi from './routes/problems/sistemas/jacobi/jacobi.tsx'
+import GaussSeidel from './routes/problems/sistemas/gauss-seidel/gauss-seidel.tsx'
 
 function AppContent() {
   const location = useLocation()
@@ -29,12 +31,16 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/problems" element={<Problemas />} />
+
         <Route path="/nolineal" element={<NoLineales />} />
         <Route path="/nolineal/biseccion" element={<Biseccion />} />
         <Route path="/nolineal/newton" element={<Newton />} />
         <Route path="/nolineal/secante" element={<Secante />} />
+
         <Route path="/lineal" element={<Sistemas />} />
         <Route path="/lineal/gauss-jordan" element={<GaussJordan />} />
+        <Route path="/lineal/jacobi" element={<Jacobi />} />
+        <Route path="/lineal/gauss-seidel" element={<GaussSeidel />} />
         <Route path="/lineal/doolittle" element={<Doolittle />} />
       </Routes>
 
