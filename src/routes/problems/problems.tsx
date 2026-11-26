@@ -2,6 +2,7 @@ import { type TarjetaData } from '@/components/tarjeta/tarjeta'
 import grafica from '@/assets/nolineal.svg'
 import sistemas from '@/assets/sistemas.jpg'
 import TarjetaGrid from '@/components/tarjeta-grid/tarjeta-grid'
+import valores from '@/assets/valores.svg'
 
 import './problems.scss'
 
@@ -47,7 +48,7 @@ const problemas: TarjetaData[] = [
     numero: '05',
     categoria: 'VALORES PROPIOS',
     titulo: 'Cálculo de valores propios',
-    formula: 'Av = λv',
+    imagen: valores,
     descripcion: 'Unidad 5 · Métodos de la Potencia y Potencia Inversa.',
     pie: 'VALORES Y VECTORES',
     ruta: '/eigenvalues'
