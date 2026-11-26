@@ -23,6 +23,19 @@ const MIN_SIZE = 2;
 const MAX_SIZE = 8;
 const EPSILON = 1e-10;
 const DECIMALS = 6;
+const EXAMPLE_MATRIX = [
+  [10, -1, 2, 6],
+  [-1, 11, -1, 22],
+  [2, -1, 10, -10],
+];
+
+function createExampleValues() {
+  return EXAMPLE_MATRIX.map((row) => row.map((value) => String(Math.abs(value))));
+}
+
+function createExampleSigns() {
+  return EXAMPLE_MATRIX.map((row) => row.map((value) => value < 0));
+}
 
 function createMatrix(size: number): string[][] {
   return Array.from({ length: size }, () => Array(size + 1).fill(""));
@@ -151,9 +164,9 @@ function gaussJordan(source: Matrix): Solution {
 }
 
 function GaussJordan() {
-  const [size, setSize] = useState(3);
-  const [matrix, setMatrix] = useState<string[][]>(() => createMatrix(3));
-  const [signs, setSigns] = useState<boolean[][]>(() => createSigns(3));
+  const [size, setSize] = useState(EXAMPLE_MATRIX.length);
+  const [matrix, setMatrix] = useState(createExampleValues);
+  const [signs, setSigns] = useState(createExampleSigns);
   const [result, setResult] = useState<Solution | null>(null);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -204,6 +217,14 @@ function GaussJordan() {
     const solution = gaussJordan(numericMatrix);
 
     setResult(solution);
+    setActiveStep(0);
+  }
+
+  function loadExample() {
+    setSize(EXAMPLE_MATRIX.length);
+    setMatrix(createExampleValues());
+    setSigns(createExampleSigns());
+    setResult(null);
     setActiveStep(0);
   }
 
@@ -308,6 +329,10 @@ function GaussJordan() {
         </div>
 
         <div className="gauss-jordan__actions">
+          <button type="button" className="gauss-jordan__reset" onClick={loadExample}>
+            Cargar ejemplo
+          </button>
+
           <button type="button" className="gauss-jordan__reset" onClick={reset}>
             <span>↺</span> Limpiar
           </button>

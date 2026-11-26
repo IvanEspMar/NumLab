@@ -152,7 +152,7 @@
   &__actions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 15px;
     padding-top: 18px;
     border-top: 1px solid #e5e8eb;
@@ -185,6 +185,7 @@
   }
 
   &__solve {
+    margin-left: auto;
     border: 1px solid #41b0ea;
     background: #41b0ea;
     color: #fff;

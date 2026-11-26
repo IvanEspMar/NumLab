@@ -40,9 +40,9 @@
     display: flex;
     align-items: stretch;
     min-height: 44px;
-    border: 1px solid color-mix(in srgb, var(--sign-accent) 35%, $color-border);
+    border: 1px solid color-mix(in srgb, var(--sign-accent) 10%, $color-border);
     border-radius: 8px;
-    background: color-mix(in srgb, var(--sign-accent) 8%, white);
+    background: color-mix(in srgb, var(--sign-accent) 4%, white);
 
     &[data-negative='true'] { --sign-accent: #{$color-red}; }
 
@@ -74,7 +74,7 @@
       width: var(--sign-size);
       padding: 0;
       border: 0;
-      border-left: 1px solid color-mix(in srgb, var(--sign-accent) 22%, transparent);
+      border-left: 1px solid color-mix(in srgb, var(--sign-accent) 14%, transparent);
       border-radius: 0 7px 7px 0;
       background: transparent;
       color: color-mix(in srgb, var(--sign-accent) 65%, #18221e);

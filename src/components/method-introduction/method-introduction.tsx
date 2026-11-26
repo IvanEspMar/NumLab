@@ -7,7 +7,8 @@ export type MethodIntroductionData = {
   category: string
   description: string
   background: string
-  history: string
+  history: string | readonly string[]
+  historyReference?: { label: string; url: string }
   procedure: readonly string[]
   formulaLatex: string
   image?: string
@@ -52,8 +53,13 @@ export default function MethodIntroduction({ method }: Props) {
               <img src={method.image} alt={method.imageAlt ?? ''} />
             </figure>
           )}
-          <h2 id="method-history">Breve historia</h2>
-          <p>{method.history}</p>
+          <h2 id="method-history">Historia del método</h2>
+          {(typeof method.history === 'string' ? [method.history] : method.history).map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          {method.historyReference && (
+            <p><a href={method.historyReference.url}>{method.historyReference.label}</a></p>
+          )}
         </section>
       </div>
     </article>
