@@ -10,8 +10,8 @@ function Problemas() {
     <TarjetaGrid
       titulo="TIPOS DE PROBLEMAS Y MÉTODOS NUMÉRICOS"
       contador="01 — 03"
-      etiqueta="Introducción"
-      introduccion="Los métodos numéricos permiten abordar distintos problemas matemáticos mediante procedimientos que generan soluciones aproximadas. Su aplicación comprende la búsqueda de raíces de ecuaciones, la resolución de sistemas lineales y el cálculo de valores propios. Cada problema requiere métodos específicos que, mediante procesos algebraicos e iterativos, permiten obtener resultados con una precisión determinada."
+      etiqueta="Qué problemas resuelve NumLab"
+      informacion="NumLab reúne tres tipos de problemas. En ecuaciones no lineales se buscan raíces de una función. En sistemas lineales se buscan valores que satisfagan varias ecuaciones a la vez. En valores propios se estudian las direcciones que una matriz conserva al transformar un vector."
       tarjetas={problemas}
       columnas={3}
     />

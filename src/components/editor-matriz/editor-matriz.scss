@@ -1,0 +1,97 @@
+@use '../../styles/variables' as *;
+
+.editor-matriz {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 6px 4px 12px;
+
+  &:focus-visible { outline: 2px solid #166c9b; }
+
+  &__layout {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(14px, 3vw, 28px);
+    width: max-content;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 8px;
+    color: #166c9b;
+    font: 600 13px $font-mono;
+    text-align: center;
+  }
+
+  &__brackets {
+    display: grid;
+    gap: 4px 6px;
+    padding: 6px 11px;
+    background: linear-gradient($color-text, $color-text) left top / 8px 2px no-repeat,
+                linear-gradient($color-text, $color-text) right top / 8px 2px no-repeat,
+                linear-gradient($color-text, $color-text) left bottom / 8px 2px no-repeat,
+                linear-gradient($color-text, $color-text) right bottom / 8px 2px no-repeat;
+    border-inline: 2px solid $color-text;
+  }
+
+  &__row { display: contents; }
+
+  &__cell {
+    --sign-accent: #86a624;
+    display: flex;
+    align-items: stretch;
+    min-height: 44px;
+    border: 1px solid color-mix(in srgb, var(--sign-accent) 35%, $color-border);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--sign-accent) 8%, white);
+
+    &[data-negative='true'] { --sign-accent: #{$color-red}; }
+
+    &:focus-within {
+      border-color: var(--sign-accent);
+      outline: 1px solid var(--sign-accent);
+    }
+
+    input {
+      box-sizing: border-box;
+      width: clamp(58px, 8vw, 84px);
+      flex: 1 0 auto;
+      min-width: 0;
+      padding: 6px 9px;
+      border: 0;
+      border-radius: 8px 0 0 8px;
+      background: transparent;
+      color: $color-text;
+      font: 500 16px $font-mono;
+
+      &:focus { outline: none; }
+    }
+
+    button {
+      --sign-size: 36px;
+      display: grid;
+      place-items: center;
+      box-sizing: border-box;
+      width: var(--sign-size);
+      padding: 0;
+      border: 0;
+      border-left: 1px solid color-mix(in srgb, var(--sign-accent) 22%, transparent);
+      border-radius: 0 7px 7px 0;
+      background: transparent;
+      color: color-mix(in srgb, var(--sign-accent) 65%, #18221e);
+      font: 600 18px / 1 $font-mono;
+      cursor: pointer;
+
+      &:hover { background: color-mix(in srgb, var(--sign-accent) 15%, transparent); }
+      &:active { background: color-mix(in srgb, var(--sign-accent) 22%, transparent); }
+      &:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .editor-matriz__cell input { width: max(14ch, calc(var(--value-width) + 20px)); }
+}
+
+@media (pointer: coarse) {
+  .editor-matriz__cell button { --sign-size: 44px; }
+}

@@ -1,3 +1,5 @@
+import { CeldaMatriz, EditorMatriz } from '@/components/editor-matriz/editor-matriz'
+import { parseDecimal } from '@/functions/parse-decimal'
 import { useState } from "react";
 import "./jacobi.scss";
 
@@ -232,13 +234,13 @@ function Jacobi() {
 
     const parsedMatrix = matrix.map((row, i) =>
       row.map((value, j) => {
-        const magnitude = value.trim() === "" ? 0 : Number(value);
+        const magnitude = value.trim() === "" ? 0 : parseDecimal(value);
         return magnitude * signs[i][j];
       }),
     );
 
     const parsedVector = vector.map((value, i) => {
-      const magnitude = value.trim() === "" ? 0 : Number(value);
+      const magnitude = value.trim() === "" ? 0 : parseDecimal(value);
       return magnitude * vectorSigns[i];
     });
 
@@ -316,82 +318,30 @@ function Jacobi() {
           </div>
         </div>
 
-        <div className="jacobi__matrix-area">
-          <div className="jacobi__matrix-labels">
-            <span>MATRIZ DE COEFICIENTES</span>
-            <span>VECTOR INDEPENDIENTE</span>
-          </div>
-
-          <div className="jacobi__matrix-wrapper">
-            <div
-              className="jacobi__matrix"
-              style={{
-                gridTemplateColumns: `repeat(${size}, minmax(75px, 1fr))`,
-              }}
-            >
-              {matrix.map((row, i) =>
-                row.map((value, j) => (
-                  <div className="jacobi__cell" key={`${i}-${j}`}>
-                    <button
-                      type="button"
-                      className={`jacobi__sign ${
-                        signs[i][j] < 0 ? "is-negative" : ""
-                      }`}
-                      onClick={() => toggleMatrixSign(i, j)}
-                      aria-label={`Cambiar signo del coeficiente ${i + 1}, ${j + 1}`}
-                    >
-                      {signs[i][j] > 0 ? "+" : "−"}
-                    </button>
-
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={value}
-                      placeholder="0"
-                      aria-label={`Coeficiente ${i + 1}, ${j + 1}`}
-                      onChange={(event) =>
-                        updateMatrix(i, j, event.target.value)
-                      }
-                    />
-                  </div>
-                )),
-              )}
-              ,
-            </div>
-
-            <div className="jacobi__vector">
-              {vector.map((value, i) => (
-                <div className="jacobi__cell" key={i}>
-                  <button
-                    type="button"
-                    className={`jacobi__sign ${
-                      vectorSigns[i] < 0 ? "is-negative" : ""
-                    }`}
-                    onClick={() => toggleVectorSign(i)}
-                    aria-label={`Cambiar signo del término independiente ${i + 1}`}
-                  >
-                    {vectorSigns[i] > 0 ? "+" : "−"}
-                  </button>
-
-                  <input
-                    type="number"
-                    min="0"
-                    step="any"
-                    value={value}
-                    placeholder="0"
-                    aria-label={`Término independiente ${i + 1}`}
-                    onChange={(event) => updateVector(i, event.target.value)}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <EditorMatriz
+          size={size}
+          renderCell={(row, column) => (
+            <CeldaMatriz
+              label={`Coeficiente: fila ${row + 1}, columna ${column + 1}`}
+              value={matrix[row][column]}
+              negative={signs[row][column] < 0}
+              onValueChange={(value) => updateMatrix(row, column, value)}
+              onToggleSign={() => toggleMatrixSign(row, column)}
+            />
+          )}
+          renderVector={(row) => (
+            <CeldaMatriz
+              label={`Término independiente ${row + 1}`}
+              value={vector[row]}
+              negative={vectorSigns[row] < 0}
+              onValueChange={(value) => updateVector(row, value)}
+              onToggleSign={() => toggleVectorSign(row)}
+            />
+          )}
+        />
 
         <div className="jacobi__matrix-note">
-          <span>+</span> y <span>−</span> permiten cambiar el signo de cada
-          valor. Las celdas vacías se consideran cero.
+          Usa ± para alternar el signo de una celda. Las celdas vacías se consideran cero.
         </div>
       </section>
 

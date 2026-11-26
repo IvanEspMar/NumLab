@@ -30,8 +30,8 @@ function EigenValues() {
     <TarjetaGrid
       titulo="VALORES Y VECTORES PROPIOS"
       contador="01 — 02"
-      etiqueta="Métodos iterativos"
-      introduccion="Los valores y vectores propios permiten estudiar propiedades fundamentales de las matrices y transformaciones lineales. Los métodos numéricos ofrecen procedimientos iterativos para aproximarlos cuando su cálculo directo resulta complicado."
+      etiqueta="Qué son los valores propios"
+      informacion="Un vector propio es un vector distinto de cero que, al multiplicarse por una matriz, queda multiplicado por un escalar. Ese escalar es su valor propio. Los métodos de la potencia y de la potencia inversa permiten aproximar valores propios de gran o pequeña magnitud, según las condiciones de la matriz."
       tarjetas={metodosEigen}
       columnas={3}
     />

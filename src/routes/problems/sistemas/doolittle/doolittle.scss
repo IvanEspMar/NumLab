@@ -96,98 +96,6 @@
   line-height: 1.7;
 }
 
-.sistema-captura {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  width: 100%;
-  padding: 22px 24px;
-  border: 1px solid #dfe4e7;
-  background: #fff;
-  overflow-x: auto;
-}
-
-.fila-ecuacion {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  min-width: max-content;
-  min-height: 58px;
-  padding: 8px 0;
-  border-bottom: 1px solid #edf0f2;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  .termino {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .signo {
-    display: grid;
-    place-items: center;
-    width: 27px;
-    height: 32px;
-    padding: 0;
-    border: 1px solid transparent;
-    background: transparent;
-    color: #41b0ea;
-    font-size: 19px;
-    cursor: pointer;
-    transition: 0.15s ease;
-
-    &:hover {
-      border-color: #cceafa;
-      background: #edf8fe;
-    }
-  }
-
-  input {
-    width: 76px;
-    height: 37px;
-    padding: 0 8px;
-    border: 1px solid #dfe4e7;
-    outline: none;
-    background: #fbfcfd;
-    color: #202326;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    text-align: center;
-    transition: 0.15s ease;
-
-    &:focus {
-      border-color: #41b0ea;
-      background: #fff;
-      box-shadow: 0 0 0 2px #41b0ea18;
-    }
-  }
-
-  .variable {
-    min-width: 19px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-
-    sub {
-      color: #747b80;
-      font-size: 10px;
-    }
-  }
-
-  .igual {
-    margin: 0 8px;
-    color: #747b80;
-    font-size: 18px;
-  }
-
-  > input {
-    border-color: #b8dff3;
-    background: #edf8fe;
-  }
-}
-
 .boton-calcular {
   min-width: 150px;
   height: 43px;
@@ -278,18 +186,6 @@
     }
   }
 
-  .sistema-captura {
-    padding: 15px;
-  }
-
-  .fila-ecuacion {
-    gap: 5px;
-
-    input {
-      width: 62px;
-    }
-  }
-
   .resultado-doolittle {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -313,20 +209,6 @@
 
   .ayuda-doolittle {
     font-size: 12px;
-  }
-
-  .fila-ecuacion {
-    min-height: 52px;
-
-    input {
-      width: 55px;
-      height: 34px;
-      font-size: 12px;
-    }
-
-    .variable {
-      font-size: 12px;
-    }
   }
 
   .boton-calcular {

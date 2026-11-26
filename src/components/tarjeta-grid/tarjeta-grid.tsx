@@ -6,7 +6,7 @@ type TarjetaGridProps = {
   tarjetas: TarjetaData[]
   contador?: string
   etiqueta?: string
-  introduccion?: string
+  informacion?: string
   columnas?: number
 }
 
@@ -14,8 +14,8 @@ function TarjetaGrid({
   titulo,
   tarjetas,
   contador,
-  etiqueta = 'Introducción',
-  introduccion,
+  etiqueta = 'Sobre el problema',
+  informacion,
   columnas = 3,
 }: TarjetaGridProps) {
   return (
@@ -34,18 +34,6 @@ function TarjetaGrid({
         )}
       </header>
 
-      {introduccion && (
-        <div className="tarjeta-grid__introduccion">
-          <span className="tarjeta-grid__etiqueta">
-            {etiqueta}
-          </span>
-
-          <p className="tarjeta-grid__texto">
-            {introduccion}
-          </p>
-        </div>
-      )}
-
       <div
         className="tarjeta-grid__contenedor"
         style={{ '--columnas': columnas } as React.CSSProperties}
@@ -57,6 +45,13 @@ function TarjetaGrid({
           />
         ))}
       </div>
+
+      {informacion && (
+        <section className="tarjeta-grid__informacion">
+          <h3 className="tarjeta-grid__etiqueta">{etiqueta}</h3>
+          <p className="tarjeta-grid__texto">{informacion}</p>
+        </section>
+      )}
 
     </section>
   )

@@ -65,8 +65,8 @@ function Sistemas() {
     <TarjetaGrid
       titulo="SISTEMAS DE ECUACIONES LINEALES"
       contador="01 — 05"
-      etiqueta="Métodos directos e iterativos"
-      introduccion="Los sistemas de ecuaciones lineales están formados por un conjunto de ecuaciones que comparten varias incógnitas. Los métodos numéricos permiten determinar o aproximar sus soluciones mediante transformaciones matriciales y procedimientos iterativos."
+      etiqueta="Qué se busca resolver"
+      informacion="Un sistema lineal reúne varias ecuaciones que comparten incógnitas. En la forma Ax = b, A contiene los coeficientes, b los términos independientes y x los valores que deben satisfacer todas las ecuaciones a la vez. Según el sistema, puede haber una solución, infinitas o ninguna."
       tarjetas={metodosSistemas}
       columnas={3}
     />

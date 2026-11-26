@@ -1,3 +1,5 @@
+import { CeldaMatriz, EditorMatriz } from '@/components/editor-matriz/editor-matriz'
+import { parseDecimal } from '@/functions/parse-decimal'
 
 import { useState } from 'react'
 import { adelante, atras, type Matriz } from './lu'
@@ -27,7 +29,7 @@ function redondear(v: number): number {
 }
 
 function esNumero(c: string): boolean {
-  return c.trim() !== '' && Number.isFinite(Number(c))
+  return c.trim() !== '' && Number.isFinite(parseDecimal(c))
 }
 
 function crout(A: Matriz): { L: Matriz; U: Matriz } {
@@ -226,12 +228,12 @@ function Crout() {
   function calcular() {
     try {
       const A: Matriz = celdas.map((fila, i) =>
-        fila.map((c, j) => signos[i][j] * Number(c))
+        fila.map((c, j) => signos[i][j] * parseDecimal(c))
       )
 
       const { L, U } = crout(A)
 
-      const y = adelante(L, b.map(Number))
+      const y = adelante(L, b.map(parseDecimal))
       const x = atras(U, y)
 
       setResultado({ L, U, y, x })
@@ -272,51 +274,28 @@ function Crout() {
       </div>
 
       <p className="ayuda-crout">
-        Escribe cada coeficiente sin signo y usa el botón
-        + / − para cambiarlo. Si un término no aparece en
-        la ecuación, escribe 0. El resultado de cada
-        ecuación va después del =.
+        Edita los valores y usa ± para alternar el signo. Escribe 0 para los términos que no aparecen en la ecuación.
       </p>
 
-      <div className="sistema-captura">
-        {celdas.map((fila, i) => (
-          <div className="fila-ecuacion" key={i}>
-            {fila.map((celda, j) => (
-              <div className="termino" key={j}>
-                <button
-                  className="signo"
-                  title="Cambiar entre + y −"
-                  onClick={() => alternarSigno(i, j)}
-                >
-                  {signos[i][j] === 1 ? '+' : '−'}
-                </button>
-
-                <input
-                  type="number"
-                  step="any"
-                  value={celda}
-                  onChange={e =>
-                    cambiarCelda(i, j, e.target.value)
-                  }
-                />
-
-                <span className="variable">
-                  x<sub>{j + 1}</sub>
-                </span>
-              </div>
-            ))}
-
-            <span className="igual">=</span>
-
-            <input
-              type="number"
-              step="any"
-              value={b[i]}
-              onChange={e => cambiarB(i, e.target.value)}
-            />
-          </div>
-        ))}
-      </div>
+      <EditorMatriz
+        size={n}
+        renderCell={(row, column) => (
+          <CeldaMatriz
+            label={`Coeficiente: fila ${row + 1}, columna ${column + 1}`}
+            value={celdas[row][column]}
+            negative={signos[row][column] < 0}
+            onValueChange={(value) => cambiarCelda(row, column, value)}
+            onToggleSign={() => alternarSigno(row, column)}
+          />
+        )}
+        renderVector={(row) => (
+          <CeldaMatriz
+            label={`Término independiente ${row + 1}`}
+            value={b[row]}
+            onValueChange={(value) => cambiarB(row, value)}
+          />
+        )}
+      />
 
       <button
         className="boton-calcular"

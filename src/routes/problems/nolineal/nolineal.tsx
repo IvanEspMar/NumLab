@@ -42,8 +42,8 @@ function NoLineales() {
     <TarjetaGrid
       titulo="RAÍCES DE ECUACIONES NO LINEALES DE UNA SOLA VARIABLE"
       contador="01 — 03"
-      etiqueta="Introducción"
-      introduccion="Resolver una ecuación no lineal consiste en encontrar los valores de la variable x para los cuales una función se hace cero. Estos valores se conocen como raíces o soluciones. Debido a que no siempre es posible obtenerlas mediante procedimientos algebraicos, se utilizan métodos numéricos que permiten aproximarlas de manera iterativa, de acuerdo con sus características y condiciones de aplicación."
+      etiqueta="Qué es una raíz"
+      informacion="Una raíz es un valor de x para el cual f(x) = 0. En la gráfica, corresponde a un punto donde la curva toca o cruza el eje horizontal. Según el método, la búsqueda parte de un intervalo o de una o dos aproximaciones iniciales."
       tarjetas={metodos}
       columnas={3}
     />
