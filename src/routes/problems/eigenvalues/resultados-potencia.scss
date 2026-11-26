@@ -1,0 +1,84 @@
+@use '../../../styles/variables' as *;
+
+.resultado-propio {
+  &__par, &__metricas, &__graficas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 14px 28px;
+  }
+
+  &__par {
+    margin-block: 18px;
+
+    > div { display: flex; align-items: center; gap: 12px; }
+    strong { color: #166c9b; font: 600 clamp(20px, 3vw, 32px) $font-mono; }
+  }
+
+  &__vector {
+    display: inline-grid;
+    gap: 4px;
+    padding: 4px 9px;
+    border-inline: 1px solid $color-muted;
+    background: linear-gradient($color-muted, $color-muted) top left / 4px 1px no-repeat,
+                linear-gradient($color-muted, $color-muted) top right / 4px 1px no-repeat,
+                linear-gradient($color-muted, $color-muted) bottom left / 4px 1px no-repeat,
+                linear-gradient($color-muted, $color-muted) bottom right / 4px 1px no-repeat;
+    text-align: right;
+    color: $color-text;
+    font: 500 13px $font-mono;
+  }
+
+  &__metricas {
+    margin: 0;
+    padding-block: 16px;
+    border-block: 1px solid $color-border;
+
+    dt { color: $color-muted; font-size: 13px; }
+    dd { margin: 4px 0 0; font: 600 14px $font-mono; }
+  }
+
+  &__comprobacion { margin-top: 20px; }
+
+  &__fila-final > th, &__fila-final > td { background: #edf6fb; }
+  .potencia__table &__estimacion { color: #166c9b; font-weight: 600; }
+
+  &__procedimiento {
+    ol { margin: 0; padding-inline-start: 24px; }
+    li { padding-block: 12px; }
+    h3 { margin: 0 0 8px; font: 600 16px $font-display; }
+    p { margin: 0; }
+  }
+
+  &__ecuacion {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    overflow-x: auto;
+    margin-block: 12px;
+    padding: 3px;
+  }
+
+  &__graficas {
+    figure { min-width: 0; margin: 0; }
+    svg { display: block; width: 100%; height: auto; }
+    text, figcaption { fill: $color-muted; color: $color-muted; font: 400 12px $font-mono; }
+  }
+
+  &__convergencia { flex: 1 1 430px; max-width: 590px; }
+  &__direcciones {
+    flex: 0 1 230px;
+
+    figcaption { display: grid; gap: 8px; }
+    input { width: 100%; min-height: 44px; margin: 0; accent-color: #166c9b; }
+    output { color: $color-text; }
+  }
+
+  &__muestra { display: inline-block; width: 18px; margin-inline-end: 4px; border-top: 1px dashed $color-red; vertical-align: middle; }
+  &__ejes { fill: none; stroke: $color-border; }
+  &__eje { fill: none; stroke: #8797a8; }
+  &__referencia { fill: none; stroke: $color-red; opacity: 0.65; stroke-dasharray: 4 4; }
+  &__trayectoria { fill: none; stroke-width: 2; stroke-linejoin: round; }
+  &__flecha { opacity: 0.42; }
+  &__flecha--actual { stroke: $color-red; stroke-width: 2; }
+}

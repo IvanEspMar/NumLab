@@ -1,42 +1,21 @@
+import { solveEigen, type EigenResult } from "../metodos-potencia";
+import { ResultadosPotencia } from "../resultados-potencia";
 import { CeldaMatriz, EditorMatriz } from '@/components/editor-matriz/editor-matriz'
 import { parseDecimal } from '@/functions/parse-decimal'
 import { useState } from "react";
+import { MathJax } from "better-react-mathjax";
 import "./potencia.scss";
 
 const MIN_SIZE = 2;
 const MAX_SIZE = 8;
-const DECIMALS = 6;
-
-type Iteration = {
-  index: number;
-  values: number[];
-  lambda: number;
-  error: number | null;
-  residual: number;
-};
-
-type Result = {
-  eigenvalue: number;
-  eigenvector: number[];
-  iterations: Iteration[];
-  converged: boolean;
-  residual: number;
-};
-
-const EXAMPLE_MATRIX = [
-  ["2", "1", "0"],
-  ["1", "2", "1"],
-  ["0", "1", "2"],
+const COEFFICIENTS = [
+  [2, -2, 1],
+  [2, -8, 2],
+  [1, 2, 2],
 ];
 
-const EXAMPLE_SIGNS = [
-  [1, 1, 1],
-  [1, 1, 1],
-  [1, 1, 1],
-];
-
-const EXAMPLE_VECTOR = ["1", "1", "1"];
-const EXAMPLE_VECTOR_SIGNS = [1, 1, 1];
+const EXAMPLE_MATRIX = COEFFICIENTS.map(row => row.map(value => String(Math.abs(value))));
+const EXAMPLE_SIGNS = COEFFICIENTS.map(row => row.map<number>(value => value < 0 ? -1 : 1));
 
 function createMatrix(size: number): string[][] {
   return Array.from({ length: size }, () =>
@@ -54,124 +33,31 @@ function createVector(size: number): string[] {
   return Array.from({ length: size }, () => "");
 }
 
-function formatNumber(value: number): string {
-  return Number(value.toFixed(DECIMALS)).toString();
-}
-
-function norm(vector: number[]): number {
-  return Math.sqrt(vector.reduce((sum, value) => sum + value ** 2, 0));
-}
-
-function dot(a: number[], b: number[]): number {
-  return a.reduce((sum, value, i) => sum + value * b[i], 0);
-}
-
-function multiplyMatrix(A: number[][], x: number[]): number[] {
-  return A.map((row) => dot(row, x));
-}
-
-function normInfinity(vector: number[]): number {
-  return Math.max(...vector.map((value) => Math.abs(value)));
-}
-
-function solvePower(
-  matrix: number[][],
-  initial: number[],
-  tolerance: number,
-  maxIterations: number,
-): Result | null {
-  const initialNorm = norm(initial);
-
-  if (initialNorm === 0) return null;
-
-  let current = initial.map((value) => value / initialNorm);
-  let previousLambda: number | null = null;
-
-  const iterations: Iteration[] = [];
-
-  for (let index = 1; index <= maxIterations; index++) {
-    const product = multiplyMatrix(matrix, current);
-    const productNorm = norm(product);
-
-    if (productNorm === 0 || !Number.isFinite(productNorm)) {
-      return null;
-    }
-
-    const next = product.map((value) => value / productNorm);
-    const Ax = multiplyMatrix(matrix, next);
-
-    const lambda = dot(next, Ax) / dot(next, next);
-
-    if (!Number.isFinite(lambda)) return null;
-
-    const residual = normInfinity(
-      Ax.map((value, i) => value - lambda * next[i]),
-    );
-
-    const error =
-      previousLambda === null ? null : Math.abs(lambda - previousLambda);
-
-    iterations.push({
-      index,
-      values: [...next],
-      lambda,
-      error,
-      residual,
-    });
-
-    const converged =
-      error !== null && error <= tolerance && residual <= tolerance;
-
-    current = next;
-
-    if (converged) {
-      return {
-        eigenvalue: lambda,
-        eigenvector: current,
-        iterations,
-        converged: true,
-        residual,
-      };
-    }
-
-    previousLambda = lambda;
-  }
-
-  const last = iterations[iterations.length - 1];
-
-  return {
-    eigenvalue: last.lambda,
-    eigenvector: last.values,
-    iterations,
-    converged: false,
-    residual: last.residual,
-  };
-}
-
-function Potencia() {
-  const [size, setSize] = useState(3);
+export function CalculadoraPotencia({ inversa = false }: { inversa?: boolean }) {
+  const exampleVector = inversa ? [3, 1, -1] : [1, 1, 1];
+  const [size, setSize] = useState(COEFFICIENTS.length);
 
   const [matrix, setMatrix] = useState<string[][]>(EXAMPLE_MATRIX);
 
   const [signs, setSigns] = useState<number[][]>(EXAMPLE_SIGNS);
 
-  const [vector, setVector] = useState<string[]>(EXAMPLE_VECTOR);
+  const [vector, setVector] = useState(() => exampleVector.map(value => String(Math.abs(value))));
 
   const [vectorSigns, setVectorSigns] =
-    useState<number[]>(EXAMPLE_VECTOR_SIGNS);
+    useState(() => exampleVector.map<number>(value => value < 0 ? -1 : 1));
 
   const [tolerance, setTolerance] = useState("0.000001");
   const [maxIterations, setMaxIterations] = useState("100");
 
-  const [result, setResult] = useState<Result | null>(null);
+  const [result, setResult] = useState<EigenResult | null>(null);
   const [error, setError] = useState("");
 
   function loadExample() {
-    setSize(3);
+    setSize(COEFFICIENTS.length);
     setMatrix(EXAMPLE_MATRIX.map((row) => [...row]));
     setSigns(EXAMPLE_SIGNS.map((row) => [...row]));
-    setVector([...EXAMPLE_VECTOR]);
-    setVectorSigns([...EXAMPLE_VECTOR_SIGNS]);
+    setVector(exampleVector.map(value => String(Math.abs(value))));
+    setVectorSigns(exampleVector.map(value => value < 0 ? -1 : 1));
     setTolerance("0.000001");
     setMaxIterations("100");
     setResult(null);
@@ -294,26 +180,7 @@ function Potencia() {
       return;
     }
 
-    if (norm(parsedVector) === 0) {
-      setError("El vector inicial no puede ser el vector cero.");
-      return;
-    }
-
-    const answer = solvePower(
-      parsedMatrix,
-      parsedVector,
-      parsedTolerance,
-      parsedIterations,
-    );
-
-    if (!answer) {
-      setError(
-        "No fue posible completar el cálculo. Revisa la matriz y el vector inicial.",
-      );
-      return;
-    }
-
-    setResult(answer);
+    setResult(solveEigen(parsedMatrix, parsedVector, parsedTolerance, parsedIterations, inversa));
   }
 
   return (
@@ -324,12 +191,13 @@ function Potencia() {
             MÉTODOS NUMÉRICOS / VALORES PROPIOS
           </span>
 
-          <h1>Método de la potencia</h1>
+          <h1>Método de la potencia{inversa ? " inversa" : ""}</h1>
 
-          <p>
-            Aproximación del valor propio dominante y su vector propio asociado
-            mediante un proceso iterativo.
-          </p>
+          {inversa ? (
+            <p><MathJax inline>{String.raw`Aproxima el valor propio de menor magnitud de una matriz invertible y su vector propio. Si \(Av=\lambda v\), entonces \(A^{-1}v=(1/\lambda)v\). Cada iteración resuelve un sistema lineal sin formar la inversa.`}</MathJax></p>
+          ) : (
+            <p><MathJax inline>{String.raw`Aproxima el valor propio dominante en magnitud de una matriz cuadrada y su vector propio, ligados por \(Av=\lambda v\). El método multiplica y normaliza el vector en cada iteración. Un valor propio negativo puede dominar si su magnitud es la mayor.`}</MathJax></p>
+          )}
         </div>
 
         <span className="potencia__tag">U5 · VALORES PROPIOS</span>
@@ -406,7 +274,7 @@ function Potencia() {
               min="0"
               step="any"
               value={tolerance}
-              onChange={(event) => setTolerance(event.target.value)}
+              onChange={(event) => { setTolerance(event.target.value); setResult(null); setError(""); }}
             />
           </label>
 
@@ -418,7 +286,7 @@ function Potencia() {
               max="1000"
               step="1"
               value={maxIterations}
-              onChange={(event) => setMaxIterations(event.target.value)}
+              onChange={(event) => { setMaxIterations(event.target.value); setResult(null); setError(""); }}
             />
           </label>
         </div>
@@ -444,91 +312,15 @@ function Potencia() {
 
       {error && (
         <p className="potencia__error" role="alert">
-          {error}
+          <strong>Entradas inválidas.</strong> {error}
         </p>
       )}
 
-      {result && (
-        <>
-          <section className="potencia__section potencia__results">
-            <div className="potencia__section-header">
-              <div>
-                <span className="potencia__number">03</span>
-                <h2>Resultados</h2>
-              </div>
-
-              <span
-                className={`potencia__status ${
-                  result.converged ? "is-success" : "is-warning"
-                }`}
-              >
-                {result.converged
-                  ? "Convergencia alcanzada"
-                  : "Máximo de iteraciones alcanzado"}
-              </span>
-            </div>
-
-            <div className="potencia__solution">
-              <div className="potencia__solution-item">
-                <span>Valor propio λ</span>
-                <strong>{formatNumber(result.eigenvalue)}</strong>
-              </div>
-
-              {result.eigenvector.map((value, i) => (
-                <div className="potencia__solution-item" key={i}>
-                  <span>x{i + 1}</span>
-                  <strong>{formatNumber(value)}</strong>
-                </div>
-              ))}
-            </div>
-
-            <p className="potencia__result-info">
-              {result.iterations.length} iteraciones realizadas
-            </p>
-          </section>
-
-          <section className="potencia__section">
-            <div className="potencia__section-header">
-              <div>
-                <span className="potencia__number">04</span>
-                <h2>Tabla de iteraciones</h2>
-              </div>
-            </div>
-
-            <div className="potencia__table-wrapper">
-              <table className="potencia__table">
-                <thead>
-                  <tr>
-                    <th>Iteración</th>
-
-                    {Array.from({ length: size }, (_, i) => (
-                      <th key={i}>x{i + 1}</th>
-                    ))}
-
-                    <th>λ</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {result.iterations.map((iteration) => (
-                    <tr key={iteration.index}>
-                      <td>{iteration.index}</td>
-
-                      {iteration.values.map((value, i) => (
-                        <td key={i}>{formatNumber(value)}</td>
-                      ))}
-
-                      <td>{formatNumber(iteration.lambda)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </>
-      )}
+      {result && <ResultadosPotencia result={result} inversa={inversa} />}
     </section>
   );
 }
 
-export default Potencia;
+export default function Potencia() {
+  return <CalculadoraPotencia />;
+}
