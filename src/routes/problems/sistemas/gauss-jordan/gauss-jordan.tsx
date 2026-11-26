@@ -1,3 +1,4 @@
+import { EncabezadoCalculadora } from "@/components/encabezado-calculadora/encabezado-calculadora";
 import { CeldaMatriz, EditorMatriz } from '@/components/editor-matriz/editor-matriz'
 import { parseDecimal } from '@/functions/parse-decimal'
 import { useState } from "react";
@@ -241,21 +242,8 @@ function GaussJordan() {
   );
 
   return (
-    <main className="gauss-jordan">
-      <header className="gauss-jordan__header">
-        <div>
-          <span className="gauss-jordan__eyebrow">
-            UNIDAD 3 / SISTEMAS DE ECUACIONES LINEALES
-          </span>
-          <h1>Gauss-Jordan</h1>
-          <p>
-            Resuelve sistemas de ecuaciones mediante operaciones elementales
-            sobre matrices.
-          </p>
-        </div>
-
-        <span className="gauss-jordan__tag">MÉTODO DIRECTO</span>
-      </header>
+    <section className="gauss-jordan">
+      <EncabezadoCalculadora titulo="Método de Gauss-Jordan" introduccion="/lineal/gauss-jordan" />
 
       <section className="gauss-jordan__workspace">
         <div className="gauss-jordan__section-header">
@@ -334,11 +322,11 @@ function GaussJordan() {
           </button>
 
           <button type="button" className="gauss-jordan__reset" onClick={reset}>
-            <span>↺</span> Limpiar
+            <span aria-hidden="true">↺</span> Limpiar
           </button>
 
           <button type="button" className="gauss-jordan__solve" onClick={solve} disabled={invalidEntry}>
-            Resolver sistema <span>→</span>
+            Calcular <span aria-hidden="true">→</span>
           </button>
         </div>
       </section>
@@ -393,7 +381,13 @@ function GaussJordan() {
 
               <p>{currentStep.description}</p>
 
-              <div className="gauss-jordan__result-matrix">
+              <div
+                className="gauss-jordan__result-matrix"
+                style={{ gridTemplateColumns: `28px repeat(${size + 1}, minmax(65px, max-content))` }}
+                role="region"
+                aria-label="Matriz del paso actual"
+                tabIndex={0}
+              >
                 {currentStep.matrix.map((row, i) => (
                   <div className="gauss-jordan__result-row" key={i}>
                     <span>F{i + 1}</span>
@@ -423,6 +417,7 @@ function GaussJordan() {
                 key={i}
                 className={i === activeStep ? "is-active" : ""}
                 onClick={() => setActiveStep(i)}
+                aria-current={i === activeStep ? "step" : undefined}
                 aria-label={`Ir al paso ${i + 1}: ${step.title}`}
               />
             ))}
@@ -465,7 +460,7 @@ function GaussJordan() {
           </div>
         </section>
       )}
-    </main>
+    </section>
   );
 }
 

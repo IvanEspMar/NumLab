@@ -3,7 +3,7 @@ import { parseDecimal } from '@/functions/parse-decimal'
 
 import { useState } from 'react'
 import { resolverCrout } from './lu'
-import { PanelFactorizacion, ResultadoFactorizacion, type ResultadoLU } from '../panel-factorizacion'
+import { PanelFactorizacion, ResultadoFactorizacion, type ResultadoLU } from '../compartido/panel-factorizacion'
 
 const TAM_MIN = 3
 const TAM_MAX = 10

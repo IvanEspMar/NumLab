@@ -1,4 +1,4 @@
-@use '../../../styles/variables' as *;
+@use '../../../../styles/variables' as *;
 
 .grafica-matematica {
   min-width: 0;
@@ -46,9 +46,11 @@
     margin-top: 8px;
     color: $color-text;
     font: 600 14px $font-mono;
+    overflow-wrap: anywhere;
 
     &::before {
       content: '';
+      flex-shrink: 0;
       width: 8px;
       height: 8px;
       border-radius: 50%;

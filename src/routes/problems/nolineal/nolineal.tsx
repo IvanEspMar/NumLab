@@ -1,7 +1,6 @@
 import bisec from '../../../assets/biseccion.svg'
 import secan from '../../../assets/secante.svg'
 import newton from '../../../assets/newton.svg'
-import './nolineal.scss'
 import { type TarjetaData } from '@/components/tarjeta/tarjeta'
 import TarjetaGrid from '@/components/tarjeta-grid/tarjeta-grid'
 

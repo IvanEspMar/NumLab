@@ -1,66 +1,21 @@
+@use '../../../../styles/controles' as ui;
+@use '../../../../styles/variables' as *;
 
 .gauss-jordan {
-  width: 100%;
-  max-width: 1180px;
-  margin: 55px auto 80px;
-  padding: 0 30px 60px;
-  color: #202326;
-  font-family: "Space Grotesk", sans-serif;
-
-  &__header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 25px;
-    padding-bottom: 35px;
-    border-bottom: 1px solid #e5e8eb;
-
-    h1 {
-      margin: 12px 0 8px;
-      font-size: clamp(32px, 5vw, 48px);
-      font-weight: 600;
-      letter-spacing: -2px;
-    }
-
-    p {
-      max-width: 520px;
-      margin: 0;
-      color: #737b83;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-  }
-
-  &__eyebrow,
-  &__tag,
-  &__number,
-  &__answer-label {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 11px;
-    letter-spacing: 0.5px;
-  }
-
-  &__eyebrow {
-    color: #41b0ea;
-    font-weight: 600;
-  }
-
-  &__tag {
-    padding: 8px 10px;
-    border: 1px solid #e5e8eb;
-    color: #737b83;
-    white-space: nowrap;
-  }
+  margin: 48px 0 64px;
+  color: $color-text;
 
   &__workspace,
   &__results {
-    padding-top: 35px;
+    @include ui.panel-calculadora;
+    margin-top: 24px;
   }
 
   &__section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 13px;
 
@@ -79,7 +34,8 @@
   }
 
   &__number {
-    color: #41b0ea;
+    color: #b9332f;
+    font: 600 12px $font-mono;
   }
 
   &__size {
@@ -96,25 +52,7 @@
       font-size: 12px;
     }
 
-    button {
-      width: 28px;
-      height: 28px;
-      border: 0;
-      background: #f1f4f6;
-      color: #202326;
-      cursor: pointer;
-      font-size: 18px;
-
-      &:hover:not(:disabled) {
-        background: #dff3fc;
-        color: #168dc9;
-      }
-
-      &:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-      }
-    }
+    button { @include ui.boton-compacto; }
   }
 
   &__hint {
@@ -158,47 +96,10 @@
     border-top: 1px solid #e5e8eb;
   }
 
-  &__reset,
+  &__reset { @include ui.boton; }
   &__solve {
-    min-height: 43px;
-    padding: 0 17px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  &__reset {
-    border: 1px solid #e1e6e9;
-    background: #fff;
-    color: #707981;
-
-    span {
-      margin-right: 6px;
-      font-size: 17px;
-    }
-
-    &:hover {
-      border-color: #aebbc3;
-      color: #202326;
-    }
-  }
-
-  &__solve {
-    margin-left: auto;
-    border: 1px solid #41b0ea;
-    background: #41b0ea;
-    color: #fff;
-    transition: background 0.2s;
-
-    span {
-      margin-left: 12px;
-    }
-
-    &:hover {
-      border-color: #219bd9;
-      background: #219bd9;
-    }
+    @include ui.boton(true);
+    margin-inline-start: auto;
   }
 
   &__step-count {
@@ -222,31 +123,15 @@
       font-size: 11px;
     }
 
-    button {
-      padding: 8px 10px;
-      border: 1px solid #e5e8eb;
-      background: #fff;
-      color: #3d454b;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 12px;
-
-      &:hover:not(:disabled) {
-        border-color: #41b0ea;
-        color: #168dc9;
-      }
-
-      &:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-      }
-    }
+    button { @include ui.boton; }
   }
 
   &__step {
     margin-top: 22px;
     padding: 22px;
-    border: 1px solid #e5e8eb;
+    border: 1px solid $color-border;
+    border-radius: 5px;
+    background: $color-background;
 
     > p {
       margin: 10px 0 25px;
@@ -273,60 +158,64 @@
   }
 
   &__result-matrix {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
+    display: grid;
+    align-items: center;
+    gap: 8px;
     width: fit-content;
     max-width: 100%;
     overflow-x: auto;
   }
 
   &__result-row {
-    display: grid;
-    grid-template-columns: 30px repeat(9, minmax(65px, 1fr));
-    align-items: center;
-    gap: 9px;
-    width: max-content;
+    display: contents;
 
     > span:first-child {
-      color: #a0a6ac;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 11px;
+      color: $color-muted;
+      font: 600 11px $font-mono;
     }
   }
 
   &__result-value {
     min-width: 65px;
     padding: 10px 5px;
-    background: #f5f7f8;
+    border: 1px solid $color-border;
+    border-radius: $radius-small;
+    background: #fff;
     color: #30383e;
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
     text-align: center;
 
     &.is-independent {
-      margin-left: 8px;
-      background: #edf8fd;
-      color: #168dc9;
+      background: #fff4f3;
+      color: #a12c28;
     }
   }
 
   &__progress {
     display: flex;
     gap: 5px;
-    margin: 15px 0 35px;
+    margin: 10px 0 22px;
 
     button {
       flex: 1;
-      height: 4px;
+      min-height: 28px;
       padding: 0;
       border: 0;
-      background: #e5e8eb;
+      background: transparent;
       cursor: pointer;
 
-      &.is-active {
-        background: #41b0ea;
+      &::before {
+        display: block;
+        height: 3px;
+        border-radius: 2px;
+        background: $color-border;
+        content: '';
       }
+
+      &:hover::before,
+      &.is-active::before { background: #b9332f; }
+      &:focus-visible { outline: 2px solid $color-red; }
     }
   }
 
@@ -338,10 +227,11 @@
     margin-top: 18px;
     padding: 23px;
     border: 1px solid #dce5e9;
-    background: #f8fbfc;
+    border-radius: 5px;
+    background: $color-background;
 
     &--unique {
-      border-left: 3px solid #41b0ea;
+      border-left: 3px solid $color-red;
     }
 
     &--infinite {
@@ -396,55 +286,13 @@
 
 @media (max-width: 650px) {
   .gauss-jordan {
-    margin-top: 30px;
-    padding: 0 16px 40px;
-
-    &__header {
-      align-items: flex-start;
-
-      h1 {
-        font-size: 36px;
-      }
-
-      p {
-        font-size: 13px;
-      }
-    }
-
-    &__tag {
-      display: none;
-    }
-
-    &__section-header {
-      h2 {
-        font-size: 18px;
-      }
-    }
-
-    &__step {
-      padding: 16px;
-    }
-
-    &__result-row {
-      grid-template-columns: 25px repeat(9, 62px);
-      gap: 6px;
-    }
-
-    &__actions {
-      align-items: stretch;
-    }
-
-    &__reset,
+    margin-top: 28px;
+    &__section-header h2 { font-size: 18px; }
+    &__step { padding: 14px; }
+    &__step-navigation { flex-wrap: wrap; }
     &__solve {
-      padding: 0 11px;
-      font-size: 12px;
-    }
-
-    &__step-navigation {
-      button {
-        padding: 8px 6px;
-        font-size: 11px;
-      }
+      flex-basis: 100%;
+      margin-inline-start: 0;
     }
   }
 }

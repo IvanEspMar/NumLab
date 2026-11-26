@@ -2,8 +2,8 @@ import { CeldaMatriz, EditorMatriz } from '@/components/editor-matriz/editor-mat
 import { parseDecimal } from '@/functions/parse-decimal'
 import { useState } from 'react'
 import { doli, adelante, atras, type Matriz } from './lu.ts'
-import { ejemploFactorizacion } from '../ejemplo-factorizacion'
-import { PanelFactorizacion, ResultadoFactorizacion, type ResultadoLU } from '../panel-factorizacion'
+import { ejemploFactorizacion } from '../compartido/ejemplo-factorizacion'
+import { PanelFactorizacion, ResultadoFactorizacion, type ResultadoLU } from '../compartido/panel-factorizacion'
 
 const TAM_MIN=3
 const TAM_MAX=10

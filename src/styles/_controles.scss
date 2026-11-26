@@ -1,0 +1,56 @@
+@use 'variables' as *;
+
+@mixin boton($principal: false) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid if(sass($principal): #111; else: $color-border);
+  border-radius: 6px;
+  background: if(sass($principal): #111; else: #fff);
+  color: if(sass($principal): #fff; else: $color-text);
+  font: 600 12px / 1.25 $font-mono;
+  letter-spacing: 0.035em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+
+  &:hover:not(:disabled) {
+    border-color: #b9332f;
+
+    @if $principal {
+      background: #b9332f;
+    } @else {
+      color: #a12c28;
+      background: #fff4f3;
+    }
+  }
+
+  &:focus-visible { outline: 2px solid $color-red; outline-offset: 3px; }
+  &:disabled {
+    background: $color-background;
+    border-color: $color-border;
+    color: $color-muted;
+    cursor: not-allowed;
+  }
+}
+
+@mixin boton-compacto {
+  @include boton;
+  width: 44px;
+  padding: 0;
+  font-size: 18px;
+}
+
+@mixin panel-calculadora {
+  min-width: 0;
+  padding: clamp(16px, 2.6vw, 28px);
+  border: 1px solid $color-border;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 5px 20px rgb(35 65 85 / 7%);
+}

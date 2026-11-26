@@ -1,4 +1,4 @@
-
+@use '../../../../styles/controles' as ui;
 .jacobi {
   width: 100%;
   max-width: 1180px;
@@ -15,49 +15,9 @@
     box-sizing: border-box;
   }
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 25px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #e5e8eb;
-
-    h1 {
-      margin: 12px 0 10px;
-      font-size: clamp(30px, 4vw, 43px);
-      font-weight: 600;
-      letter-spacing: -1.8px;
-      line-height: 1.15;
-    }
-
-    p {
-      max-width: 570px;
-      margin: 0;
-      color: #777f87;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-  }
-
-  &__eyebrow,
-  &__tag {
-    color: #858c93;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 10px;
-    letter-spacing: 0.6px;
-  }
-
-  &__tag {
-    padding: 8px 10px;
-    border: 1px solid #e5e8eb;
-    white-space: nowrap;
-  }
-
   &__section {
-    min-width: 0;
-    padding: 30px 0;
-    border-bottom: 1px solid #e5e8eb;
+    @include ui.panel-calculadora;
+    margin-top: 24px;
   }
 
   &__section-header {
@@ -166,38 +126,12 @@
     gap: 10px;
     padding: 25px 0;
 
-    button {
-      min-height: 39px;
-      padding: 0 15px;
-      border: 1px solid #dfe4e8;
-      border-radius: 3px;
-      background: #fff;
-      color: #555e66;
-      font-family: inherit;
-      font-size: 12px;
-      cursor: pointer;
-      transition: 0.2s;
-
-      &:hover {
-        border-color: #41b0ea;
-        color: #269bd8;
-      }
-    }
+    button { @include ui.boton; }
   }
 
-  &__calculate {
-    border-color: #41b0ea !important;
-    background: #41b0ea !important;
-    color: #fff !important;
-
-    span {
-      margin-left: 15px;
-    }
-
-    &:hover {
-      border-color: #269bd8 !important;
-      background: #269bd8 !important;
-    }
+  &__actions &__calculate {
+    @include ui.boton(true);
+    margin-inline-start: auto;
   }
 
   &__error {
@@ -306,22 +240,6 @@
   .jacobi {
     margin: 30px auto 60px;
     padding: 0 16px;
-
-    &__header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 18px;
-      padding-bottom: 22px;
-
-      h1 {
-        font-size: clamp(28px, 7vw, 36px);
-        letter-spacing: -1.2px;
-      }
-    }
-
-    &__tag {
-      align-self: flex-start;
-    }
 
     &__section {
       padding: 25px 0;

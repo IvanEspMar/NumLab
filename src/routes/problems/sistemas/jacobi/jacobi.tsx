@@ -1,7 +1,8 @@
+import { EncabezadoCalculadora } from "@/components/encabezado-calculadora/encabezado-calculadora";
 import { CeldaMatriz, EditorMatriz } from '@/components/editor-matriz/editor-matriz'
 import { parseDecimal } from '@/functions/parse-decimal'
 import { useState } from "react";
-import "./jacobi.scss";
+import "../compartido/iterativos.scss";
 
 type Iteration = {
   index: number;
@@ -274,22 +275,11 @@ function Jacobi() {
 
   return (
     <section className="jacobi">
-      <header className="jacobi__header">
-        <div>
-          <span className="jacobi__eyebrow">
-            MÉTODOS NUMÉRICOS / SISTEMAS LINEALES
-          </span>
-
-          <h1>Método de Jacobi</h1>
-
-          <p>
-            Solución de sistemas de ecuaciones lineales mediante aproximaciones
-            sucesivas.
-          </p>
-        </div>
-
-        <span className="jacobi__tag">U3 · MÉTODOS ITERATIVOS</span>
-      </header>
+      <EncabezadoCalculadora
+        titulo="Método de Jacobi"
+        introduccion="/lineal/jacobi"
+        descripcion="Solución de sistemas de ecuaciones lineales mediante aproximaciones sucesivas."
+      />
 
       <section className="jacobi__section">
         <div className="jacobi__section-header">
@@ -379,16 +369,14 @@ function Jacobi() {
       </section>
 
       <div className="jacobi__actions">
-        <button type="button" className="jacobi__calculate" onClick={calculate}>
-          Calcular método <span>→</span>
-        </button>
-
         <button type="button" className="jacobi__example" onClick={loadExample}>
           Cargar ejemplo
         </button>
-
         <button type="button" className="jacobi__clear" onClick={clearMatrix}>
           Limpiar
+        </button>
+        <button type="button" className="jacobi__calculate" onClick={calculate}>
+          Calcular <span aria-hidden="true">→</span>
         </button>
       </div>
 

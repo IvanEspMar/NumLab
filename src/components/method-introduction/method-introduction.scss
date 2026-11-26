@@ -1,3 +1,4 @@
+@use '../../styles/controles' as ui;
 @use '../../styles/variables' as *;
 
 .method-introduction {
@@ -20,23 +21,7 @@
     }
   }
 
-  &__action {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    padding: 11px 18px;
-    border-radius: 6px;
-    background: #111;
-    color: white;
-    font: 600 12px $font-mono;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: background 160ms ease;
-
-    &:hover { background: #b9332f; }
-    &:focus-visible { outline: 3px solid $color-red; outline-offset: 3px; }
-  }
+  &__action { @include ui.boton(true); }
 
   &__summary {
     display: grid;

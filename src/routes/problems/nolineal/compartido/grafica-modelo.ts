@@ -1,11 +1,11 @@
-import { isComplex, type EvalFunction } from "mathjs";
+import { evaluarReal, type FuncionReal } from "../calculo/funcion-real.ts";
 
 type Range = readonly [number, number];
 type Evaluate = (x: number) => number | null;
 
 export type GraphInput =
     | { method: "biseccion"; a: number; b: number }
-    | { method: "newton"; x: number; derivative: EvalFunction }
+    | { method: "newton"; x: number; derivative: FuncionReal }
     | { method: "secante"; x0: number; x1: number };
 
 interface GraphPoint {
@@ -20,29 +20,7 @@ export interface GraphData {
     y: Range;
     points?: readonly GraphPoint[];
     interval?: Range;
-    root?: number;
-}
-
-export function evaluateGraphValue(expression: EvalFunction, x: number): number | null {
-    if (!Number.isFinite(x)) return null;
-    try {
-        const value: unknown = expression.evaluate({ x });
-        return typeof value === "number" && Number.isFinite(value) ? value : null;
-    } catch {
-        return null;
-    }
-}
-
-export function isNumericExpression(expression: EvalFunction, initialPoints: readonly number[]): boolean {
-    return [...initialPoints, 1, 0, -1, 2, -2].some((x) => {
-        if (!Number.isFinite(x)) return false;
-        try {
-            const value: unknown = expression.evaluate({ x });
-            return typeof value === "number" || isComplex(value);
-        } catch {
-            return false;
-        }
-    });
+    result?: { x: number; fx: number };
 }
 
 function finiteBound(value: number): number {
@@ -74,8 +52,8 @@ function sampleHeights(evaluate: Evaluate, range: Range): number[] {
         .sort((a, b) => a - b);
 }
 
-export function createInputGraph(expression: EvalFunction, input: GraphInput): GraphData | null {
-    const evaluate: Evaluate = (x) => evaluateGraphValue(expression, x);
+export function createInputGraph(expression: FuncionReal, input: GraphInput): GraphData | null {
+    const evaluate: Evaluate = (x) => evaluarReal(expression, x);
     let x: Range;
     let interval: Range | undefined;
     const points: GraphPoint[] = [];
@@ -91,7 +69,7 @@ export function createInputGraph(expression: EvalFunction, input: GraphInput): G
         case "newton": {
             const y = evaluate(input.x);
             if (y === null) return null;
-            const slope = evaluateGraphValue(input.derivative, input.x);
+            const slope = evaluarReal(input.derivative, input.x);
             const fallback = Math.max(1, Math.abs(input.x) * 0.15);
             const step = slope === null || slope === 0 ? Infinity : Math.abs(y / slope);
             const radius = step > Number.EPSILON * fallback * 16 && step / fallback < 1e4
@@ -132,12 +110,15 @@ export function createInputGraph(expression: EvalFunction, input: GraphInput): G
     return { evaluate, x, y: paddedRange(Math.min(...heights), Math.max(...heights), 0.18, 1), points, interval };
 }
 
-export function createSolutionGraph(input: GraphData, root: number): GraphData {
-    const position = normalize(root, input.x);
+export function createSolutionGraph(input: GraphData, result: { x: number; fx: number }): GraphData {
+    const position = normalize(result.x, input.x);
     const x = position > 0.02 && position < 0.98
         ? input.x
-        : paddedRange(Math.min(root, input.x[0]), Math.max(root, input.x[1]), 0.07, 1);
-    return { evaluate: input.evaluate, x, y: input.y, root };
+        : paddedRange(Math.min(result.x, input.x[0]), Math.max(result.x, input.x[1]), 0.07, 1);
+    const y = result.fx >= input.y[0] && result.fx <= input.y[1]
+        ? input.y
+        : paddedRange(Math.min(result.fx, input.y[0]), Math.max(result.fx, input.y[1]), 0.07, 1);
+    return { evaluate: input.evaluate, x, y, result };
 }
 
 type Sample = readonly [number, number | null];
@@ -191,7 +172,7 @@ export function sampleCurve(graph: GraphData): PlotPoint[][] {
 
     const divisions = 160;
     const stops = new Set(Array.from({ length: divisions }, (_, index) => (index + 1) / divisions));
-    const anchors = graph.root === undefined ? graph.points?.map((point) => point.x) ?? [] : [graph.root];
+    const anchors = graph.result ? [graph.result.x] : graph.points?.map((point) => point.x) ?? [];
     for (const anchor of anchors) {
         const position = normalize(anchor, graph.x);
         if (position > 0 && position < 1) stops.add(position);

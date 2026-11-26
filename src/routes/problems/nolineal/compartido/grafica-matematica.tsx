@@ -1,4 +1,5 @@
 import { memo, useEffect, useId, useMemo, useRef, useState } from "react";
+import { formatearDecimal } from "./formato-decimal";
 import { axisTicks, formatGraphNumber, normalize, sampleCurve, type GraphData } from "./grafica-modelo";
 import "./grafica-matematica.scss";
 
@@ -35,8 +36,8 @@ export const GraficaMatematica = memo(function GraficaMatematica({ data }: { dat
     const path = segments.map((segment) => segment.map(([u, v], index) =>
         `${index === 0 ? "M" : "L"}${plotX(u).toFixed(2)} ${plotY(v).toFixed(2)}`,
     ).join(" ")).join(" ");
-    const rootLabel = data.root === undefined ? null : `x ≈ ${formatGraphNumber(data.root, 9)}`;
-    const title = rootLabel ? `Gráfica de la solución, ${rootLabel}` : "Gráfica de los datos de entrada";
+    const rootLabel = data.result === undefined ? null : `x ≈ ${formatearDecimal(data.result.x).replace("-", "−")}`;
+    const title = rootLabel ? `Punto calculado, ${rootLabel}` : "Gráfica de los datos de entrada";
     const points = data.points ?? [];
 
     return (
@@ -80,7 +81,7 @@ export const GraficaMatematica = memo(function GraficaMatematica({ data }: { dat
                     {points.map((point) => (
                         <Point key={point.label} x={x(point.x)} y={y(point.y)} />
                     ))}
-                    {data.root !== undefined && <Point x={x(data.root)} y={zeroY} root />}
+                    {data.result && <Point x={x(data.result.x)} y={y(data.result.fx)} root />}
                 </g>
 
                 <g className="grafica-matematica__ticks">

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { MathJax } from 'better-react-mathjax'
-import { Link } from 'react-router'
+import { EncabezadoCalculadora } from "@/components/encabezado-calculadora/encabezado-calculadora";
 import './panel-factorizacion.scss'
 
 interface PanelFactorizacionProps {
@@ -24,10 +24,7 @@ export function PanelFactorizacion({
 }: PanelFactorizacionProps) {
   return (
     <section className="factorizacion">
-      <header className="factorizacion__encabezado">
-        <h1>Método de {metodo}<span className="punto">.</span></h1>
-        <Link to={`/lineal/${metodo.toLowerCase()}`}>Más detalles <span aria-hidden="true">→</span></Link>
-      </header>
+      <EncabezadoCalculadora titulo={`Método de ${metodo}`} introduccion={`/lineal/${metodo.toLowerCase()}`} />
 
       <section className="factorizacion__panel">
         <div className="factorizacion__controles">

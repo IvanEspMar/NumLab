@@ -1,24 +1,8 @@
+@use '../styles/controles' as ui;
 
 .start-button {
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background-color: #111111;
-  color: #ffffff;
-  padding: 10px 20px;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'IBM Plex Mono', monospace;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.start-button:hover {
-  background-color: #ff3b30;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(255, 59, 48, 0.25);
+  @include ui.boton(true);
+  padding-inline: 20px;
 }
 
 .presentacion {

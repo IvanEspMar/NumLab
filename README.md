@@ -51,4 +51,7 @@ Vite utiliza `base: '/NumLab/'`. Si cambias el nombre del repositorio, actualiza
 
 ## Organización
 
-Se conserva la estructura de rutas y calculadoras. `src/components/method-introduction/` contiene la plantilla reutilizable para las introducciones, y `src/styles/_variables.scss` reúne los tokens Sass comunes.
+- `src/routes/problems/` contiene los catálogos y las pantallas de cada método, agrupados en `nolineal/`, `sistemas/` y `eigenvalues/`.
+- La carpeta `compartido/` de cada familia reúne sus componentes, auxiliares y estilos reutilizables. `nolineal/calculo/` reúne los algoritmos de raíces, la evaluación de funciones, los ejemplos y sus pruebas.
+- `src/components/` contiene las piezas que usan varias familias, como la cabecera de calculadora, el editor de matrices y la plantilla de las introducciones.
+- `src/styles/` reúne los tokens de diseño y los mixins Sass para botones y paneles.
