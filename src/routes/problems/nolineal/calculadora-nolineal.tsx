@@ -77,6 +77,34 @@ export function CalculadoraNoLineal({
     );
 }
 
+interface EntradaDecimalProps {
+    id: string;
+    value: string;
+    onValueChange: (value: string) => void;
+    placeholder?: string;
+}
+
+export function EntradaDecimal({ id, value, onValueChange, placeholder }: EntradaDecimalProps) {
+    function changeSign() {
+        const numberText = value.trim();
+        onValueChange(/^[-−]/.test(numberText) ? numberText.slice(1) : `-${numberText.replace(/^\+/, "")}`);
+    }
+
+    return (
+        <div className="calculadora-nolineal__decimal-input">
+            <input
+                id={id}
+                type="text"
+                inputMode="decimal"
+                value={value}
+                onChange={(event) => onValueChange(event.target.value)}
+                placeholder={placeholder}
+            />
+            <button type="button" aria-label="Cambiar signo" aria-controls={id} onClick={changeSign}>±</button>
+        </div>
+    );
+}
+
 export function ResultadoNoLineal({ x, fx }: { x: string; fx: string }) {
     return (
         <div className="calculadora-nolineal__result" role="status">

@@ -135,7 +135,25 @@
 
     h3 { flex-basis: 100%; }
     label { font: 500 15px $font-mono; }
-    input { width: 108px; }
+  }
+
+  &__decimal-input {
+    display: flex;
+    gap: 4px;
+
+    input { width: 86px; }
+
+    button {
+      width: 44px;
+      min-height: 44px;
+      padding: 0;
+      background: $color-background;
+      border-color: #bdcad4;
+      color: $color-text;
+      font-size: 20px;
+
+      &:hover:not(:disabled) { background: $color-border; }
+    }
   }
 
   &__interval-values,

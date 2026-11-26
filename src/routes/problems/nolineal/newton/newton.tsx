@@ -1,4 +1,5 @@
-import { CalculadoraNoLineal, ResultadoNoLineal } from "../calculadora-nolineal";
+import { parseDecimal } from "@/functions/parse-decimal";
+import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 import { derivative, parse, type EvalFunction } from "mathjs";
 import { useState } from "react";
 
@@ -62,7 +63,7 @@ export default function Newton() {
 
         resetResults();
 
-        let x = Number(initialValue);
+        let x = parseDecimal(initialValue);
         if (initialValue.trim() === "" || !Number.isFinite(x)) {
             setCalculationMessage("Ingresa un valor inicial válido.");
             return;
@@ -136,13 +137,11 @@ export default function Newton() {
                     <div className="calculadora-nolineal__interval-inputs">
                         <h3>Valor inicial</h3>
                         <label htmlFor="newton-initial-value">x₀:</label>
-                        <input
+                        <EntradaDecimal
                             id="newton-initial-value"
-                            type="number"
-                            step="any"
                             value={initialValue}
-                            onChange={(event) => {
-                                setInitialValue(event.target.value);
+                            onValueChange={(value) => {
+                                setInitialValue(value);
                                 resetResults();
                             }}
                         />

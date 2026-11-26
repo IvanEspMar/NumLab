@@ -1,4 +1,5 @@
-import { CalculadoraNoLineal, ResultadoNoLineal } from "../calculadora-nolineal";
+import { parseDecimal } from "@/functions/parse-decimal";
+import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 
 import { compile, parse } from "mathjs";
 import { MathJax } from "better-react-mathjax";
@@ -31,8 +32,8 @@ function Biseccion() {
   const decimals = 6;
   const maxIterations = 50;
 
-  const a = Number(aInput);
-  const b = Number(bInput);
+  const a = parseDecimal(aInput);
+  const b = parseDecimal(bInput);
 
   const intervalIsValid =
     Number.isFinite(a) &&
@@ -185,15 +186,13 @@ function Biseccion() {
               </MathJax>
             </label>
 
-            <input
+            <EntradaDecimal
               id="interval-a"
               value={aInput}
-              onChange={(e) => {
-                setAInput(e.target.value);
+              onValueChange={(value) => {
+                setAInput(value);
                 resetResults();
               }}
-              type="number"
-              step="any"
               placeholder="0"
             />
 
@@ -203,15 +202,13 @@ function Biseccion() {
               </MathJax>
             </label>
 
-            <input
+            <EntradaDecimal
               id="interval-b"
               value={bInput}
-              onChange={(e) => {
-                setBInput(e.target.value);
+              onValueChange={(value) => {
+                setBInput(value);
                 resetResults();
               }}
-              type="number"
-              step="any"
               placeholder="0"
             />
 

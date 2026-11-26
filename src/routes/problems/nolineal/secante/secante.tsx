@@ -1,4 +1,5 @@
-import { CalculadoraNoLineal, ResultadoNoLineal } from "../calculadora-nolineal";
+import { parseDecimal } from "@/functions/parse-decimal";
+import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 
 import { compile, parse } from "mathjs";
 import { useState } from "react";
@@ -70,8 +71,8 @@ function Secante() {
     }
 
     function computeIterations() {
-        const x0 = Number(initialValue);
-        const x1 = Number(initialValue2);
+        const x0 = parseDecimal(initialValue);
+        const x1 = parseDecimal(initialValue2);
 
         resetResults();
 
@@ -198,15 +199,13 @@ function Secante() {
                             x₀:
                         </label>
 
-                        <input
+                        <EntradaDecimal
                             id="initial-value"
                             value={initialValue}
-                            onChange={(e) => {
-                                setInitialValue(e.target.value);
+                            onValueChange={(value) => {
+                                setInitialValue(value);
                                 resetResults();
                             }}
-                            type="number"
-                            step="any"
                             placeholder="0"
                         />
 
@@ -214,15 +213,13 @@ function Secante() {
                             x₁:
                         </label>
 
-                        <input
+                        <EntradaDecimal
                             id="initial-value-2"
                             value={initialValue2}
-                            onChange={(e) => {
-                                setInitialValue2(e.target.value);
+                            onValueChange={(value) => {
+                                setInitialValue2(value);
                                 resetResults();
                             }}
-                            type="number"
-                            step="any"
                             placeholder="1"
                         />
                     </div>
