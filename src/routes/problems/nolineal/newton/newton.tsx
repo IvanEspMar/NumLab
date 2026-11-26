@@ -1,235 +1,196 @@
-
-import { compile, derivative } from "mathjs";
+import { CalculadoraNoLineal, ResultadoNoLineal } from "../calculadora-nolineal";
+import { derivative, parse, type EvalFunction } from "mathjs";
 import { useState } from "react";
-import "./newton.scss";
 
-interface RowNewtonType {
-    x_n: number;
-    fx_n: number;
-    dfx_n: number;
+interface NewtonIteration {
+    x: number;
+    fx: number;
+    slope: number;
+    nextX: number;
 }
 
-function Newton() {
-    const [iterations, setIterations] = useState<RowNewtonType[]>([]);
-    const [equationText, setEquationText] = useState("x^4 - 3x^3 + 2x - 5");
-    const [equationIsValid, setEquationIsValid] = useState(false);
+interface NewtonFunction {
+    value: EvalFunction;
+    derivative: EvalFunction;
+    latex: string;
+}
 
-    const [initialValue, setInitialValue] = useState("0");
-    const [sol, setSol] = useState<number | null>(null);
+const tolerance = 0.00001;
+const decimals = 6;
+const maxIterations = 100;
+
+function evaluateReal(expression: EvalFunction, x: number): number {
+    const result = expression.evaluate({ x });
+    if (typeof result !== "number" || !Number.isFinite(result)) {
+        throw new Error("La evaluación debe producir un número real y finito.");
+    }
+    return result;
+}
+
+export default function Newton() {
+    const [equationText, setEquationText] = useState("x^4 - 3x^3 + 2x - 5");
+    const [validatedFunction, setValidatedFunction] = useState<NewtonFunction | null>(null);
+    const [initialValue, setInitialValue] = useState("3");
+    const [iterations, setIterations] = useState<NewtonIteration[]>([]);
+    const [solution, setSolution] = useState<{ x: number; fx: number } | null>(null);
     const [calculationMessage, setCalculationMessage] = useState("");
 
-    const tolerance = 0.00001;
-    const decimals = 6;
-    const maxIterations = 100;
+    function resetResults() {
+        setIterations([]);
+        setSolution(null);
+        setCalculationMessage("");
+    }
 
     function validateEquation() {
+        resetResults();
+
         try {
-            const compiledEquation = compile(equationText);
-            const derivedEquation = compile(
-                derivative(equationText, "x").toString()
-            );
-
-            const testF = compiledEquation.evaluate({ x: 1 });
-            const testDF = derivedEquation.evaluate({ x: 1 });
-
-            if (
-                typeof testF !== "number" ||
-                typeof testDF !== "number" ||
-                !Number.isFinite(testF) ||
-                !Number.isFinite(testDF)
-            ) {
-                throw new Error("Expresión no válida");
-            }
-
-            setEquationIsValid(true);
-            setIterations([]);
-            setSol(null);
-            setCalculationMessage("");
-
-        } catch (error) {
-            setEquationIsValid(false);
-            setIterations([]);
-            setSol(null);
-            setCalculationMessage("La función introducida no es válida.");
+            const expression = parse(equationText);
+            setValidatedFunction({
+                value: expression.compile(),
+                derivative: derivative(expression, "x").compile(),
+                latex: expression.toTex(),
+            });
+        } catch {
+            setValidatedFunction(null);
+            setCalculationMessage("Ingresa una función válida que se pueda derivar respecto a x.");
         }
     }
 
-    function equation(x: number): number {
-        return compile(equationText).evaluate({ x });
-    }
-
-    function equationD(x: number): number {
-        const derivedEquation = derivative(equationText, "x");
-        return compile(derivedEquation.toString()).evaluate({ x });
-    }
-
     function computeIterations() {
-        const x0 = Number(initialValue);
+        if (!validatedFunction) return;
 
-        if (initialValue.trim() === "" || !Number.isFinite(x0)) {
+        resetResults();
+
+        let x = Number(initialValue);
+        if (initialValue.trim() === "" || !Number.isFinite(x)) {
             setCalculationMessage("Ingresa un valor inicial válido.");
             return;
         }
 
-        let currentX = x0;
-        const newIterations: RowNewtonType[] = [];
+        const rows: NewtonIteration[] = [];
+        let message = "Se alcanzó el máximo de iteraciones sin converger.";
 
-        setSol(null);
-        setCalculationMessage("");
-
-        try {
-            for (let i = 0; i < maxIterations; i++) {
-                const fx = equation(currentX);
-                const dfx = equationD(currentX);
-
-                if (!Number.isFinite(fx) || !Number.isFinite(dfx)) {
-                    setCalculationMessage(
-                        "Se obtuvo un resultado no válido durante el cálculo."
-                    );
-                    break;
-                }
-
-                newIterations.push({
-                    x_n: currentX,
-                    fx_n: fx,
-                    dfx_n: dfx
-                });
-
-                if (Math.abs(fx) < tolerance) {
-                    setSol(currentX);
-                    break;
-                }
-
-                if (dfx === 0) {
-                    setCalculationMessage(
-                        "La derivada es cero. No se puede continuar."
-                    );
-                    break;
-                }
-
-                const xNext = currentX - (fx / dfx);
-
-                if (!Number.isFinite(xNext)) {
-                    setCalculationMessage(
-                        "La siguiente aproximación no es válida."
-                    );
-                    break;
-                }
-
-                currentX = xNext;
-
-                if (i === maxIterations - 1) {
-                    setSol(currentX);
-                    setCalculationMessage(
-                        "Se alcanzó el máximo de iteraciones."
-                    );
-                }
+        for (let step = 0; step <= maxIterations; step++) {
+            let fx: number;
+            try {
+                fx = evaluateReal(validatedFunction.value, x);
+            } catch {
+                message = "No se pudo evaluar la función en la aproximación actual.";
+                break;
             }
 
-        } catch (error) {
-            setCalculationMessage(
-                "Ocurrió un error al evaluar la función."
-            );
+            if (Math.abs(fx) < tolerance) {
+                setSolution({ x, fx });
+                message = "";
+                break;
+            }
+            if (step === maxIterations) break;
+
+            let slope: number;
+            try {
+                slope = evaluateReal(validatedFunction.derivative, x);
+            } catch {
+                message = "No se pudo evaluar la derivada en la aproximación actual.";
+                break;
+            }
+
+            if (slope === 0) {
+                message = "La derivada es cero en la aproximación actual.";
+                break;
+            }
+
+            const nextX = x - fx / slope;
+            if (!Number.isFinite(nextX)) {
+                message = "La siguiente aproximación no es finita.";
+                break;
+            }
+            if (nextX === x) {
+                message = "La aproximación dejó de cambiar sin alcanzar la tolerancia.";
+                break;
+            }
+
+            rows.push({ x, fx, slope, nextX });
+            x = nextX;
         }
 
-        setIterations(newIterations);
+        setIterations(rows);
+        setCalculationMessage(message);
     }
 
     return (
-        <section className="newton">
-
-            <div className="newton__introduction">
-                <h1>MÉTODO DE NEWTON-RAPHSON</h1>
-                <button className="start-button">Más detalles</button>
-            </div>
-
-            <div className="newton__equation-input">
-                <label>Ingresa una ecuación válida</label>
-
-                <div>
-                    <input
-                        type="text"
-                        value={equationText}
-                        onChange={(e) => {
-                            setEquationText(e.target.value);
-                            setEquationIsValid(false);
-                            setIterations([]);
-                            setSol(null);
-                            setCalculationMessage("");
-                        }}
-                        placeholder="x^2 + 5x"
-                    />
-
-                    <button onClick={validateEquation}>
-                        Validar función
-                    </button>
-                </div>
-            </div>
-
-            {equationIsValid && (
+        <CalculadoraNoLineal
+            title="MÉTODO DE NEWTON-RAPHSON"
+            introductionPath="/nolineal/newton"
+            equationText={equationText}
+            equationLatex={validatedFunction?.latex ?? null}
+            validationMessage={calculationMessage}
+            onEquationChange={(value) => {
+                setEquationText(value);
+                setValidatedFunction(null);
+                resetResults();
+            }}
+            onValidate={validateEquation}
+            parameters={(
                 <>
-                    <div className="newton__interval-inputs">
+                    <div className="calculadora-nolineal__interval-inputs">
                         <h3>Valor inicial</h3>
-
-                        <label htmlFor="initial-value">x₀:</label>
-
+                        <label htmlFor="newton-initial-value">x₀:</label>
                         <input
-                            id="initial-value"
-                            value={initialValue}
-                            onChange={(e) => {
-                                setInitialValue(e.target.value);
-                                setIterations([]);
-                                setSol(null);
-                                setCalculationMessage("");
-                            }}
+                            id="newton-initial-value"
                             type="number"
-                            placeholder="1"
+                            step="any"
+                            value={initialValue}
+                            onChange={(event) => {
+                                setInitialValue(event.target.value);
+                                resetResults();
+                            }}
                         />
                     </div>
 
-                    <div className="newton__calculation-controls">
-                        <button onClick={computeIterations}>
-                            Calcular
-                        </button>
-
-                        <span>{calculationMessage}</span>
+                    <div className="calculadora-nolineal__calculation-controls">
+                        <button onClick={computeIterations}>Calcular</button>
+                        <span role="status">{calculationMessage}</span>
                     </div>
+                </>
+            )}
+        >
+            {solution && (
+                <ResultadoNoLineal
+                    x={solution.x.toFixed(decimals)}
+                    fx={solution.fx.toFixed(decimals)}
+                />
+            )}
 
-                    {sol !== null && (
-                        <div className="newton__result">
-                            Resultado: x = {sol.toFixed(decimals)}
-                            {" | "}
-                            f(x) = {equation(sol).toFixed(decimals)}
-                        </div>
-                    )}
-
-                    {iterations.length > 0 && (
-                        <table className="newton__iterations-table">
+            {iterations.length > 0 && (
+                <section className="calculadora-nolineal__iterations">
+                    <h2>Iteraciones</h2>
+                    <div className="calculadora-nolineal__table-scroll" tabIndex={0} role="region" aria-label="Tabla de iteraciones">
+                        <table className="calculadora-nolineal__iterations-table">
                             <thead>
                                 <tr>
-                                    <th>n</th>
-                                    <th>xₙ</th>
-                                    <th>f(xₙ)</th>
-                                    <th>f'(xₙ)</th>
+                                    <th scope="col">n</th>
+                                    <th scope="col">xₙ</th>
+                                    <th scope="col">f(xₙ)</th>
+                                    <th scope="col">f′(xₙ)</th>
+                                    <th scope="col">xₙ₊₁</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                {iterations.map(({ x_n, fx_n, dfx_n }, i) => (
-                                    <tr key={i}>
-                                        <td>{i + 1}</td>
-                                        <td>{Number(x_n.toFixed(decimals))}</td>
-                                        <td>{Number(fx_n.toFixed(decimals))}</td>
-                                        <td>{Number(dfx_n.toFixed(decimals))}</td>
+                                {iterations.map(({ x, fx, slope, nextX }, step) => (
+                                    <tr key={step}>
+                                        <td>{step}</td>
+                                        <td>{Number(x.toFixed(decimals))}</td>
+                                        <td>{Number(fx.toFixed(decimals))}</td>
+                                        <td>{Number(slope.toFixed(decimals))}</td>
+                                        <td>{Number(nextX.toFixed(decimals))}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    )}
-                </>
+                    </div>
+                </section>
             )}
-        </section>
+        </CalculadoraNoLineal>
     );
 }
-
-export default Newton;

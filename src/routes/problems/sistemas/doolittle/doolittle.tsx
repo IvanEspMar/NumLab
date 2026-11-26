@@ -76,14 +76,12 @@ function Doolittle()
   const [resultado,setResultado]=useState<Resultado|null>(null)
   const [error,setError]=useState('')
 
-  // Cualquier cambio en los datos borra el resultado anterior
   function limpiar()
   {
     setResultado(null)
     setError('')
   }
 
-  // Cambia el tamaño y conserva lo que ya estaba escrito
   function cambiarTamano(nuevo:number)
   {
     if(nuevo<TAM_MIN||nuevo>TAM_MAX)
@@ -104,7 +102,6 @@ function Doolittle()
     limpiar()
   }
 
-  // Cambia el signo de un término entre + y −
   function alternarSigno(i:number,j:number)
   {
     setSignos(signos.map((fila,fi)=>

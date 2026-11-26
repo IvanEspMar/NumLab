@@ -1,0 +1,93 @@
+import { MathJax } from "better-react-mathjax";
+import { useId, type ReactNode } from "react";
+import { Link } from "react-router";
+import "./calculadora-nolineal.scss";
+
+interface CalculadoraNoLinealProps {
+    title: string;
+    introductionPath: string;
+    equationText: string;
+    equationLatex: string | null;
+    validationMessage: string;
+    onEquationChange: (value: string) => void;
+    onValidate: () => void;
+    parameters: ReactNode;
+    children: ReactNode;
+}
+
+export function CalculadoraNoLineal({
+    title,
+    introductionPath,
+    equationText,
+    equationLatex,
+    validationMessage,
+    onEquationChange,
+    onValidate,
+    parameters,
+    children,
+}: CalculadoraNoLinealProps) {
+    const equationId = useId();
+
+    return (
+        <section className="calculadora-nolineal">
+            <header className="calculadora-nolineal__header">
+                <h1>{title}<span className="punto">.</span></h1>
+                <Link to={introductionPath}>Más detalles <span aria-hidden="true">→</span></Link>
+            </header>
+
+            <div className="calculadora-nolineal__workspace">
+                <div className="calculadora-nolineal__panel">
+                    <form className="calculadora-nolineal__equation-input" onSubmit={(event) => {
+                        event.preventDefault();
+                        onValidate();
+                    }}>
+                        <label htmlFor={equationId}>Función de x</label>
+                        <div>
+                            <input
+                                id={equationId}
+                                type="text"
+                                value={equationText}
+                                onChange={(event) => onEquationChange(event.target.value)}
+                                placeholder="x^2 - 2"
+                            />
+                            <button type="submit">Validar función</button>
+                        </div>
+                        {equationLatex === null && validationMessage && (
+                            <span className="calculadora-nolineal__error" role="status">{validationMessage}</span>
+                        )}
+                    </form>
+                    {equationLatex !== null && (
+                        <div className="calculadora-nolineal__parameters">{parameters}</div>
+                    )}
+                </div>
+
+                <section className="calculadora-nolineal__panel" aria-label="Vista previa de la función">
+                    <h2>Vista previa</h2>
+                    {equationLatex === null ? (
+                        <p className="calculadora-nolineal__hint">Valida la función para ver su fórmula y habilitar el cálculo.</p>
+                    ) : (
+                        <div className="calculadora-nolineal__equation-preview">
+                            <MathJax dynamic>{String.raw`\[f(x)=${equationLatex}\]`}</MathJax>
+                        </div>
+                    )}
+                </section>
+            </div>
+            {equationLatex !== null && children}
+        </section>
+    );
+}
+
+export function ResultadoNoLineal({ x, fx }: { x: string; fx: string }) {
+    return (
+        <div className="calculadora-nolineal__result" role="status">
+            <div>
+                <h3>Resultado</h3>
+                <MathJax dynamic>{String.raw`\[x\approx ${x}\]`}</MathJax>
+            </div>
+            <div>
+                <h3>Comprobación</h3>
+                <MathJax dynamic>{String.raw`\[f(${x})\approx ${fx}\]`}</MathJax>
+            </div>
+        </div>
+    );
+}

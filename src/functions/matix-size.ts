@@ -1,5 +1,4 @@
 
-// Esta funcion aumenta y disminuye el tamaño de una matriz manteniendo sus valores
 export function resizeMatrix(matrix: number[][], newSize: number): number[][] {
     const currentSize = matrix.length;
 
