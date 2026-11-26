@@ -1,0 +1,161 @@
+@use '../../../styles/variables' as *;
+
+.factorizacion {
+  margin: 48px 0 64px;
+  color: $color-text;
+
+  &__encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid $color-border;
+
+    h1 {
+      margin: 0;
+      font: 600 clamp(32px, 5vw, 60px) / 1 $font-display;
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+  }
+
+  &__encabezado a,
+  &__acciones button,
+  &__tamano button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid $color-border;
+    border-radius: 6px;
+    background: white;
+    color: $color-text;
+    font: 600 12px $font-mono;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover:not(:disabled) { background: $color-background; border-color: #9eb6c6; }
+    &:focus-visible { outline: 2px solid #166c9b; outline-offset: 2px; }
+    &:disabled { background: $color-background; color: $color-muted; cursor: not-allowed; }
+  }
+
+  &__encabezado a {
+    background: #111;
+    color: white;
+    text-transform: uppercase;
+
+    &:hover:not(:disabled) { background: #b9332f; }
+  }
+
+  &__panel,
+  &__solucion,
+  &__resultados > div {
+    min-width: 0;
+    padding: clamp(16px, 2.6vw, 28px);
+    border: 1px solid $color-border;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 5px 20px rgb(35 65 85 / 7%);
+  }
+
+  &__panel { margin-top: 24px; }
+
+  h2 { font: 600 24px / 1.15 $font-display; letter-spacing: -0.04em; }
+  &__controles h2 { margin: 0; }
+
+  &__controles,
+  &__acciones {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  &__tamano {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font: 600 14px $font-mono;
+
+    button { width: 44px; padding: 0; font-size: 20px; }
+  }
+
+  &__ayuda { margin: 14px 0; color: $color-muted; font-size: 14px; line-height: 1.6; }
+
+  &__acciones {
+    justify-content: flex-start;
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid $color-border;
+
+    .factorizacion__calcular {
+      margin-left: auto;
+      border-color: #166c9b;
+      background: #166c9b;
+      color: white;
+
+      &:hover:not(:disabled) { background: #11577e; border-color: #11577e; }
+      &:disabled { border-color: $color-border; background: $color-background; color: $color-muted; }
+    }
+  }
+
+  &__error {
+    padding: 10px 14px;
+    border-left: 2px solid $color-red;
+    background: #fff4f3;
+    color: #a12c28;
+  }
+
+  &__solucion {
+    margin-top: 20px;
+    border-left: 2px solid $color-red;
+
+    h2 { margin: 0 0 14px; }
+
+    dl {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0;
+    }
+
+    dl > div {
+      display: grid;
+      gap: 5px;
+      min-width: 80px;
+      padding: 10px 14px;
+      border: 1px solid $color-border;
+      border-radius: 5px;
+      background: $color-background;
+    }
+
+    dt { color: #166c9b; }
+    dd { margin: 0; font: 600 17px $font-mono; }
+  }
+
+  &__resultados {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    > div { overflow-x: auto; }
+    h3 { margin: 0 0 12px; font: 600 17px $font-display; }
+    table { width: 100%; border-collapse: collapse; font: 400 13px $font-mono; }
+    th, td { padding: 10px; border-bottom: 1px solid $color-border; text-align: center; white-space: nowrap; }
+    tr:nth-child(even) { background: $color-background; }
+  }
+
+  @media (max-width: 700px) {
+    margin-top: 28px;
+    &__resultados { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    &__acciones .factorizacion__calcular { flex-basis: 100%; }
+  }
+}

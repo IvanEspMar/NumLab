@@ -1,5 +1,5 @@
 import { parseDecimal } from "@/functions/parse-decimal";
-import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
+import { CalculadoraNoLineal, EncabezadosIteraciones, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 
 import { parse, type EvalFunction } from "mathjs";
 import { useMemo, useState } from "react";
@@ -249,15 +249,7 @@ function Secante() {
                     <h2>Iteraciones</h2>
                     <div className="calculadora-nolineal__table-scroll" tabIndex={0} role="region" aria-label="Tabla de iteraciones">
                         <table className="calculadora-nolineal__iterations-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">n</th>
-                                    <th scope="col">xₙ₋₁</th>
-                                    <th scope="col">xₙ</th>
-                                    <th scope="col">xₙ₊₁</th>
-                                    <th scope="col">f(xₙ)</th>
-                                </tr>
-                            </thead>
+                            <EncabezadosIteraciones columns={["n", "x_{n-1}", "x_n", "x_{n+1}", "f(x_n)"]} />
 
                             <tbody>
                                 {iterations.map(

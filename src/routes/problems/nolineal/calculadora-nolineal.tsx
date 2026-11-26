@@ -127,6 +127,20 @@ export function EntradaDecimal({ id, value, onValueChange, placeholder }: Entrad
     );
 }
 
+export function EncabezadosIteraciones({ columns }: { columns: readonly string[] }) {
+    return (
+        <thead>
+            <tr>
+                {columns.map((column) => (
+                    <th key={column} scope="col">
+                        <MathJax inline>{String.raw`\(${column}\)`}</MathJax>
+                    </th>
+                ))}
+            </tr>
+        </thead>
+    );
+}
+
 export function ResultadoNoLineal({ x, fx }: { x: string; fx: string }) {
     return (
         <div className="calculadora-nolineal__result" role="status">

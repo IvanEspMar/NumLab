@@ -460,7 +460,7 @@ function PotenciaInversa() {
         />
 
         <div className="potencia__matrix-note">
-          Usa ± para alternar el signo de una celda. Las celdas vacías se consideran cero.
+          Alterna el signo con ±. Las celdas vacías valen 0.
         </div>
       </section>
 

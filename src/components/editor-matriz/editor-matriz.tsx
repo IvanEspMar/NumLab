@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import './editor-matriz.scss'
 
 interface EditorMatrizProps {
@@ -79,7 +79,7 @@ export function CeldaMatriz({ label, value, onValueChange, negative, onToggleSig
         inputMode="decimal"
         placeholder="0"
         value={displayedValue}
-        style={{ '--value-width': `${displayedValue.length}ch` } as CSSProperties}
+        title={displayedValue || undefined}
         onChange={(event) => updateValue(event.target.value)}
       />
       <button

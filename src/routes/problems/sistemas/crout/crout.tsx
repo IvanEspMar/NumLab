@@ -3,29 +3,17 @@ import { parseDecimal } from '@/functions/parse-decimal'
 
 import { useState } from 'react'
 import { adelante, atras, type Matriz } from './lu'
-import './crout.scss'
+import { ejemploFactorizacion } from '../ejemplo-factorizacion'
+import { PanelFactorizacion, ResultadoFactorizacion, type ResultadoLU } from '../panel-factorizacion'
 
 const TAM_MIN = 3
 const TAM_MAX = 10
-const DECIMALES = 6
-
-type Resultado = {
-  L: Matriz
-  U: Matriz
-  y: number[]
-  x: number[]
-}
-
 function crearGrid(n: number): string[][] {
   return Array.from({ length: n }, () => Array(n).fill(''))
 }
 
 function crearSignos(n: number): number[][] {
   return Array.from({ length: n }, () => Array(n).fill(1))
-}
-
-function redondear(v: number): number {
-  return Number(v.toFixed(DECIMALES))
 }
 
 function esNumero(c: string): boolean {
@@ -81,74 +69,32 @@ function crout(A: Matriz): { L: Matriz; U: Matriz } {
   return { L, U }
 }
 
-function VistaMatriz({
-  titulo,
-  M
-}: {
-  titulo: string
-  M: Matriz
-}) {
-  return (
-    <div>
-      <h3>{titulo}</h3>
-      <table>
-        <tbody>
-          {M.map((fila, i) => (
-            <tr key={i}>
-              {fila.map((valor, j) => (
-                <td key={j}>{redondear(valor)}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-function VistaVector({
-  titulo,
-  v,
-  nombre
-}: {
-  titulo: string
-  v: number[]
-  nombre: string
-}) {
-  return (
-    <div>
-      <h3>{titulo}</h3>
-      <table>
-        <tbody>
-          {v.map((valor, i) => (
-            <tr key={i}>
-              <td>{nombre}{i + 1}</td>
-              <td>{redondear(valor)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
 function Crout() {
-  const [n, setN] = useState(TAM_MIN)
-  const [celdas, setCeldas] = useState<string[][]>(
-    crearGrid(TAM_MIN)
-  )
-  const [signos, setSignos] = useState<number[][]>(
-    crearSignos(TAM_MIN)
-  )
-  const [b, setB] = useState<string[]>(
-    Array(TAM_MIN).fill('')
-  )
-  const [resultado, setResultado] = useState<Resultado | null>(null)
+  const [n, setN] = useState(ejemploFactorizacion.celdas.length)
+  const [celdas, setCeldas] = useState(ejemploFactorizacion.celdas)
+  const [signos, setSignos] = useState(ejemploFactorizacion.signos)
+  const [b, setB] = useState(ejemploFactorizacion.vector)
+  const [resultado, setResultado] = useState<ResultadoLU | null>(null)
   const [error, setError] = useState('')
 
-  function limpiar() {
+  function limpiarResultado() {
     setResultado(null)
     setError('')
+  }
+
+  function cargarEjemplo() {
+    setN(ejemploFactorizacion.celdas.length)
+    setCeldas(ejemploFactorizacion.celdas)
+    setSignos(ejemploFactorizacion.signos)
+    setB(ejemploFactorizacion.vector)
+    limpiarResultado()
+  }
+
+  function limpiarMatriz() {
+    setCeldas(crearGrid(n))
+    setSignos(crearSignos(n))
+    setB(Array(n).fill(''))
+    limpiarResultado()
   }
 
   function cambiarTamano(nuevo: number) {
@@ -180,7 +126,7 @@ function Crout() {
     )
 
     setN(nuevo)
-    limpiar()
+    limpiarResultado()
   }
 
   function cambiarCelda(
@@ -196,7 +142,7 @@ function Crout() {
       )
     )
 
-    limpiar()
+    limpiarResultado()
   }
 
   function alternarSigno(i: number, j: number) {
@@ -208,7 +154,7 @@ function Crout() {
       )
     )
 
-    limpiar()
+    limpiarResultado()
   }
 
   function cambiarB(i: number, valor: string) {
@@ -218,7 +164,7 @@ function Crout() {
       )
     )
 
-    limpiar()
+    limpiarResultado()
   }
 
   const todoValido =
@@ -250,101 +196,41 @@ function Crout() {
   }
 
   return (
-    <section className="seccion-crout">
-      <h1>MÉTODO DE CROUT</h1>
-
-      <div className="tamano-crout">
-        <span>Tamaño del sistema</span>
-
-        <button
-          onClick={() => cambiarTamano(n - 1)}
-          disabled={n <= TAM_MIN}
-        >
-          −
-        </button>
-
-        <strong>{n} × {n}</strong>
-
-        <button
-          onClick={() => cambiarTamano(n + 1)}
-          disabled={n >= TAM_MAX}
-        >
-          +
-        </button>
-      </div>
-
-      <p className="ayuda-crout">
-        Edita los valores y usa ± para alternar el signo. Escribe 0 para los términos que no aparecen en la ecuación.
-      </p>
-
-      <EditorMatriz
-        size={n}
-        renderCell={(row, column) => (
-          <CeldaMatriz
-            label={`Coeficiente: fila ${row + 1}, columna ${column + 1}`}
-            value={celdas[row][column]}
-            negative={signos[row][column] < 0}
-            onValueChange={(value) => cambiarCelda(row, column, value)}
-            onToggleSign={() => alternarSigno(row, column)}
-          />
-        )}
-        renderVector={(row) => (
-          <CeldaMatriz
-            label={`Término independiente ${row + 1}`}
-            value={b[row]}
-            onValueChange={(value) => cambiarB(row, value)}
-          />
-        )}
-      />
-
-      <button
-        className="boton-calcular"
-        disabled={!todoValido}
-        onClick={calcular}
-      >
-        Calcular
-      </button>
-
-      {!todoValido && (
-        <p className="ayuda-crout">
-          Llena todas las casillas para poder calcular.
-        </p>
-      )}
-
-      {error && (
-        <p className="error-crout">{error}</p>
-      )}
-
-      {resultado && (
-        <>
-          <h2>Resultado</h2>
-
-          <div className="resultado-crout">
-            <VistaMatriz
-              titulo="L"
-              M={resultado.L}
+    <PanelFactorizacion
+      metodo="Crout"
+      tamano={n}
+      minimo={TAM_MIN}
+      maximo={TAM_MAX}
+      puedeCalcular={todoValido}
+      onCambiarTamano={cambiarTamano}
+      onCargarEjemplo={cargarEjemplo}
+      onLimpiar={limpiarMatriz}
+      onCalcular={calcular}
+      error={error}
+      editor={
+        <EditorMatriz
+          size={n}
+          renderCell={(row, column) => (
+            <CeldaMatriz
+              label={`Coeficiente: fila ${row + 1}, columna ${column + 1}`}
+              value={celdas[row][column]}
+              negative={signos[row][column] < 0}
+              onValueChange={(value) => cambiarCelda(row, column, value)}
+              onToggleSign={() => alternarSigno(row, column)}
             />
-
-            <VistaMatriz
-              titulo="U"
-              M={resultado.U}
+          )}
+          renderVector={(row) => (
+            <CeldaMatriz
+              label={`Término independiente ${row + 1}`}
+              value={b[row]}
+              onValueChange={(value) => cambiarB(row, value)}
             />
-
-            <VistaVector
-              titulo="y (L·y = b)"
-              v={resultado.y}
-              nombre="y"
-            />
-
-            <VistaVector
-              titulo="x (U·x = y)"
-              v={resultado.x}
-              nombre="x"
-            />
-          </div>
-        </>
-      )}
-    </section>
+          )}
+        />
+      }
+    >
+      {resultado && <ResultadoFactorizacion {...resultado} />}
+    </PanelFactorizacion>
   )
 }
 

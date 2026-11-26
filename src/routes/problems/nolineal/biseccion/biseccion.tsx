@@ -1,5 +1,5 @@
 import { parseDecimal } from "@/functions/parse-decimal";
-import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
+import { CalculadoraNoLineal, EncabezadosIteraciones, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 
 import { parse, type EvalFunction } from "mathjs";
 import { MathJax } from "better-react-mathjax";
@@ -298,51 +298,7 @@ function Biseccion() {
           <div className="calculadora-nolineal__table-scroll" tabIndex={0} role="region" aria-label="Tabla de iteraciones">
             <table className="calculadora-nolineal__iterations-table">
 
-              <thead>
-                <tr>
-                  <th scope="col">
-                    <MathJax inline>
-                      {String.raw`\(n\)`}
-                    </MathJax>
-                  </th>
-
-                  <th scope="col">
-                    <MathJax inline>
-                      {String.raw`\(a\)`}
-                    </MathJax>
-                  </th>
-
-                  <th scope="col">
-                    <MathJax inline>
-                      {String.raw`\(c\)`}
-                    </MathJax>
-                  </th>
-
-                  <th scope="col">
-                    <MathJax inline>
-                      {String.raw`\(b\)`}
-                    </MathJax>
-                  </th>
-
-                  <th scope="col">
-                    <MathJax inline>
-                      {String.raw`\(f(a)\)`}
-                    </MathJax>
-                  </th>
-
-                  <th scope="col">
-                    <MathJax inline>
-                      {String.raw`\(f(c)\)`}
-                    </MathJax>
-                  </th>
-
-                  <th scope="col">
-                    <MathJax inline>
-                      {String.raw`\(f(b)\)`}
-                    </MathJax>
-                  </th>
-                </tr>
-              </thead>
+              <EncabezadosIteraciones columns={["n", "a", "c", "b", "f(a)", "f(c)", "f(b)"]} />
 
               <tbody>
                 {iterations.map(

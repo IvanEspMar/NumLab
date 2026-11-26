@@ -1,5 +1,5 @@
 import { parseDecimal } from "@/functions/parse-decimal";
-import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
+import { CalculadoraNoLineal, EncabezadosIteraciones, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 import { derivative, parse, type EvalFunction } from "mathjs";
 import { useMemo, useState } from "react";
 import { createInputGraph, createSolutionGraph, type GraphData } from "../grafica-modelo";
@@ -176,15 +176,7 @@ export default function Newton() {
                     <h2>Iteraciones</h2>
                     <div className="calculadora-nolineal__table-scroll" tabIndex={0} role="region" aria-label="Tabla de iteraciones">
                         <table className="calculadora-nolineal__iterations-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">n</th>
-                                    <th scope="col">xₙ</th>
-                                    <th scope="col">f(xₙ)</th>
-                                    <th scope="col">f′(xₙ)</th>
-                                    <th scope="col">xₙ₊₁</th>
-                                </tr>
-                            </thead>
+                            <EncabezadosIteraciones columns={["n", "x_n", "f(x_n)", "f'(x_n)", "x_{n+1}"]} />
                             <tbody>
                                 {iterations.map(({ x, fx, slope, nextX }, step) => (
                                     <tr key={step}>

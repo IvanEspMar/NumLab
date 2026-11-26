@@ -290,7 +290,7 @@ function GaussJordan() {
         </div>
 
         <p className="gauss-jordan__hint">
-          Edita los valores y usa ± para alternar el signo. Las celdas vacías se consideran cero.
+          Alterna el signo con ±. Las celdas vacías valen 0.
         </p>
         {invalidEntry && <p role="status">Completa el número en la celda antes de resolver.</p>}
 
