@@ -57,14 +57,20 @@ const methods = {
   crout: {
     title: 'Método de Crout', category: 'Sistemas lineales · Factorización LU',
     description: String.raw`Descompone una matriz en un factor triangular inferior \(L\) y un factor triangular superior \(U\) cuya diagonal contiene unos.`,
-    background: 'La factorización facilita la resolución de sistemas con la misma matriz de coeficientes y diferentes términos independientes. En su forma básica necesita pivotes no nulos.',
+    background: String.raw`Los pivotes quedan en la diagonal de \(L\). Si el pivote es cero o demasiado pequeño y hay una fila adecuada debajo, se intercambian las filas correspondientes. La permutación \(P\) se aplica tanto a \(A\) como a \(b\).`,
     history: [
       'En 1941, Prescott Durand Crout publicó en la revista del American Institute of Electrical Engineers un procedimiento para evaluar determinantes y resolver sistemas lineales con coeficientes reales o complejos.',
       'Su trabajo abordaba dos problemas de cálculo con la misma estructura. En la variante de factorización que lleva su nombre, el factor triangular superior tiene unos en la diagonal, de modo que los pivotes quedan en el factor inferior.',
     ],
     historyReference: { label: 'Artículo de Crout de 1941', url: 'https://doi.org/10.1109/T-AIEE.1941.5058258' },
-    procedure: [String.raw`Formar la matriz \(A\) y el vector \(b\).`, String.raw`Calcular \(L\) y \(U\), fijando la diagonal de \(U\) en uno.`, String.raw`Resolver \(Ly=b\).`, String.raw`Resolver \(Ux=y\).`],
-    formulaLatex: String.raw`A=LU,\quad U_{ii}=1`, image: crout, imageAlt: 'Retrato asociado a Crout', calculatorPath: '/lineal/crout/calcular',
+    procedure: [
+      String.raw`Para cada columna \(j\), calcular \(L_{ij}=A_{ij}-\sum_{k=0}^{j-1}L_{ik}U_{kj}\) para \(i\ge j\), usando el orden actual de las filas.`,
+      String.raw`Comprobar el pivote \(L_{jj}\). Si hace falta intercambiar filas, aplicar el cambio también a las entradas ya calculadas de \(L\).`,
+      String.raw`Fijar \(U_{jj}=1\) y calcular \(U_{ji}=(A_{ji}-\sum_{k=0}^{j-1}L_{jk}U_{ki})/L_{jj}\) para \(i>j\).`,
+      String.raw`Resolver \(Ly=b\) (o \(Ly=Pb\) si se intercambiaron filas) por sustitución hacia adelante, dividiendo cada término entre \(L_{ii}\).`,
+      String.raw`Resolver \(Ux=y\) por sustitución hacia atrás con la diagonal unitaria de \(U\).`,
+    ],
+    formulaLatex: String.raw`\begin{gathered} A=LU\;\text{sin intercambios} \\ PA=LU\;\text{con intercambios} \\ U_{ii}=1 \end{gathered}`, image: crout, imageAlt: 'Retrato asociado a Crout', calculatorPath: '/lineal/crout/calcular',
   },
 } satisfies Record<string, MethodIntroductionData>
 
