@@ -1,0 +1,58 @@
+@use '../../../styles/variables' as *;
+
+.grafica-matematica {
+  min-width: 0;
+  margin: 14px 0 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  &__area { fill: #fafcfe; stroke: #e1e7ec; }
+  &__grid { stroke: #e6ebf0; }
+  &__axes { stroke: #8797a8; stroke-width: 1.2; }
+  &__guide { stroke: #6661c0; stroke-dasharray: 4 4; opacity: 0.78; }
+
+  &__curve {
+    fill: none;
+    stroke-width: 2.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &__ticks {
+    fill: #52606e;
+    font: 400 11px $font-mono;
+  }
+
+  &__point-label {
+    fill: #39377d;
+    font: 600 12px $font-mono;
+    paint-order: stroke;
+    stroke: #fafcfe;
+    stroke-width: 3px;
+  }
+
+  &__point { fill: #6563e7; }
+  &__root-point { fill: $color-red; }
+  &__note { color: $color-muted; font: 400 13px / 1.5 $font-body; }
+
+  &__root {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 8px;
+    color: $color-text;
+    font: 600 14px $font-mono;
+
+    &::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $color-red;
+    }
+  }
+}

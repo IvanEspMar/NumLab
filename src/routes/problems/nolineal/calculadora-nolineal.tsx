@@ -1,6 +1,8 @@
 import { MathJax } from "better-react-mathjax";
 import { useId, type ReactNode } from "react";
 import { Link } from "react-router";
+import { GraficaMatematica } from "./grafica-matematica";
+import type { GraphData } from "./grafica-modelo";
 import "./calculadora-nolineal.scss";
 
 interface CalculadoraNoLinealProps {
@@ -13,6 +15,9 @@ interface CalculadoraNoLinealProps {
     onValidate: () => void;
     parameters: ReactNode;
     children: ReactNode;
+    inputGraph: GraphData | null;
+    solutionGraph: GraphData | null;
+    graphHint?: string;
 }
 
 export function CalculadoraNoLineal({
@@ -25,6 +30,9 @@ export function CalculadoraNoLineal({
     onValidate,
     parameters,
     children,
+    inputGraph,
+    solutionGraph,
+    graphHint = "Ingresa valores iniciales donde la función esté definida.",
 }: CalculadoraNoLinealProps) {
     const equationId = useId();
 
@@ -70,8 +78,22 @@ export function CalculadoraNoLineal({
                             <MathJax dynamic>{String.raw`\[f(x)=${equationLatex}\]`}</MathJax>
                         </div>
                     )}
+                    {equationLatex !== null && (
+                        <div className="calculadora-nolineal__input-graph">
+                            <h2>Gráfica de entrada</h2>
+                            {inputGraph ? <GraficaMatematica data={inputGraph} /> : (
+                                <p className="calculadora-nolineal__hint">{graphHint}</p>
+                            )}
+                        </div>
+                    )}
                 </section>
             </div>
+            {solutionGraph && (
+                <section className="calculadora-nolineal__panel calculadora-nolineal__solution-graph">
+                    <h2>Gráfica de la última solución</h2>
+                    <GraficaMatematica data={solutionGraph} />
+                </section>
+            )}
             {equationLatex !== null && children}
         </section>
     );

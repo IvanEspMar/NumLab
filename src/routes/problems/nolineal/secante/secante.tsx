@@ -1,8 +1,9 @@
 import { parseDecimal } from "@/functions/parse-decimal";
 import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 
-import { compile, parse } from "mathjs";
-import { useState } from "react";
+import { parse, type EvalFunction } from "mathjs";
+import { useMemo, useState } from "react";
+import { createInputGraph, createSolutionGraph, evaluateGraphValue, isNumericExpression, type GraphData } from "../grafica-modelo";
 
 interface RowSecantType {
     x_nm1: number;
@@ -14,17 +15,23 @@ interface RowSecantType {
 function Secante() {
     const [iterations, setIterations] = useState<RowSecantType[]>([]);
     const [equationText, setEquationText] = useState("x^4 - 3x^3 + 2x - 5");
-    const [equationLatex, setEquationLatex] = useState<string | null>(null);
+    const [validatedFunction, setValidatedFunction] = useState<{ value: EvalFunction; latex: string } | null>(null);
 
     const [initialValue, setInitialValue] = useState("0");
     const [initialValue2, setInitialValue2] = useState("1");
 
     const [sol, setSol] = useState<number | null>(null);
+    const [solutionGraph, setSolutionGraph] = useState<GraphData | null>(null);
     const [calculationMessage, setCalculationMessage] = useState("");
 
     const tolerance = 0.00001;
     const decimals = 6;
     const maxIterations = 100;
+    const x0 = parseDecimal(initialValue);
+    const x1 = parseDecimal(initialValue2);
+    const inputGraph = useMemo(() => validatedFunction && createInputGraph(validatedFunction.value, {
+        method: "secante", x0, x1,
+    }), [validatedFunction, x0, x1]);
 
     function resetResults() {
         setIterations([]);
@@ -36,20 +43,15 @@ function Secante() {
         try {
             const expression = parse(equationText);
             const compiledEquation = expression.compile();
-            const testF = compiledEquation.evaluate({ x: 1 });
-
-            if (
-                typeof testF !== "number" ||
-                !Number.isFinite(testF)
-            ) {
+            if (!isNumericExpression(compiledEquation, [x0, x1])) {
                 throw new Error("Expresión no válida");
             }
 
-            setEquationLatex(expression.toTex());
+            setValidatedFunction({ value: compiledEquation, latex: expression.toTex() });
             resetResults();
 
         } catch {
-            setEquationLatex(null);
+            setValidatedFunction(null);
             resetResults();
             setCalculationMessage(
                 "La función introducida no es válida."
@@ -58,12 +60,8 @@ function Secante() {
     }
 
     function equation(x: number): number {
-        const result = compile(equationText).evaluate({ x });
-
-        if (
-            typeof result !== "number" ||
-            !Number.isFinite(result)
-        ) {
+        const result = validatedFunction ? evaluateGraphValue(validatedFunction.value, x) : null;
+        if (result === null) {
             throw new Error("Resultado no válido");
         }
 
@@ -71,10 +69,8 @@ function Secante() {
     }
 
     function computeIterations() {
-        const x0 = parseDecimal(initialValue);
-        const x1 = parseDecimal(initialValue2);
-
         resetResults();
+        setSolutionGraph(null);
 
         if (
             initialValue.trim() === "" ||
@@ -105,7 +101,7 @@ function Secante() {
             let currentFx = equation(currentX);
 
             if (Math.abs(previousFx) < tolerance) {
-                setSol(previousX);
+                recordSolution(previousX);
                 return;
             }
 
@@ -119,7 +115,7 @@ function Secante() {
                         fx_n: currentFx
                     });
 
-                    setSol(currentX);
+                    recordSolution(currentX);
                     break;
                 }
 
@@ -159,7 +155,7 @@ function Secante() {
 
                 if (i === maxIterations - 1) {
                     if (Math.abs(currentFx) < tolerance) {
-                        setSol(currentX);
+                        recordSolution(currentX);
                     } else {
                         setCalculationMessage(
                             "Se alcanzó el máximo de iteraciones sin converger."
@@ -177,19 +173,26 @@ function Secante() {
         setIterations(newIterations);
     }
 
+    function recordSolution(root: number) {
+        setSol(root);
+        if (inputGraph) setSolutionGraph(createSolutionGraph(inputGraph, root));
+    }
+
     return (
         <CalculadoraNoLineal
             title="MÉTODO DE LA SECANTE"
             introductionPath="/nolineal/secante"
             equationText={equationText}
-            equationLatex={equationLatex}
+            equationLatex={validatedFunction?.latex ?? null}
             validationMessage={calculationMessage}
             onEquationChange={(value) => {
                 setEquationText(value);
-                setEquationLatex(null);
+                setValidatedFunction(null);
                 resetResults();
             }}
             onValidate={validateEquation}
+            inputGraph={inputGraph}
+            solutionGraph={solutionGraph}
             parameters={(
                 <>
                     <div className="calculadora-nolineal__interval-inputs">

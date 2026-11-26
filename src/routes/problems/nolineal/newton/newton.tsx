@@ -1,7 +1,8 @@
 import { parseDecimal } from "@/functions/parse-decimal";
 import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 import { derivative, parse, type EvalFunction } from "mathjs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { createInputGraph, createSolutionGraph, type GraphData } from "../grafica-modelo";
 
 interface NewtonIteration {
     x: number;
@@ -34,7 +35,12 @@ export default function Newton() {
     const [initialValue, setInitialValue] = useState("3");
     const [iterations, setIterations] = useState<NewtonIteration[]>([]);
     const [solution, setSolution] = useState<{ x: number; fx: number } | null>(null);
+    const [solutionGraph, setSolutionGraph] = useState<GraphData | null>(null);
     const [calculationMessage, setCalculationMessage] = useState("");
+    const initialX = parseDecimal(initialValue);
+    const inputGraph = useMemo(() => validatedFunction && createInputGraph(validatedFunction.value, {
+        method: "newton", x: initialX, derivative: validatedFunction.derivative,
+    }), [validatedFunction, initialX]);
 
     function resetResults() {
         setIterations([]);
@@ -62,8 +68,9 @@ export default function Newton() {
         if (!validatedFunction) return;
 
         resetResults();
+        setSolutionGraph(null);
 
-        let x = parseDecimal(initialValue);
+        let x = initialX;
         if (initialValue.trim() === "" || !Number.isFinite(x)) {
             setCalculationMessage("Ingresa un valor inicial válido.");
             return;
@@ -83,6 +90,7 @@ export default function Newton() {
 
             if (Math.abs(fx) < tolerance) {
                 setSolution({ x, fx });
+                if (inputGraph) setSolutionGraph(createSolutionGraph(inputGraph, x));
                 message = "";
                 break;
             }
@@ -132,6 +140,8 @@ export default function Newton() {
                 resetResults();
             }}
             onValidate={validateEquation}
+            inputGraph={inputGraph}
+            solutionGraph={solutionGraph}
             parameters={(
                 <>
                     <div className="calculadora-nolineal__interval-inputs">

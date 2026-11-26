@@ -1,9 +1,10 @@
 import { parseDecimal } from "@/functions/parse-decimal";
 import { CalculadoraNoLineal, EntradaDecimal, ResultadoNoLineal } from "../calculadora-nolineal";
 
-import { compile, parse } from "mathjs";
+import { parse, type EvalFunction } from "mathjs";
 import { MathJax } from "better-react-mathjax";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { createInputGraph, createSolutionGraph, evaluateGraphValue, isNumericExpression, type GraphData } from "../grafica-modelo";
 
 interface RowBisecType {
   a: number;
@@ -15,17 +16,42 @@ interface RowBisecType {
   aChanged: boolean;
 }
 
+function midpoint(a: number, b: number): number {
+  const width = b - a;
+  return Number.isFinite(width) ? a + width / 2 : a / 2 + b / 2;
+}
+
+function bracketApproachesZero(evaluate: GraphData["evaluate"], row: RowBisecType, tolerance: number): boolean {
+  let { a, b, fa, fb } = row;
+  const initialMagnitude = Math.max(Math.abs(fa), Math.abs(fb));
+  for (let refinement = 0; refinement < 6; refinement++) {
+    const c = midpoint(a, b);
+    if (c === a || c === b) break;
+    const fc = evaluate(c);
+    if (fc === null) return false;
+    if (Math.abs(fc) < tolerance) return true;
+    if ((fa < 0) !== (fc < 0)) {
+      b = c;
+      fb = fc;
+    } else {
+      a = c;
+      fa = fc;
+    }
+  }
+  return Math.max(Math.abs(fa), Math.abs(fb)) < initialMagnitude * 0.9;
+}
+
 function Biseccion() {
 
   const [iterations, setIterations] = useState<RowBisecType[]>([]);
   const [equationText, setEquationText] = useState("2x^2 - 7");
-  const [equationIsValid, setEquationIsValid] = useState(false);
-  const [equationLatex, setEquationLatex] = useState("");
+  const [validatedFunction, setValidatedFunction] = useState<{ value: EvalFunction; latex: string } | null>(null);
 
   const [aInput, setAInput] = useState("0");
   const [bInput, setBInput] = useState("0");
 
-  const [sol, setSol] = useState<number | null>(null);
+  const [sol, setSol] = useState<{ x: number; fx: number } | null>(null);
+  const [solutionGraph, setSolutionGraph] = useState<GraphData | null>(null);
   const [calculationMessage, setCalculationMessage] = useState("");
 
   const tolerance = 0.00001;
@@ -34,6 +60,9 @@ function Biseccion() {
 
   const a = parseDecimal(aInput);
   const b = parseDecimal(bInput);
+  const inputGraph = useMemo(() => validatedFunction && createInputGraph(validatedFunction.value, {
+    method: "biseccion", a, b,
+  }), [validatedFunction, a, b]);
 
   const intervalIsValid =
     Number.isFinite(a) &&
@@ -46,63 +75,38 @@ function Biseccion() {
     setCalculationMessage("");
   }
 
-  function equation(x: number): number {
-    return compile(equationText).evaluate({ x });
-  }
-
   function validateEquation() {
     resetResults();
 
     try {
       const parsedEquation = parse(equationText);
       const compiledEquation = parsedEquation.compile();
-      const test = compiledEquation.evaluate({ x: 1 });
-
-      if (
-        typeof test !== "number" ||
-        !Number.isFinite(test)
-      ) {
+      if (!isNumericExpression(compiledEquation, [a, b])) {
         throw new Error("La función no devuelve un número válido");
       }
 
-      setEquationLatex(parsedEquation.toTex());
-      setEquationIsValid(true);
+      setValidatedFunction({ value: compiledEquation, latex: parsedEquation.toTex() });
 
     } catch {
-      setEquationLatex("");
-      setEquationIsValid(false);
+      setValidatedFunction(null);
       setCalculationMessage("La función introducida no es válida.");
     }
   }
 
-  function safeEvaluate(x: number): number | null {
-    try {
-      const result = equation(x);
-
-      return typeof result === "number" &&
-        Number.isFinite(result)
-        ? result
-        : null;
-
-    } catch {
-      return null;
-    }
-  }
-
-  const fa = equationIsValid ? safeEvaluate(a) : null;
-  const fb = equationIsValid ? safeEvaluate(b) : null;
+  const fa = validatedFunction ? evaluateGraphValue(validatedFunction.value, a) : null;
+  const fb = validatedFunction ? evaluateGraphValue(validatedFunction.value, b) : null;
 
   const intervalHasSignChange =
-    equationIsValid &&
     intervalIsValid &&
     fa !== null &&
     fb !== null &&
-    fa * fb < 0;
+    fa !== 0 && fb !== 0 && (fa < 0) !== (fb < 0);
 
   function computeIterations() {
-    if (!intervalHasSignChange) return;
+    if (!intervalHasSignChange || !inputGraph) return;
 
     resetResults();
+    setSolutionGraph(null);
 
     let currentA = a;
     let currentB = b;
@@ -111,11 +115,11 @@ function Biseccion() {
 
     for (let i = 0; i < maxIterations; i++) {
 
-      const currentC = (currentA + currentB) / 2;
+      const currentC = midpoint(currentA, currentB);
 
-      const fa = safeEvaluate(currentA);
-      const fb = safeEvaluate(currentB);
-      const fc = safeEvaluate(currentC);
+      const fa = inputGraph.evaluate(currentA);
+      const fb = inputGraph.evaluate(currentB);
+      const fc = inputGraph.evaluate(currentC);
 
       if (fa === null || fb === null || fc === null) {
         setCalculationMessage(
@@ -124,9 +128,9 @@ function Biseccion() {
         break;
       }
 
-      const acHasSignChange = fa * fc < 0;
+      const acHasSignChange = (fa < 0) !== (fc < 0);
 
-      newIterations.push({
+      const row = {
         a: currentA,
         b: currentB,
         c: currentC,
@@ -134,13 +138,17 @@ function Biseccion() {
         fb,
         fc,
         aChanged: !acHasSignChange
-      });
+      };
+      newIterations.push(row);
 
-      if (
-        Math.abs(fc) < tolerance ||
-        Math.abs(currentB - currentA) / 2 < tolerance
-      ) {
-        setSol(currentC);
+      const residualConverged = Math.abs(fc) < tolerance;
+      if (residualConverged || Math.abs(currentB - currentA) / 2 < tolerance) {
+        if (residualConverged || bracketApproachesZero(inputGraph.evaluate, row, tolerance)) {
+          setSol({ x: currentC, fx: fc });
+          setSolutionGraph(createSolutionGraph(inputGraph, currentC));
+        } else {
+          setCalculationMessage("El intervalo se redujo sin aproximarse a una raíz. Revisa si la función es continua en el intervalo.");
+        }
         break;
       }
 
@@ -165,15 +173,17 @@ function Biseccion() {
       title="MÉTODO DE BISECCIÓN"
       introductionPath="/nolineal/biseccion"
       equationText={equationText}
-      equationLatex={equationIsValid ? equationLatex : null}
+      equationLatex={validatedFunction?.latex ?? null}
       validationMessage={calculationMessage}
       onEquationChange={(value) => {
         setEquationText(value);
-        setEquationLatex("");
-        setEquationIsValid(false);
+        setValidatedFunction(null);
         resetResults();
       }}
       onValidate={validateEquation}
+      inputGraph={inputGraph}
+      solutionGraph={solutionGraph}
+      graphHint="Ingresa un intervalo válido con a menor que b."
       parameters={(
         <>
           <div className="calculadora-nolineal__interval-inputs">
@@ -277,8 +287,8 @@ function Biseccion() {
     >
       {sol !== null && (
         <ResultadoNoLineal
-          x={sol.toFixed(decimals)}
-          fx={equation(Number(sol.toFixed(decimals))).toFixed(decimals)}
+          x={sol.x.toFixed(decimals)}
+          fx={sol.fx.toFixed(decimals)}
         />
       )}
 

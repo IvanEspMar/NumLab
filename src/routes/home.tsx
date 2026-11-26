@@ -38,10 +38,11 @@ function Presentacion() {
 
       <div className="presentacion-inferior">
         <div className="presentacion-descripcion">
-          <span className="etiqueta">¿DE QUÉ TRATA EL PROGRAMA?</span>
+          <span className="etiqueta">¿QUÉ PUEDES HACER CON NUMLAB?</span>
           <p>
             NumLab es una aplicación para resolver ecuaciones y sistemas mediante distintos métodos numéricos. Permite obtener resultados, consultar los procedimientos paso a paso y comprender cómo funciona cada método.
           </p>
+          <p>Desarrollado con <strong>React</strong> y <strong>TypeScript</strong>.</p>
         </div>
 
         <aside className="integrantes">
