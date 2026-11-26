@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router";
 import "./breadcrumbs.scss";
 
 const routes: Record<string, string> = {
-  "/": "Inicio",
+  "/": "NumLab",
   "/problems": "Problemas",
   "/nolineal": "Ecuaciones no lineales",
   "/nolineal/biseccion": "Bisección",
@@ -24,37 +24,29 @@ function Breadcrumbs() {
 
   const segments = location.pathname.split("/").filter(Boolean);
 
-  const paths = segments.map((_, index) =>
+  const paths = ["/", ...segments.map((_, index) =>
     "/" + segments.slice(0, index + 1).join("/")
-  );
-
-  const labels = { ...routes };
-  for (const path of paths) {
-    if (path.endsWith('/calcular')) labels[path] = 'Calculadora';
-  }
+  )];
 
   return (
     <nav className="breadcrumbs" aria-label="Ruta de navegación">
-      <Link to="/">NumLab</Link>
+      <ol className="breadcrumbs__trail" role="list">
+        {paths.map((path, index) => {
+          const isCurrent = index === paths.length - 1;
+          const label = path.endsWith("/calcular") ? "Calculadora" : routes[path] ?? "Sección";
 
-      {paths.map((path, index) => {
-        const isLast = index === paths.length - 1;
-        const label = labels[path] || "Sección";
-
-        return (
-          <span className="breadcrumbs__item" key={path}>
-            <span className="breadcrumbs__separator">/</span>
-
-            {isLast ? (
-              <span className="breadcrumbs__current">
-                {label}
-              </span>
-            ) : (
-              <Link to={path}>{label}</Link>
-            )}
-          </span>
-        );
-      })}
+          return (
+            <li className="breadcrumbs__item" key={path}>
+              {index > 0 && <span className="breadcrumbs__separator" aria-hidden="true">/</span>}
+              {isCurrent ? (
+                <span className="breadcrumbs__current" aria-current="page">{label}</span>
+              ) : (
+                <Link to={path}>{label}</Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
     </nav>
   );
 }

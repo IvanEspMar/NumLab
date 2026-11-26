@@ -1,43 +1,88 @@
+@use '../../styles/variables' as *;
+
 .breadcrumbs {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 9px;
-    width: 100%;
-    max-width: 1180px;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 20px;
-    margin-top: 25px;
+    margin-top: 24px;
+    color: $color-muted;
+    font: 500 13px / 1.4 $font-mono;
 
-    a {
-        color: #858c93;
-        text-decoration: none;
-        transition: color 0.2s;
-
-        &:hover {
-            color: #41b0ea;
-        }
+    &__trail {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
     }
 
     &__item {
         display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    a,
+    &__current {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 4px 8px;
+        border-radius: $radius-small;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            background: $color-border;
+            color: $color-text;
+        }
+
+        &:focus-visible {
+            outline: 2px solid #166c9b;
+            outline-offset: 2px;
+        }
+    }
+
+    &__item:first-child a {
+        color: $color-text;
+        font-weight: 600;
     }
 
     &__separator {
-        color: #c5cbd0;
+        align-self: center;
+        color: #747f89;
     }
 
     &__current {
-        color: #202326;
+        gap: 8px;
+        background: white;
+        color: $color-text;
         font-weight: 600;
-    }
-}
 
-@media (max-width: 650px) {
-    .breadcrumbs {
-        padding: 0 16px;
-        font-size: 11px;
+        &::before {
+            width: 5px;
+            height: 5px;
+            flex: 0 0 5px;
+            border-radius: 50%;
+            background: $color-red;
+            content: '';
+        }
+    }
+
+    @media (max-width: 650px) {
+        margin-top: 14px;
+
+        &__trail,
+        &__item {
+            column-gap: 5px;
+        }
+
+        a,
+        &__current {
+            min-height: 44px;
+        }
     }
 }
