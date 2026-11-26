@@ -36,7 +36,7 @@
   &__row { display: contents; }
 
   &__cell {
-    --sign-accent: #86a624;
+    --sign-accent: #{$color-blue};
     display: flex;
     align-items: stretch;
     min-height: 44px;
